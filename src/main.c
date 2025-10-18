@@ -4,15 +4,22 @@
 int main()
 {
 	VDP_setScreenWidth256();
-	VDP_drawText("Hello World!", 4, 4);
-	PAL_setPalette(PAL1, palette_1.data, DMA);
 
-	// VDP_setBackgroundColor(8);
-	// VDP_drawImageEx(BG_A, &player, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 12, 12, 0, CPU);
-	// SPR_
+	PAL_setPalette(PAL0, palette_1.data, DMA);
+	PAL_setPalette(PAL1, palette_1.data, DMA);
+	VDP_setBackgroundColor(4);
+
+	SPR_init();
+	Sprite *testing = SPR_addSprite(&player, 0, 0, TILE_ATTR(PAL0, 0, FALSE, FALSE));
+	// SPR_setVisibility(testing, true);
+	// VDP_drawText("Hello World!", 4, 4);
+
 	while (TRUE)
 	{
+		SPR_update();
+		SYS_doVBlankProcess();
 		VDP_waitVSync();
 	}
+
 	return 0;
 }

@@ -5,11 +5,11 @@ int main()
 {
 	VDP_setScreenWidth256();
 	VDP_drawText("Hello World!", 4, 4);
-	PAL_setPalette(PAL1, player.palette->data, DMA);
+	PAL_setPalette(PAL1, palette_1.data, DMA);
 
 	// VDP_setBackgroundColor(8);
-	VDP_drawImageEx(BG_A, &player, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 12, 12, 0, CPU);
-
+	// VDP_drawImageEx(BG_A, &player, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 12, 12, 0, CPU);
+	// SPR_
 	while (TRUE)
 	{
 		VDP_waitVSync();

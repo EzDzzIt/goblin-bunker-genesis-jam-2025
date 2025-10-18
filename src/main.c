@@ -3,6 +3,7 @@
 
 int main()
 {
+	VDP_setScreenWidth256();
 	VDP_drawText("Hello World!", 4, 4);
 
 	PAL_setPalette(PAL1, moon.palette->data, DMA);

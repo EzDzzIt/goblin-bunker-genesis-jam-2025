@@ -1,1 +1,1 @@
-IMAGE moon "assets/moon.bmp" 0
+IMAGE player "assets/player.png" 0

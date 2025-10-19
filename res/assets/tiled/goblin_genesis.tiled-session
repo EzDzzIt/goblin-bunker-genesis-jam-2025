@@ -1,0 +1,51 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "level0.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "exportAsImage.includeBackgroundColor": true,
+    "fileStates": {
+        "level0.tmx": {
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 133,
+                "y": 120.75
+            }
+        },
+        "tileset0.tsx": {
+            "scaleInDock": 5.5,
+            "scaleInEditor": 3
+        },
+        "tileset0_testing.tsx": {
+            "scaleInDock": 11,
+            "scaleInEditor": 3
+        }
+    },
+    "last.imagePath": "/home/nate/repos/goblin-bunker-genesis-jam-2025/res/assets",
+    "map.height": 28,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 8,
+    "map.tileWidth": 8,
+    "map.width": 32,
+    "openFiles": [
+        "level0.tmx",
+        "tileset0.tsx",
+        "tileset0_testing.tsx"
+    ],
+    "project": "goblin_genesis.tiled-project",
+    "recentFiles": [
+        "tileset0_testing.tsx",
+        "tileset0.tsx",
+        "level0.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 8,
+        "width": 8
+    }
+}

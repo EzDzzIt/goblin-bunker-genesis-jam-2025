@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/inc",
                 "${workspaceFolder}/res",
-                "${workspaceFolder}/inc/res_inc"
+                "${workspaceFolder}/inc/res_inc",
+                "${workspaceFolder}/src/inc"
             ]
         }
     ],

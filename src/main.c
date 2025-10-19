@@ -1,6 +1,7 @@
 #include <genesis.h>
 #include "resources.h"
 #include "player.h"
+#include "globals.h"
 
 void inGameJoyEvent(u16 joy, u16 changed, u16 state);
 
@@ -35,11 +36,9 @@ int main()
 	return 0;
 }
 
-// void inGameJoyEvent(u16 joy, u16 changed, u16 state)
-// {
-// 	input.joy = joy;
-// 	input.changed = changed;
-// 	input.state = state;
-
-// 	playerInputChanged();
-// }
+void inGameJoyEvent(u16 joy, u16 changed, u16 state)
+{
+	input.joy = joy;
+	input.changed = changed;
+	input.state = state;
+}

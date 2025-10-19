@@ -16,6 +16,7 @@ int main()
 	VDP_setBackgroundColor(4);
 
 	initPlayer();
+	JOY_setEventHandler(inGameJoyEvent);
 
 	// move to new header
 	VDP_loadTileSet(&level_tileset, 0, DMA);
@@ -41,4 +42,5 @@ void inGameJoyEvent(u16 joy, u16 changed, u16 state)
 	input.joy = joy;
 	input.changed = changed;
 	input.state = state;
+	checkInput();
 }

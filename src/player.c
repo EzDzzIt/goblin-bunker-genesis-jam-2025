@@ -12,8 +12,6 @@ void initPlayer()
 void updatePlayer()
 {
     checkInput();
-    player.x += 1;
-    player.y += 1;
     SPR_setPosition(player.sprite, player.x, player.y);
 }
 
@@ -23,4 +21,12 @@ void checkInput()
     u16 joy = input.joy;
     u16 state = input.state;
     u16 changed = input.changed;
+
+    if (joy == JOY_1)
+    {
+        if (state & BUTTON_LEFT)
+        {
+            player.x += 1;
+        }
+    }
 }

@@ -12,6 +12,7 @@ struct doorData initDoor(u8 x, u8 y)
     door.data.sprite = SPR_addSprite(&door_sprite, 0, 0, TILE_ATTR(PAL2, 0, FALSE, FALSE));
     door.data.x = x;
     door.data.y = y;
+    door.beastmode = false;
 
     SPR_setAnim(door.data.sprite, DOOR_OPENING_ANIM);
     return door;
@@ -24,5 +25,9 @@ void updateLevel()
     {
         SPR_setPosition(door_array[i].data.sprite, door_array[i].data.x, door_array[i].data.y);
         // SPR_setHFlip(player.sprite, player.hflip);
+        if (door_array[i].beastmode)
+        {
+            SPR_setPosition(door_array[i].beastmode_sprite, door_array[i].beastmode_x, door_array[i].beastmode_y);
+        }
     }
 }

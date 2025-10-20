@@ -6,8 +6,10 @@ struct playerData player;
 
 void initPlayer()
 {
-    player.sprite = SPR_addSprite(&player_sprite, 0, 0, TILE_ATTR(PAL2, 0, FALSE, FALSE));
+    player.sprite = SPR_addSprite(&player_sprite, SCREEN_X_OFFSET, SCREEN_Y_OFFSET, TILE_ATTR(PAL2, 0, FALSE, FALSE));
     player.speed = 1.8;
+    player.x = SCREEN_X_OFFSET;
+    player.y = SCREEN_Y_OFFSET;
     // player.last_input = 0x0000; // continuous pressed down
     SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
 }
@@ -16,8 +18,18 @@ void updatePlayer()
 {
     // checkInput();
     // apply velocity
+    // check collide
+
     player.x += player.velocity.x;
     player.y += player.velocity.y;
+    if (player.x >= SCREEN_X_END - PLAYER_WIDTH || player.x <= SCREEN_X_OFFSET)
+    {
+        player.x -= player.velocity.x;
+    }
+    if (player.y >= SCREEN_Y_END - PLAYER_HEIGHT || player.y <= SCREEN_Y_OFFSET)
+    {
+        player.y -= player.velocity.y;
+    }
     SPR_setPosition(player.sprite, player.x, player.y);
     SPR_setHFlip(player.sprite, player.hflip);
 }

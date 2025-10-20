@@ -4,6 +4,8 @@
 
 #define PLAYER_ANIM_IDLE 0
 #define PLAYER_ANIM_WALK 1
+#define PLAYER_HEIGHT 2 * 8 // px
+#define PLAYER_WIDTH 8      // px
 
 struct playerData
 {

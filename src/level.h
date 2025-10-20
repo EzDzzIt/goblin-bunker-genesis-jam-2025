@@ -16,6 +16,11 @@ struct objectData
 struct doorData
 {
     struct objectData data;
+    bool beastmode;
+    Sprite *beastmode_sprite;
+    u8 beastmode_x;
+    u8 beastmode_y;
+    bool beastmode_hflip;
 };
 
 struct doorData initDoor(u8 x, u8 y);

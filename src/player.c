@@ -7,8 +7,9 @@ struct playerData player;
 void initPlayer()
 {
     player.sprite = SPR_addSprite(&player_sprite, 0, 0, TILE_ATTR(PAL2, 0, FALSE, FALSE));
-    player.speed = 3;
-    player.last_input = 0x0000; // continuous pressed down
+    player.speed = 1.8;
+    // player.last_input = 0x0000; // continuous pressed down
+    SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
 }
 
 void updatePlayer()
@@ -37,29 +38,23 @@ void checkInput()
         {
             player.velocity.x -= player.speed;
             player.hflip = true;
-            player.last_input = BUTTON_LEFT;
+            // player.last_input = BUTTON_LEFT;
         }
         if (movement_mask & BUTTON_RIGHT)
         {
             player.velocity.x += player.speed;
             player.hflip = false;
-            player.last_input = BUTTON_RIGHT;
+            // player.last_input = BUTTON_RIGHT;
         }
         if (movement_mask & BUTTON_UP)
         {
             player.velocity.y -= player.speed;
-            player.last_input = BUTTON_UP;
+            // player.last_input = BUTTON_UP;
         }
         if (movement_mask & BUTTON_DOWN)
         {
             player.velocity.y += player.speed;
-            player.last_input = BUTTON_DOWN;
+            // player.last_input = BUTTON_DOWN;
         }
-        // if (movement_mask & 0x0000)
-        // {
-        //     player.last_input = 0x0000;
-        //     player.velocity.x = 0;
-        //     player.velocity.y = 0;
-        // }
     }
 }

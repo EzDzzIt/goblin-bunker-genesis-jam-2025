@@ -2,6 +2,9 @@
 
 #include <genesis.h>
 
+#define DOOR_OBJECT 0
+#define DOOR_OPENING_ANIM 1
+
 struct objectData
 {
     Sprite *sprite;
@@ -10,8 +13,13 @@ struct objectData
     bool hflip;
 };
 
-struct objectData initObject(u8 type, u8 x, u8 y);
+struct doorData
+{
+    struct objectData data;
+};
+
+struct doorData initDoor(u8 x, u8 y);
 
 void updateLevel();
 
-extern struct objectData door_array[1];
+extern struct doorData door_array[];

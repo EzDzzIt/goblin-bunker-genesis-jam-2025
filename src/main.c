@@ -19,18 +19,12 @@ int main()
 	// VDP_setTextPalette(PAL0);
 
 	initPlayer();
-	door_array[0] = initObject(0, 140, 100);
+	door_array[0] = initDoor(140, 100);
 	JOY_setEventHandler(inGameJoyEvent);
 
 	// move to new header
 	VDP_loadTileSet(&level_tileset, 0, DMA);
 	VDP_setTileMapEx(BG_B, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 0, 0, 0, 0, 32, 28, DMA);
-	// initLevel
-
-	// bga = MAP_create(&level_map, TILEMAP_PLANE, TILE_ATTR_FULL(PAL1, FALSE, FALSE, FALSE, VDPTilesFilled));
-
-	// Update the number of tiles filled in order to avoid overlaping them when loading more
-	// VDPTilesFilled += level_tileset.numTile;
 
 	while (TRUE)
 	{
@@ -50,5 +44,5 @@ void inGameJoyEvent(u16 joy, u16 changed, u16 state)
 	input.joy = joy;
 	input.changed = changed;
 	input.state = state;
-	checkInput();
+	checkInput(); // in the player.c file
 }

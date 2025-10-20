@@ -2,6 +2,9 @@
 
 #include <genesis.h>
 
+#define PLAYER_ANIM_IDLE 0
+#define PLAYER_ANIM_WALK 1
+
 struct playerData
 {
     Sprite *sprite;

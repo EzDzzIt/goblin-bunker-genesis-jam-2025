@@ -4,6 +4,7 @@
 #include "player.h"
 #include "level.h"
 #include "enemy.h"
+#include "game.h"
 
 void inGameJoyEvent(u16 joy, u16 changed, u16 state);
 void display_stats();
@@ -36,7 +37,7 @@ int main()
 		// }
 		global_counter += 1;
 		updatePlayer(global_counter);
-		updateLevel(global_counter);
+		updateGame(global_counter);
 		SPR_update();
 		// char buffer[16];
 		// sprintf(buffer, "%d", global_counter);

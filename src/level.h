@@ -35,4 +35,3 @@ extern struct doorData door_array[];
 // actual level logic
 
 void initLevel(u8 id);
-void updateLevel(u16 time);

@@ -3,37 +3,45 @@
 #include "globals.h"
 #include "player.h"
 #include "level.h"
+#include "enemy.h"
 
 void inGameJoyEvent(u16 joy, u16 changed, u16 state);
+void display_stats();
 
 int main()
 {
 	VDP_setScreenWidth256();
 	SPR_init();
 	JOY_init();
+	JOY_setEventHandler(inGameJoyEvent);
 
 	PAL_setPalette(PAL0, palette_1.data, DMA);
 	PAL_setPalette(PAL1, palette_1.data, DMA);
 	PAL_setPalette(PAL2, palette_2.data, DMA);
-	VDP_setBackgroundColor(4);
-	// VDP_setTextPalette(PAL0);
 
+	VDP_setBackgroundColor(4); // change this per level?
+
+	// initialize some global vars
+	u16 global_counter = 0;
 	initPlayer();
-	door_array[0] = initDoor(140, 100);
-	JOY_setEventHandler(inGameJoyEvent);
 
-	// move to new header
-	VDP_loadTileSet(&level_tileset, 0, DMA);
-	VDP_setTileMapEx(BG_B, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 0, 0, 0, 0, 32, 28, DMA);
+	initLevel(0);
 
 	while (TRUE)
 	{
-		updatePlayer();
-		updateLevel();
+		// if (game_state == GAME_STATE_TITLE)
+		// {
+
+		// }
+		global_counter += 1;
+		updatePlayer(global_counter);
+		updateLevel(global_counter);
 		SPR_update();
-		VDP_drawText("test", 0, 0);
+		char buffer[16];
+		sprintf(buffer, "%d", global_counter);
+		VDP_drawText(buffer, 0, 0);
+		display_stats();
 		SYS_doVBlankProcess();
-		// VDP_waitVSync();
 	}
 
 	return 0;
@@ -45,4 +53,15 @@ void inGameJoyEvent(u16 joy, u16 changed, u16 state)
 	input.changed = changed;
 	input.state = state;
 	checkInput(); // in the player.c file
+}
+
+void display_stats()
+{
+	char free_mem[16] = "MEM: ";
+	char free_vram[16] = "VRAM: ";
+	VDP_showCPULoad(0, 0);
+	intToStr(MEM_getAllocated(), &free_mem[5], 1);
+	VDP_drawText(free_mem, 1, 3);
+	intToStr(SPR_getFreeVRAM(), &free_vram[6], 1);
+	VDP_drawText(free_vram, 1, 4);
 }

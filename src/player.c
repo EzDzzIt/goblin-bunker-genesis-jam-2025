@@ -14,7 +14,7 @@ void initPlayer()
     SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
 }
 
-void updatePlayer()
+void updatePlayer(u16 time)
 {
     // checkInput();
     // apply velocity

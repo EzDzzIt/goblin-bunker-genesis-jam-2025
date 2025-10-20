@@ -19,5 +19,5 @@ struct playerData
 };
 
 void initPlayer();
-void updatePlayer();
+void updatePlayer(u16 time);
 void checkInput();

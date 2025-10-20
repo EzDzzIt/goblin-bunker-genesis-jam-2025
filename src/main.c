@@ -18,6 +18,7 @@ int main()
 	PAL_setPalette(PAL0, palette_1.data, DMA);
 	PAL_setPalette(PAL1, palette_1.data, DMA);
 	PAL_setPalette(PAL2, palette_2.data, DMA);
+	PAL_setPalette(PAL3, palette_1.data, DMA);
 
 	VDP_setBackgroundColor(4); // change this per level?
 
@@ -37,9 +38,9 @@ int main()
 		updatePlayer(global_counter);
 		updateLevel(global_counter);
 		SPR_update();
-		char buffer[16];
-		sprintf(buffer, "%d", global_counter);
-		VDP_drawText(buffer, 0, 0);
+		// char buffer[16];
+		// sprintf(buffer, "%d", global_counter);
+		// VDP_drawText(buffer, 0, 0);
 		display_stats();
 		SYS_doVBlankProcess();
 	}

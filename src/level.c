@@ -30,6 +30,7 @@ struct doorData initDoor(u8 x, u8 y)
 void updateLevel(u16 time)
 {
     u8 i = 0;
+    // update doors
     for (i = 0; i < 5; i++)
     {
         if (door_array[i].data.active)
@@ -42,18 +43,35 @@ void updateLevel(u16 time)
             }
         }
     }
+    // update enemies
     for (i = 0; i < 5; i++)
     {
         if (enemy_array[i].data.active)
         {
+            // enemy ai
             SPR_setPosition(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
         }
     }
+    // update bullets
+    for (i = 0; i < 5; i++)
+    {
+        if (bullet_array[i].data.active)
+        {
+            // bullet updates
+            bullet_array[i].data.x += bullet_array[i].velocity.x;
+            bullet_array[i].data.y += bullet_array[i].velocity.y;
+            SPR_setPosition(bullet_array[i].data.sprite, bullet_array[i].data.x, bullet_array[i].data.y);
+        }
+    }
+
+    // spawn debug
+
     if (time == 100)
     {
         // SPR_releaseSprite(door_array[4].data.sprite);
         // SPR_releaseSprite(door_array[4].beastmode_sprite);
         door_array[0] = initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+        bullet_array[0] = initBullet(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, 1);
     }
     else if (time == 200)
     {

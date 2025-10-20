@@ -16,5 +16,27 @@ struct enemyData initEnemy(u8 x, u8 y)
     en.data.y = y;
 
     SPR_setAnim(en.data.sprite, 0);
+
     return en;
+}
+
+// bullet stuff
+
+struct bulletData bullet_array[5];
+
+struct bulletData initBullet(u8 x, u8 y, f16 x_velocity, f16 y_velocity)
+{
+
+    struct bulletData bul;
+
+    bul.data.sprite = SPR_addSprite(&bullet_sprite, x, y, TILE_ATTR(PAL2, 0, FALSE, FALSE));
+    bul.data.x = x;
+    bul.data.y = y;
+    bul.data.active = true;
+    bul.velocity.x = x_velocity;
+    bul.velocity.y = y_velocity;
+
+    SPR_setAnim(bul.data.sprite, 0);
+
+    return bul;
 }

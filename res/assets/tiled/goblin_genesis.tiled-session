@@ -10,11 +10,11 @@
     "exportAsImage.includeBackgroundColor": true,
     "fileStates": {
         "level0.tmx": {
-            "scale": 2,
+            "scale": 3.6515625,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 133,
-                "y": 120.75
+                "x": 127.89045785194696,
+                "y": 111.869918699187
             }
         },
         "tileset0.tsx": {
@@ -33,15 +33,14 @@
     "map.tileWidth": 8,
     "map.width": 32,
     "openFiles": [
-        "level0.tmx",
-        "tileset0.tsx",
-        "tileset0_testing.tsx"
+        "tileset0_testing.tsx",
+        "level0.tmx"
     ],
     "project": "goblin_genesis.tiled-project",
     "recentFiles": [
         "tileset0_testing.tsx",
-        "tileset0.tsx",
-        "level0.tmx"
+        "level0.tmx",
+        "tileset0.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

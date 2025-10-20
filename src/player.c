@@ -13,6 +13,7 @@ void updatePlayer()
 {
     checkInput();
     SPR_setPosition(player.sprite, player.x, player.y);
+    SPR_setHFlip(player.sprite, player.hflip);
 }
 
 void checkInput()
@@ -26,7 +27,21 @@ void checkInput()
     {
         if (state & BUTTON_LEFT)
         {
+            player.x -= 1;
+            player.hflip = true;
+        }
+        if (state & BUTTON_RIGHT)
+        {
             player.x += 1;
+            player.hflip = false;
+        }
+        if (state & BUTTON_UP)
+        {
+            player.y -= 1;
+        }
+        if (state & BUTTON_DOWN)
+        {
+            player.y += 1;
         }
     }
 }

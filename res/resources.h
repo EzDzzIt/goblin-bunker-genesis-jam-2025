@@ -3,6 +3,7 @@
 
 extern const Palette palette_1;
 extern const SpriteDefinition player_sprite;
+extern const SpriteDefinition door_sprite;
 extern const TileSet level_tileset;
 extern const TileMap level_map;
 

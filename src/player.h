@@ -8,7 +8,9 @@ struct playerData
     fix16 x;
     fix16 y;
     bool hflip;
-    // Vect2D_s16 input;
+    fix16 speed;
+    u16 last_input;
+    Vect2D_f16 velocity;
 };
 
 void initPlayer();

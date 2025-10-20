@@ -6,12 +6,17 @@ struct playerData player;
 
 void initPlayer()
 {
-    player.sprite = SPR_addSprite(&player_sprite, 0, 0, TILE_ATTR(PAL0, 0, FALSE, FALSE));
+    player.sprite = SPR_addSprite(&player_sprite, 0, 0, TILE_ATTR(PAL2, 0, FALSE, FALSE));
+    player.speed = 3;
+    player.last_input = 0x0000; // continuous pressed down
 }
 
 void updatePlayer()
 {
-    checkInput();
+    // checkInput();
+    // apply velocity
+    player.x += player.velocity.x;
+    player.y += player.velocity.y;
     SPR_setPosition(player.sprite, player.x, player.y);
     SPR_setHFlip(player.sprite, player.hflip);
 }
@@ -25,23 +30,36 @@ void checkInput()
 
     if (joy == JOY_1)
     {
-        if (state & BUTTON_LEFT)
+        u8 movement_mask = state & 0b1111;
+        player.velocity.x = 0;
+        player.velocity.y = 0;
+        if (movement_mask & BUTTON_LEFT)
         {
-            player.x -= 1;
+            player.velocity.x -= player.speed;
             player.hflip = true;
+            player.last_input = BUTTON_LEFT;
         }
-        if (state & BUTTON_RIGHT)
+        if (movement_mask & BUTTON_RIGHT)
         {
-            player.x += 1;
+            player.velocity.x += player.speed;
             player.hflip = false;
+            player.last_input = BUTTON_RIGHT;
         }
-        if (state & BUTTON_UP)
+        if (movement_mask & BUTTON_UP)
         {
-            player.y -= 1;
+            player.velocity.y -= player.speed;
+            player.last_input = BUTTON_UP;
         }
-        if (state & BUTTON_DOWN)
+        if (movement_mask & BUTTON_DOWN)
         {
-            player.y += 1;
+            player.velocity.y += player.speed;
+            player.last_input = BUTTON_DOWN;
         }
+        // if (movement_mask & 0x0000)
+        // {
+        //     player.last_input = 0x0000;
+        //     player.velocity.x = 0;
+        //     player.velocity.y = 0;
+        // }
     }
 }

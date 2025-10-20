@@ -14,8 +14,9 @@ int main()
 
 	PAL_setPalette(PAL0, palette_1.data, DMA);
 	PAL_setPalette(PAL1, palette_1.data, DMA);
+	PAL_setPalette(PAL2, palette_2.data, DMA);
 	VDP_setBackgroundColor(4);
-	VDP_setTextPalette(PAL2);
+	// VDP_setTextPalette(PAL0);
 
 	initPlayer();
 	door_array[0] = initObject(0, 140, 100);
@@ -23,7 +24,7 @@ int main()
 
 	// move to new header
 	VDP_loadTileSet(&level_tileset, 0, DMA);
-	VDP_setTileMap(BG_B, &level_map, 0, 0, 32, 28, DMA);
+	VDP_setTileMapEx(BG_B, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 0, 0, 0, 0, 32, 28, DMA);
 	// initLevel
 
 	// bga = MAP_create(&level_map, TILEMAP_PLANE, TILE_ATTR_FULL(PAL1, FALSE, FALSE, FALSE, VDPTilesFilled));

@@ -10,7 +10,7 @@ struct objectData initObject(u8 type, u8 x, u8 y)
     struct objectData object;
     if (type == 0)
     {
-        object.sprite = SPR_addSprite(&door_sprite, 0, 0, TILE_ATTR(PAL0, 0, FALSE, FALSE));
+        object.sprite = SPR_addSprite(&door_sprite, 0, 0, TILE_ATTR(PAL2, 0, FALSE, FALSE));
         object.x = x;
         object.y = y;
     }

@@ -19,7 +19,7 @@ void initPlayer()
     player.speed = 1.8;
     player.x = SCREEN_X_OFFSET;
     player.y = SCREEN_Y_OFFSET;
-    player.hp = 10;
+    player.hp = 3;
     SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
 }
 

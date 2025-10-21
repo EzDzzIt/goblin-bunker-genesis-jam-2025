@@ -101,7 +101,7 @@ int main()
 			else if (title_counter == 2)
 			{ // game start!
 				game_state = GAME_STATE_GAME;
-
+				XGM2_fadeOutAndStop(3);
 				VDP_setTextPalette(PAL3);
 				initPlayer();
 				initLevel(0);

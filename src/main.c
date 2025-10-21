@@ -72,7 +72,7 @@ int main()
 					VDP_clearTileMap(BG_A, 0, 200, TRUE);
 					// VDP_clearTileMap(BG_B, 0, 200, TRUE);
 					VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
-					VDP_drawBitmapEx(BG_A, &title_screen, TILE_ATTR_FULL(PAL3, 0, 0, 0, 1), 0, 0, FALSE);
+					VDP_drawBitmapEx(BG_A, &title_screen, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 0, 0, FALSE);
 					// load title screen 1 into vram and display
 					PAL_setPalette(PAL0, palette_1.data, DMA);
 					PAL_setPalette(PAL1, palette_1.data, DMA);
@@ -91,11 +91,12 @@ int main()
 					title_counter = 2;
 					global_counter = 0; // reset this to 0 to time the next section
 				}
-				if (global_counter > 1000)
+				if (global_counter == 300)
 				{
-					global_counter = 0;
+					global_counter = 2;
+					// VDP_drawBitmapEx(BG_A, &title_screen, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 0, 0, FALSE);
 				}
-			}
+						}
 			else if (title_counter == 2)
 			{ // game start!
 				game_state = GAME_STATE_GAME;

@@ -46,7 +46,7 @@ int main()
 			if (title_counter == 0)
 			{
 
-				if (global_counter >= 240 || title_skip) // time in frames for first title drop
+				if (global_counter >= 300 || title_skip) // time in frames for first title drop
 				{
 					title_skip = false;
 					// start by cleaning up old level memory
@@ -59,24 +59,27 @@ int main()
 				else if (global_counter == 1)
 				{
 					// load title screen 0 into vram and display
+					// PAL_setPalette(PAL3, palette_3.data, DMA);
 					VDP_drawBitmapEx(BG_A, &sgdk_logo_image, TILE_ATTR_FULL(PAL3, 0, 0, 0, 1), 1, 3, FALSE);
 					XGM2_play(xgm2_title);
 				}
 			}
 			else if (title_counter == 1)
 			{
-				if (global_counter >= 60 * 15)
-				{ // wait for 15 seconds, then reset
-					title_counter = 0;
-					global_counter = 0;
-				}
-				else if (global_counter == 1)
+
+				if (global_counter == 1)
 				{
+					VDP_clearTileMap(BG_A, 0, 200, TRUE);
+					// VDP_clearTileMap(BG_B, 0, 200, TRUE);
+					VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
+					VDP_drawBitmapEx(BG_A, &title_screen, TILE_ATTR_FULL(PAL3, 0, 0, 0, 1), 0, 0, FALSE);
 					// load title screen 1 into vram and display
 					PAL_setPalette(PAL0, palette_1.data, DMA);
 					PAL_setPalette(PAL1, palette_1.data, DMA);
 					PAL_setPalette(PAL2, palette_1.data, DMA);
 					PAL_setPalette(PAL3, palette_3.data, DMA);
+					// VDP_setTextPriority(1);
+					// VDP_drawText("PRESS START TO PLAY", 10 + 9, 9 + 12);
 				}
 				if (title_skip)
 				{
@@ -87,6 +90,10 @@ int main()
 					VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
 					title_counter = 2;
 					global_counter = 0; // reset this to 0 to time the next section
+				}
+				if (global_counter > 1000)
+				{
+					global_counter = 0;
 				}
 			}
 			else if (title_counter == 2)

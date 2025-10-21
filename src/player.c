@@ -69,7 +69,7 @@ void updatePlayer(u16 time)
         }
     }
     // cycle through stuff that hurts u, only if you are not invincible &|| warping
-    if (player.hurt_cooldown <= 0 && player.warp_cooldown <= 60)
+    if (player.hurt_cooldown <= 0 && player.warp_cooldown <= 80)
     {
         for (i = 0; i < 5; i++)
         {

@@ -10,11 +10,19 @@
     "exportAsImage.includeBackgroundColor": true,
     "fileStates": {
         "level0.tmx": {
-            "scale": 8,
+            "scale": 4,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 134.6875,
-                "y": 117
+                "x": 211,
+                "y": 163.5
+            }
+        },
+        "level0_small.tmx": {
+            "scale": 8.497222222222222,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 80.02615233736515,
+                "y": 57.90127492644655
             }
         },
         "tileset0.tsx": {
@@ -27,11 +35,11 @@
         }
     },
     "last.imagePath": "/home/nate/repos/goblin-bunker-genesis-jam-2025/res/assets",
-    "map.height": 28,
+    "map.height": 18,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 8,
     "map.tileWidth": 8,
-    "map.width": 32,
+    "map.width": 20,
     "openFiles": [
         "tileset0_testing.tsx",
         "level0.tmx"

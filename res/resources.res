@@ -8,6 +8,6 @@ SPRITE doorbeast_sprite "assets/doorbeast.png" 1 2 FAST 15
 SPRITE demon_sprite "assets/demon.png" 1 2 FAST 10
 SPRITE bullet_sprite "assets/bullet.png" 1 1 FAST 10
 TILESET level_tileset "assets/tileset.png" FAST NONE 
-TILEMAP level_map "assets/tiled/level0.tmx" "Tile Layer 1" FAST FAST  0
+TILEMAP level_map "assets/tiled/level0_small.tmx" "Tile Layer 1" FAST FAST  0
 TILESET border_tileset "assets/border.png" FAST ALL
 TILEMAP border_image "assets/border.png" border_tileset

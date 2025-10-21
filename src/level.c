@@ -36,7 +36,7 @@ void initLevel(u8 id)
     // door_array[3] = initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
     // door_array[4] = initDoor(16 + SCREEN_X_OFFSET, 128 + SCREEN_Y_OFFSET);
     VDP_loadTileSet(&level_tileset, 0, DMA);
-    VDP_setTileMapEx(BG_A, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 0, 0, 0, 0, 32, 28, DMA);
+    VDP_setTileMapEx(BG_A, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, 0, 0, 20, 18, DMA);
     // this index needs to be adjusted based on the size in tiles of the main level tileset
     VDP_loadTileSet(&border_tileset, 20, DMA);
     VDP_setTileMapEx(BG_B, &border_image, TILE_ATTR_FULL(PAL3, 0, FALSE, FALSE, 20), 0, 0, 0, 0, 32, 28, DMA);

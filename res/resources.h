@@ -1,6 +1,7 @@
 #ifndef _RES_RESOURCES_H_
 #define _RES_RESOURCES_H_
 
+extern const u8 xgm2_title[1024];
 extern const Palette palette_0;
 extern const Palette palette_1;
 extern const Palette palette_2;
@@ -14,5 +15,6 @@ extern const TileSet level_tileset;
 extern const TileMap level_map;
 extern const TileSet border_tileset;
 extern const TileMap border_image;
+extern const Bitmap sgdk_logo_image;
 
 #endif // _RES_RESOURCES_H_

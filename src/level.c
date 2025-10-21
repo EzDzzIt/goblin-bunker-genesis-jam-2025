@@ -29,12 +29,10 @@ struct doorData initDoor(u8 x, u8 y)
 void initLevel(u8 id)
 {
     // start by cleaning up old level memory
+    VDP_clearTileMap(BG_A, 0, 200, TRUE);
+    // VDP_clearTileMap(BG_B, 0, 200, TRUE);
+    VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
     // load in new level data based on the level id parameter
-    // door_array[0] = initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-    // door_array[1] = initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-    // door_array[2] = initDoor(128 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-    // door_array[3] = initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
-    // door_array[4] = initDoor(16 + SCREEN_X_OFFSET, 128 + SCREEN_Y_OFFSET);
     VDP_loadTileSet(&level_tileset, 0, DMA);
     VDP_setTileMapEx(BG_A, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, 0, 0, 20, 18, DMA);
     // this index needs to be adjusted based on the size in tiles of the main level tileset

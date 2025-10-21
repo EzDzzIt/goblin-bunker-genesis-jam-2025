@@ -15,35 +15,21 @@ int main()
 	SPR_init();
 	JOY_init();
 	JOY_setEventHandler(inGameJoyEvent);
-
-	PAL_setPalette(PAL0, palette_1.data, DMA);
-	PAL_setPalette(PAL1, palette_1.data, DMA);
-	PAL_setPalette(PAL2, palette_1.data, DMA);
-	PAL_setPalette(PAL3, palette_3.data, DMA);
-
-	VDP_setTextPalette(PAL3);
-
 	VDP_setBackgroundColor(5); // change this per level?
-
-	// initialize some global vars
-	u16 global_counter = 0;
-	// track which title screen to show
-
-	initPlayer();
-	initLevel(0);
 
 	while (TRUE)
 	{
+		global_counter += 1; // update this counter no matter what
+
 		if (game_state == GAME_STATE_GAME)
 		{
-			global_counter += 1;
 			updatePlayer(global_counter);
 			updateGame(global_counter);
 			SPR_update();
 
 			debug_player_info_print();
 
-			// display_stats();
+			display_stats();
 			SYS_doVBlankProcess();
 		}
 		else if (game_state == GAME_STATE_PAUSE)
@@ -56,17 +42,25 @@ int main()
 		}
 		else if (game_state == GAME_STATE_TITLE)
 		{
-			global_counter += 1;
+
 			if (title_counter == 0)
 			{
-				if (global_counter >= 180)
+
+				if (global_counter >= 240 || title_skip) // time in frames for first title drop
 				{
+					title_skip = false;
+					// start by cleaning up old level memory
+					VDP_clearTileMap(BG_A, 0, 200, TRUE);
+					// VDP_clearTileMap(BG_B, 0, 200, TRUE);
+					VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
 					title_counter += 1;
 					global_counter = 0; // reset this to 0 to time the next section
 				}
 				else if (global_counter == 1)
 				{
 					// load title screen 0 into vram and display
+					VDP_drawBitmapEx(BG_A, &sgdk_logo_image, TILE_ATTR_FULL(PAL3, 0, 0, 0, 1), 1, 3, FALSE);
+					XGM2_play(xgm2_title);
 				}
 			}
 			else if (title_counter == 1)
@@ -79,7 +73,29 @@ int main()
 				else if (global_counter == 1)
 				{
 					// load title screen 1 into vram and display
+					PAL_setPalette(PAL0, palette_1.data, DMA);
+					PAL_setPalette(PAL1, palette_1.data, DMA);
+					PAL_setPalette(PAL2, palette_1.data, DMA);
+					PAL_setPalette(PAL3, palette_3.data, DMA);
 				}
+				if (title_skip)
+				{
+					title_skip = false;
+					// start by cleaning up old level memory
+					VDP_clearTileMap(BG_A, 0, 200, TRUE);
+					// VDP_clearTileMap(BG_B, 0, 200, TRUE);
+					VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
+					title_counter = 2;
+					global_counter = 0; // reset this to 0 to time the next section
+				}
+			}
+			else if (title_counter == 2)
+			{ // game start!
+				game_state = GAME_STATE_GAME;
+
+				VDP_setTextPalette(PAL3);
+				initPlayer();
+				initLevel(0);
 			}
 			SYS_doVBlankProcess();
 		}

@@ -165,79 +165,89 @@ void checkInput()
 
     if (joy == JOY_1)
     {
-        u8 movement_mask = state & 0b1111;
-        // u8 action_mask = state & 0b000011110000;
-        // BUTTON_A
-        // BUTTON_B
-        // BUTTON_C
-        // BUTTON_START
-        player.velocity.x = 0;
-        player.velocity.y = 0;
-        player.last_input = 0;
-        if (player.move_cooldown <= 0)
+        if (game_state == GAME_STATE_GAME) // gameplay controls
         {
-            if (state & BUTTON_A && player.warp_cooldown <= 0)
+            u8 movement_mask = state & 0b1111;
+            // u8 action_mask = state & 0b000011110000;
+            // BUTTON_A
+            // BUTTON_B
+            // BUTTON_C
+            // BUTTON_START
+            player.velocity.x = 0;
+            player.velocity.y = 0;
+            player.last_input = 0;
+            if (player.move_cooldown <= 0)
             {
+                if (state & BUTTON_A && player.warp_cooldown <= 0)
+                {
 
-                if (state & BUTTON_LEFT)
-                {
-                    player.velocity.x -= (player.speed + 2); // keep momentum
-                    // player.x -= 24;                    // warp 24 px
-                    player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
-                    player.hflip = true;
-                    SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
-                    player.last_input = BUTTON_A;
+                    if (state & BUTTON_LEFT)
+                    {
+                        player.velocity.x -= (player.speed + 2); // keep momentum
+                        // player.x -= 24;                    // warp 24 px
+                        player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
+                        player.hflip = true;
+                        SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
+                        player.last_input = BUTTON_A;
+                    }
+                    if (state & BUTTON_RIGHT)
+                    {
+                        player.velocity.x += (player.speed + 2);
+                        // player.x += 24;                    // warp 24 px
+                        player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
+                        player.hflip = false;
+                        SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
+                        player.last_input = BUTTON_A;
+                    }
+                    if (state & BUTTON_UP)
+                    {
+                        player.velocity.y -= (player.speed + 2);
+                        // player.y -= 24;
+                        player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
+                        SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
+                        player.last_input = BUTTON_A;
+                    }
+                    if (state & BUTTON_DOWN)
+                    {
+                        player.velocity.y += (player.speed + 2);
+                        // player.y += 24;
+                        player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
+                        SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
+                        player.last_input = BUTTON_A;
+                    }
                 }
-                if (state & BUTTON_RIGHT)
+                else
                 {
-                    player.velocity.x += (player.speed + 2);
-                    // player.x += 24;                    // warp 24 px
-                    player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
-                    player.hflip = false;
-                    SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
-                    player.last_input = BUTTON_A;
-                }
-                if (state & BUTTON_UP)
-                {
-                    player.velocity.y -= (player.speed + 2);
-                    // player.y -= 24;
-                    player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
-                    SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
-                    player.last_input = BUTTON_A;
-                }
-                if (state & BUTTON_DOWN)
-                {
-                    player.velocity.y += (player.speed + 2);
-                    // player.y += 24;
-                    player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
-                    SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
-                    player.last_input = BUTTON_A;
+                    if (state & BUTTON_LEFT)
+                    {
+                        player.velocity.x -= player.speed;
+                        player.hflip = true;
+                        player.last_input = BUTTON_LEFT;
+                    }
+                    if (state & BUTTON_RIGHT)
+                    {
+                        player.velocity.x += player.speed;
+                        player.hflip = false;
+                        player.last_input = BUTTON_RIGHT;
+                    }
+                    if (state & BUTTON_UP)
+                    {
+                        player.velocity.y -= player.speed;
+                        player.last_input = BUTTON_UP;
+                    }
+                    if (state & BUTTON_DOWN)
+                    {
+                        player.velocity.y += player.speed;
+                        player.last_input = BUTTON_DOWN;
+                    }
                 }
             }
-            else
+        }
+        else if (game_state == GAME_STATE_TITLE)
+        {
+            if (state & BUTTON_START && !title_skip)
             {
-                if (state & BUTTON_LEFT)
-                {
-                    player.velocity.x -= player.speed;
-                    player.hflip = true;
-                    player.last_input = BUTTON_LEFT;
-                }
-                if (state & BUTTON_RIGHT)
-                {
-                    player.velocity.x += player.speed;
-                    player.hflip = false;
-                    player.last_input = BUTTON_RIGHT;
-                }
-                if (state & BUTTON_UP)
-                {
-                    player.velocity.y -= player.speed;
-                    player.last_input = BUTTON_UP;
-                }
-                if (state & BUTTON_DOWN)
-                {
-                    player.velocity.y += player.speed;
-                    player.last_input = BUTTON_DOWN;
-                }
+                title_skip = true;
             }
         }
     }

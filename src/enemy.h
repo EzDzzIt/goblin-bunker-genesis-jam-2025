@@ -13,6 +13,7 @@ struct enemyData
 extern struct enemyData enemy_array[];
 
 struct enemyData initEnemy(u8 x, u8 y);
+void deinitEnemy(u8 i);
 
 // bullet stuff
 

@@ -14,6 +14,7 @@ struct doorData initDoor(u8 x, u8 y)
     door.data.sprite = SPR_addSprite(&door_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
     door.data.x = x;
     door.data.y = y;
+    door.data.active = true;
     door.beastmode = true;
     door.beastmode_sprite = SPR_addSprite(&doorbeast_sprite, x + 8, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
     door.beastmode_x = x + 8;

@@ -14,10 +14,17 @@ struct enemyData initEnemy(u8 x, u8 y)
     en.data.sprite = SPR_addSprite(&demon_sprite, x, y, TILE_ATTR(PAL2, 0, FALSE, FALSE));
     en.data.x = x;
     en.data.y = y;
+    en.data.active = true;
 
     SPR_setAnim(en.data.sprite, 0);
 
     return en;
+}
+
+void deinitEnemy(u8 i)
+{
+    enemy_array[i].data.active = false;
+    SPR_releaseSprite(enemy_array[i].data.sprite);
 }
 
 // bullet stuff

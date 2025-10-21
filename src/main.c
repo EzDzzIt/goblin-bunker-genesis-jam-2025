@@ -16,7 +16,7 @@ int main()
 	JOY_init();
 	JOY_setEventHandler(inGameJoyEvent);
 
-	PAL_setPalette(PAL0, palette_1.data, DMA);
+	PAL_setPalette(PAL0, palette_0.data, DMA);
 	PAL_setPalette(PAL1, palette_1.data, DMA);
 	PAL_setPalette(PAL2, palette_2.data, DMA);
 	PAL_setPalette(PAL3, palette_3.data, DMA);

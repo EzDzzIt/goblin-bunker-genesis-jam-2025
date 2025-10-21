@@ -17,6 +17,8 @@ struct objectData
 
 #define DOOR_OBJECT 0
 #define DOOR_OPENING_ANIM 1
+#define DOOR_WIDTH 8
+#define DOOR_HEIGHT 16
 
 struct doorData
 {

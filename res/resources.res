@@ -1,3 +1,4 @@
+PALETTE palette_0 "assets/PAL0.png"
 PALETTE palette_1 "assets/PAL1.png"
 PALETTE palette_2 "assets/PAL2.png"
 PALETTE palette_3 "assets/PAL3.png"

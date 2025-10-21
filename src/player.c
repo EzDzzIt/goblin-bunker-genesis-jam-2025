@@ -54,7 +54,7 @@ void updatePlayer(u16 time)
     {
         if (door_array[i].data.active)
         {
-            if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, door_array[i].data.x, door_array[i].data.y, DOOR_WIDTH, DOOR_HEIGHT))
+            if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, door_array[i].data.x + 1, door_array[i].data.y + 3, DOOR_WIDTH - 4, DOOR_HEIGHT - 4))
             {
                 collided = true;
                 break;
@@ -73,9 +73,10 @@ void updatePlayer(u16 time)
         }
         if (bullet_array[i].data.active)
         {
-            if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, enemy_array[i].data.x, enemy_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT))
+            if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, bullet_array[i].data.x, bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT))
             {
                 hurt = true;
+                SPR_reset();
             }
         }
     }

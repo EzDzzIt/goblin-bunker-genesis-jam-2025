@@ -19,14 +19,15 @@ int main()
 	PAL_setPalette(PAL0, palette_1.data, DMA);
 	PAL_setPalette(PAL1, palette_1.data, DMA);
 	PAL_setPalette(PAL2, palette_2.data, DMA);
-	PAL_setPalette(PAL3, palette_1.data, DMA);
+	PAL_setPalette(PAL3, palette_3.data, DMA);
 
-	VDP_setBackgroundColor(4); // change this per level?
+	VDP_setTextPalette(PAL3);
+
+	VDP_setBackgroundColor(5); // change this per level?
 
 	// initialize some global vars
 	u16 global_counter = 0;
 	initPlayer();
-
 	initLevel(0);
 
 	while (TRUE)
@@ -42,7 +43,7 @@ int main()
 		// char buffer[16];
 		// sprintf(buffer, "%d", global_counter);
 		// VDP_drawText(buffer, 0, 0);
-		display_stats();
+		// display_stats();
 		SYS_doVBlankProcess();
 	}
 

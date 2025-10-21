@@ -28,8 +28,7 @@ int main()
 	// initialize some global vars
 	u16 global_counter = 0;
 	// track which title screen to show
-	u8 title_counter = 0;
-	enum game_state_enum game_state = GAME_STATE_GAME;
+
 	initPlayer();
 	initLevel(0);
 

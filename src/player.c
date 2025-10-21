@@ -68,8 +68,8 @@ void updatePlayer(u16 time)
             }
         }
     }
-    // cycle through stuff that hurts u, only if you are not invincible
-    if (player.hurt_cooldown <= 0)
+    // cycle through stuff that hurts u, only if you are not invincible &|| warping
+    if (player.hurt_cooldown <= 0 && player.warp_cooldown <= 60)
     {
         for (i = 0; i < 5; i++)
         {
@@ -105,19 +105,19 @@ void updatePlayer(u16 time)
         }
         if (player.velocity.x > 0)
         {
-            player.x -= player.velocity.x + 1 + teleport_correction;
+            player.x -= player.velocity.x + 2 + teleport_correction;
         }
         else if (player.velocity.x < 0)
         {
-            player.x -= player.velocity.x - 1 - teleport_correction;
+            player.x -= player.velocity.x - 2 - teleport_correction;
         }
         if (player.velocity.y > 0)
         {
-            player.y -= player.velocity.y + 1 + teleport_correction;
+            player.y -= player.velocity.y + 2 + teleport_correction;
         }
         else if (player.velocity.y < 0)
         {
-            player.y -= player.velocity.y - 1 - teleport_correction;
+            player.y -= player.velocity.y - 2 - teleport_correction;
         }
 
         player.move_cooldown = PLAYER_MOVE_COOLDOWN;
@@ -149,6 +149,10 @@ void updatePlayer(u16 time)
         {
             SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
         }
+    }
+    if (player.hp <= 0)
+    {
+        game_state = GAME_STATE_OVER;
     }
 }
 

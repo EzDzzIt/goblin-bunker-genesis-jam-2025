@@ -72,12 +72,13 @@ int main()
 					VDP_clearTileMap(BG_A, 0, 200, TRUE);
 					// VDP_clearTileMap(BG_B, 0, 200, TRUE);
 					VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
-					VDP_drawBitmapEx(BG_A, &title_screen, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 0, 0, FALSE);
 					// load title screen 1 into vram and display
 					PAL_setPalette(PAL0, palette_1.data, DMA);
 					PAL_setPalette(PAL1, palette_1.data, DMA);
 					PAL_setPalette(PAL2, palette_1.data, DMA);
 					PAL_setPalette(PAL3, palette_3.data, DMA);
+					VDP_drawBitmapEx(BG_A, &title_screen, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 0, 0, FALSE);
+
 					// VDP_setTextPriority(1);
 					// VDP_drawText("PRESS START TO PLAY", 10 + 9, 9 + 12);
 				}
@@ -96,7 +97,7 @@ int main()
 					global_counter = 2;
 					// VDP_drawBitmapEx(BG_A, &title_screen, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 0, 0, FALSE);
 				}
-						}
+			}
 			else if (title_counter == 2)
 			{ // game start!
 				game_state = GAME_STATE_GAME;

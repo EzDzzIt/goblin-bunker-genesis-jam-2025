@@ -26,26 +26,33 @@ struct enemyData initEnemy(u8 x, u8 y)
 void deinitEnemy(u8 i)
 {
     enemy_array[i].data.active = false;
-    SPR_releaseSprite(enemy_array[i].data.sprite);
+    // SPR_releaseSprite(enemy_array[i].data.sprite);
 }
 
 // bullet stuff
 
 struct bulletData bullet_array[5];
 
-struct bulletData initBullet(u8 x, u8 y, f16 x_velocity, f16 y_velocity)
+void initBullet(u8 x, u8 y, f16 x_velocity, f16 y_velocity)
 {
 
     struct bulletData bul;
-
     bul.data.sprite = SPR_addSprite(&bullet_sprite, x, y, TILE_ATTR(PAL2, 0, FALSE, FALSE));
     bul.data.x = x;
     bul.data.y = y;
     bul.data.active = true;
     bul.velocity.x = x_velocity;
     bul.velocity.y = y_velocity;
-
     SPR_setAnim(bul.data.sprite, 0);
+    u8 i = 0;
+    for (i = 0; i < 5; i++)
+    {
+        if (!bullet_array[i].data.active)
+        {
+            bullet_array[i] = bul;
+            break;
+        }
+    }
 
-    return bul;
+    // return bul;
 }

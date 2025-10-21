@@ -30,4 +30,4 @@ struct bulletData
 
 extern struct bulletData bullet_array[];
 
-struct bulletData initBullet(u8 x, u8 y, f16 x_velocity, f16 y_velocity);
+void initBullet(u8 x, u8 y, f16 x_velocity, f16 y_velocity);

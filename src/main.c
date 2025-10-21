@@ -23,14 +23,34 @@ int main()
 
 		if (game_state == GAME_STATE_GAME)
 		{
-			updatePlayer();
-			updateGame(global_counter);
-			SPR_update();
-			// debug
-			debug_player_info_print();
-			display_stats();
+			if (global_counter == 1)
+			{
+				VDP_clearTileMap(BG_A, 0, 200, TRUE);
+				// VDP_clearTileMap(BG_B, 0, 200, TRUE);
+				VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
+				// load title screen 1 into vram and display
+				PAL_setPalette(PAL0, palette_1.data, DMA);
+				PAL_setPalette(PAL1, palette_1.data, DMA);
+				PAL_setPalette(PAL2, palette_1.data, DMA);
+				PAL_setPalette(PAL3, palette_3.data, DMA);
+				initPlayer();
+				initLevel(0);
+			}
+			else
+			{
+				updatePlayer();
+				updateGame(global_counter);
+				SPR_update();
+				// debug
+				debug_player_info_print();
+				display_stats();
 
-			SYS_doVBlankProcess();
+				SYS_doVBlankProcess();
+			}
+			if (global_counter >= 20000)
+			{
+				global_counter = 2;
+			}
 		}
 		else if (game_state == GAME_STATE_PAUSE)
 		{
@@ -103,8 +123,7 @@ int main()
 				game_state = GAME_STATE_GAME;
 				XGM2_fadeOutAndStop(3);
 				VDP_setTextPalette(PAL3);
-				initPlayer();
-				initLevel(0);
+				global_counter = 0;
 			}
 			SYS_doVBlankProcess();
 		}

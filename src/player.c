@@ -6,13 +6,20 @@
 
 struct playerData player;
 
+void debug_player_info_print()
+{
+    char buffer[16];
+    sprintf(buffer, "%d", player.hp);
+    VDP_drawText(buffer, 0, 0);
+}
+
 void initPlayer()
 {
     player.sprite = SPR_addSprite(&player_sprite, SCREEN_X_OFFSET, SCREEN_Y_OFFSET, TILE_ATTR(PAL0, 0, FALSE, FALSE));
     player.speed = 1.8;
     player.x = SCREEN_X_OFFSET;
     player.y = SCREEN_Y_OFFSET;
-    // player.last_input = 0x0000; // continuous pressed down
+    player.hp = 10;
     SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
 }
 
@@ -61,23 +68,31 @@ void updatePlayer(u16 time)
             }
         }
     }
-    // cycle through stuff that hurts u
-    for (i = 0; i < 5; i++)
+    // cycle through stuff that hurts u, only if you are not invincible
+    if (player.hurt_cooldown <= 0)
     {
-        if (enemy_array[i].data.active)
+        for (i = 0; i < 5; i++)
         {
-            if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, enemy_array[i].data.x, enemy_array[i].data.y, enemy_array[i].width, enemy_array[i].height))
+            if (enemy_array[i].data.active)
             {
-                hurt = true;
+                if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, enemy_array[i].data.x, enemy_array[i].data.y, enemy_array[i].width, enemy_array[i].height))
+                {
+                    player.hurt_cooldown = PLAYER_HURT_COOLDOWN;
+                    player.hp -= 1;
+                }
+            }
+            if (bullet_array[i].data.active)
+            {
+                if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, bullet_array[i].data.x, bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT))
+                {
+                    player.hurt_cooldown = PLAYER_HURT_COOLDOWN;
+                    player.hp -= 1;
+                }
             }
         }
-        if (bullet_array[i].data.active)
+        if (player.hurt_cooldown > 0)
         {
-            if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, bullet_array[i].data.x, bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT))
-            {
-                hurt = true;
-                SPR_reset();
-            }
+            SPR_setAnim(player.sprite, PLAYER_ANIM_HURT);
         }
     }
 
@@ -86,7 +101,7 @@ void updatePlayer(u16 time)
         u8 teleport_correction = 0;
         if (player.last_input == BUTTON_A)
         {
-            teleport_correction = 3;
+            teleport_correction = PLAYER_TELEPORT_CORRECTION;
         }
         if (player.velocity.x > 0)
         {
@@ -105,7 +120,7 @@ void updatePlayer(u16 time)
             player.y -= player.velocity.y - 1 - teleport_correction;
         }
 
-        player.move_cooldown = 5;
+        player.move_cooldown = PLAYER_MOVE_COOLDOWN;
         player.velocity.y = 0;
         player.velocity.x = 0;
     }
@@ -115,10 +130,10 @@ void updatePlayer(u16 time)
     SPR_setHFlip(player.sprite, player.hflip);
 
     // update timers
-    if (player.jump_cooldown > 0)
+    if (player.warp_cooldown > 0)
     {
-        player.jump_cooldown -= 1;
-        if (player.jump_cooldown == 60)
+        player.warp_cooldown -= 1;
+        if (player.warp_cooldown == 60)
         {
             SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
         }
@@ -126,6 +141,14 @@ void updatePlayer(u16 time)
     if (player.move_cooldown > 0)
     {
         player.move_cooldown -= 1;
+    }
+    if (player.hurt_cooldown > 0)
+    {
+        player.hurt_cooldown -= 1;
+        if (player.hurt_cooldown == 25)
+        {
+            SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
+        }
     }
 }
 
@@ -149,40 +172,40 @@ void checkInput()
         player.last_input = 0;
         if (player.move_cooldown <= 0)
         {
-            if (state & BUTTON_A && player.jump_cooldown <= 0)
+            if (state & BUTTON_A && player.warp_cooldown <= 0)
             {
 
                 if (state & BUTTON_LEFT)
                 {
-                    player.velocity.x -= (player.speed + 3); // keep momentum
-                    // player.x -= 24;                    // jump 24 px
-                    player.jump_cooldown = 120; // cooldown
+                    player.velocity.x -= (player.speed + 2); // keep momentum
+                    // player.x -= 24;                    // warp 24 px
+                    player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
                     player.hflip = true;
                     SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
                     player.last_input = BUTTON_A;
                 }
                 if (state & BUTTON_RIGHT)
                 {
-                    player.velocity.x += (player.speed + 3);
-                    // player.x += 24;                    // jump 24 px
-                    player.jump_cooldown = 120; // cooldown
+                    player.velocity.x += (player.speed + 2);
+                    // player.x += 24;                    // warp 24 px
+                    player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
                     player.hflip = false;
                     SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
                     player.last_input = BUTTON_A;
                 }
                 if (state & BUTTON_UP)
                 {
-                    player.velocity.y -= (player.speed + 3);
+                    player.velocity.y -= (player.speed + 2);
                     // player.y -= 24;
-                    player.jump_cooldown = 120; // cooldown
+                    player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
                     SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
                     player.last_input = BUTTON_A;
                 }
                 if (state & BUTTON_DOWN)
                 {
-                    player.velocity.y += (player.speed + 3);
+                    player.velocity.y += (player.speed + 2);
                     // player.y += 24;
-                    player.jump_cooldown = 120; // cooldown
+                    player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
                     SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
                     player.last_input = BUTTON_A;
                 }

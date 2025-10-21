@@ -4,8 +4,15 @@
 
 #define PLAYER_ANIM_IDLE 0
 #define PLAYER_ANIM_TELEPORT 1
+#define PLAYER_ANIM_HURT 2
+
 #define PLAYER_HEIGHT 2 * 8 // px
 #define PLAYER_WIDTH 8      // px
+
+#define PLAYER_HURT_COOLDOWN 50      // frames
+#define PLAYER_MOVE_COOLDOWN 5       // frames
+#define PLAYER_WARP_COOLDOWN 120     // frames
+#define PLAYER_TELEPORT_CORRECTION 3 // px
 
 struct playerData
 {
@@ -16,10 +23,13 @@ struct playerData
     fix16 speed;
     u16 last_input;
     Vect2D_f16 velocity;
-    u8 jump_cooldown;
-    u8 move_cooldown;
+    s8 warp_cooldown;
+    s8 move_cooldown;
+    s8 hurt_cooldown;
+    s8 hp;
 };
 
+void debug_player_info_print();
 void initPlayer();
 void updatePlayer(u16 time);
 void checkInput();

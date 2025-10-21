@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "globals.h": "c",
-        "genesis.h": "c"
+        "genesis.h": "c",
+        "player.h": "c"
     }
 }

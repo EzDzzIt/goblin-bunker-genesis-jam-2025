@@ -16,9 +16,9 @@ int main()
 	JOY_init();
 	JOY_setEventHandler(inGameJoyEvent);
 
-	PAL_setPalette(PAL0, palette_0.data, DMA);
+	PAL_setPalette(PAL0, palette_1.data, DMA);
 	PAL_setPalette(PAL1, palette_1.data, DMA);
-	PAL_setPalette(PAL2, palette_2.data, DMA);
+	PAL_setPalette(PAL2, palette_1.data, DMA);
 	PAL_setPalette(PAL3, palette_3.data, DMA);
 
 	VDP_setTextPalette(PAL3);
@@ -41,10 +41,10 @@ int main()
 			updatePlayer(global_counter);
 			updateGame(global_counter);
 			SPR_update();
-			// char buffer[16];
-			// sprintf(buffer, "%d", global_counter);
-			// VDP_drawText(buffer, 0, 0);
-			display_stats();
+
+			debug_player_info_print();
+
+			// display_stats();
 			SYS_doVBlankProcess();
 		}
 		else if (game_state == GAME_STATE_PAUSE)

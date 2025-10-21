@@ -43,7 +43,7 @@ int main()
 		// char buffer[16];
 		// sprintf(buffer, "%d", global_counter);
 		// VDP_drawText(buffer, 0, 0);
-		// display_stats();
+		display_stats();
 		SYS_doVBlankProcess();
 	}
 

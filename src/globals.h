@@ -12,6 +12,7 @@ enum game_state_enum
 {
     GAME_STATE_TITLE,
     GAME_STATE_GAME,
+    GAME_STATE_TRANSITION,
     GAME_STATE_OVER,
     GAME_STATE_WIN,
     GAME_STATE_PAUSE
@@ -28,4 +29,4 @@ typedef struct
 
 extern InputType input;
 
-extern bool collision_check(f16 x, f16 y, int width, int height, f16 x2, f16 y2, int width2, int height2);
+extern bool collision_check(f16 x, f16 y, u8 width, u8 height, f16 x2, f16 y2, u8 width2, u8 height2);

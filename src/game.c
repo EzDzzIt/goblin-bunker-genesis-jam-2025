@@ -57,24 +57,22 @@ void updateGame(u16 time)
     }
     else if (time == 300)
     {
-        SPR_releaseSprite(door_array[1].data.sprite);
-        SPR_releaseSprite(door_array[1].beastmode_sprite);
 
-        enemy_array[1] = initEnemy(100 + SCREEN_X_OFFSET, 50 + SCREEN_Y_OFFSET);
+        enemy_array[0] = initEnemy(100 + SCREEN_X_OFFSET, 50 + SCREEN_Y_OFFSET);
     }
     else if (time == 400)
     {
-        SPR_releaseSprite(door_array[0].data.sprite);
-        SPR_releaseSprite(door_array[0].beastmode_sprite);
-        SPR_defragVRAM();
+        // SPR_releaseSprite(door_array[0].data.sprite);
+        // SPR_releaseSprite(door_array[0].beastmode_sprite);
+        // SPR_defragVRAM();
         // SPR_reset(); // clears all sprites
     }
     else if (time == 500)
     {
-        door_array[0] = initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+        // door_array[0] = initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
     }
     else if (time == 600)
     {
-        door_array[1] = initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+        // door_array[1] = initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
     }
 }

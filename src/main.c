@@ -27,24 +27,71 @@ int main()
 
 	// initialize some global vars
 	u16 global_counter = 0;
+	// track which title screen to show
+	u8 title_counter = 0;
+	enum game_state_enum game_state = GAME_STATE_GAME;
 	initPlayer();
 	initLevel(0);
 
 	while (TRUE)
 	{
-		// if (game_state == GAME_STATE_TITLE)
-		// {
-
-		// }
-		global_counter += 1;
-		updatePlayer(global_counter);
-		updateGame(global_counter);
-		SPR_update();
-		// char buffer[16];
-		// sprintf(buffer, "%d", global_counter);
-		// VDP_drawText(buffer, 0, 0);
-		display_stats();
-		SYS_doVBlankProcess();
+		if (game_state == GAME_STATE_GAME)
+		{
+			global_counter += 1;
+			updatePlayer(global_counter);
+			updateGame(global_counter);
+			SPR_update();
+			// char buffer[16];
+			// sprintf(buffer, "%d", global_counter);
+			// VDP_drawText(buffer, 0, 0);
+			display_stats();
+			SYS_doVBlankProcess();
+		}
+		else if (game_state == GAME_STATE_PAUSE)
+		{
+			SYS_doVBlankProcess();
+		}
+		else if (game_state == GAME_STATE_TRANSITION)
+		{
+			SYS_doVBlankProcess();
+		}
+		else if (game_state == GAME_STATE_TITLE)
+		{
+			global_counter += 1;
+			if (title_counter == 0)
+			{
+				if (global_counter >= 180)
+				{
+					title_counter += 1;
+					global_counter = 0; // reset this to 0 to time the next section
+				}
+				else if (global_counter == 1)
+				{
+					// load title screen 0 into vram and display
+				}
+			}
+			else if (title_counter == 1)
+			{
+				if (global_counter >= 60 * 15)
+				{ // wait for 15 seconds, then reset
+					title_counter = 0;
+					global_counter = 0;
+				}
+				else if (global_counter == 1)
+				{
+					// load title screen 1 into vram and display
+				}
+			}
+			SYS_doVBlankProcess();
+		}
+		else if (game_state == GAME_STATE_OVER)
+		{
+			SYS_doVBlankProcess();
+		}
+		else if (game_state == GAME_STATE_WIN)
+		{
+			SYS_doVBlankProcess();
+		}
 	}
 
 	return 0;

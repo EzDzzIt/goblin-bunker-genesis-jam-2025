@@ -14,6 +14,8 @@ struct enemyData initEnemy(u8 x, u8 y)
     en.data.sprite = SPR_addSprite(&demon_sprite, x, y, TILE_ATTR(PAL2, 0, FALSE, FALSE));
     en.data.x = x;
     en.data.y = y;
+    en.width = 8;
+    en.height = 16;
     en.data.active = true;
 
     SPR_setAnim(en.data.sprite, 0);

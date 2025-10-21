@@ -8,6 +8,8 @@
 struct enemyData
 {
     struct objectData data;
+    u8 width;
+    u8 height;
 };
 
 extern struct enemyData enemy_array[];
@@ -16,6 +18,9 @@ struct enemyData initEnemy(u8 x, u8 y);
 void deinitEnemy(u8 i);
 
 // bullet stuff
+
+#define BULLET_WIDTH 8
+#define BULLET_HEIGHT 8
 
 struct bulletData
 {

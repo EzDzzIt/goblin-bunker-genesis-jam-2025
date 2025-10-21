@@ -23,12 +23,17 @@ void initPlayer()
     SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
 }
 
-void updatePlayer(u16 time)
+void updatePlayer()
 {
     // checkInput();
     // apply velocity
     // check collide
-
+    // is the player dead?
+    if (player.hp <= 0)
+    {
+        game_state = GAME_STATE_OVER;
+        global_counter = 0;
+    }
     player.x += player.velocity.x;
     player.y += player.velocity.y;
 

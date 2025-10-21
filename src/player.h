@@ -31,5 +31,5 @@ struct playerData
 
 void debug_player_info_print();
 void initPlayer();
-void updatePlayer(u16 time);
+void updatePlayer();
 void checkInput();

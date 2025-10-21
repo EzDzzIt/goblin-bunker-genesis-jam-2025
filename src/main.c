@@ -23,13 +23,13 @@ int main()
 
 		if (game_state == GAME_STATE_GAME)
 		{
-			updatePlayer(global_counter);
+			updatePlayer();
 			updateGame(global_counter);
 			SPR_update();
-
+			// debug
 			debug_player_info_print();
-
 			display_stats();
+
 			SYS_doVBlankProcess();
 		}
 		else if (game_state == GAME_STATE_PAUSE)
@@ -110,6 +110,20 @@ int main()
 		}
 		else if (game_state == GAME_STATE_OVER)
 		{
+			if (global_counter != 1)
+			{
+				// loop for now
+				game_state = GAME_STATE_TITLE;
+				title_counter = 0;
+				title_skip = false;
+				// start by cleaning up old level memory
+				VDP_clearTileMap(BG_A, 0, 200, TRUE);
+				// VDP_clearTileMap(BG_B, 0, 200, TRUE);
+				VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
+				SPR_defragVRAM();
+				SPR_reset();
+				// SPR_end();
+			}
 			SYS_doVBlankProcess();
 		}
 		else if (game_state == GAME_STATE_WIN)

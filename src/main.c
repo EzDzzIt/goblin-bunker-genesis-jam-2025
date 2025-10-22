@@ -15,7 +15,7 @@ int main()
 	SPR_init();
 	JOY_init();
 	JOY_setEventHandler(inGameJoyEvent);
-	VDP_setTextPalette(PAL3);
+	VDP_setTextPalette(PAL1);
 	VDP_setBackgroundColor(5); // change this per level?
 
 	while (TRUE)

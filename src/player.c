@@ -62,11 +62,11 @@ void updatePlayer()
     bool collided = false;
     bool hurt = false;
     // cycle through stuff for things that stop movement
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < MAX_DOORS; i++)
     {
         if (door_array[i].data.active)
         {
-            if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, door_array[i].data.x + 1, door_array[i].data.y + 3, DOOR_WIDTH - 4, DOOR_HEIGHT - 4))
+            if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, door_array[i].data.x + 1, door_array[i].data.y + 3, DOOR_WIDTH - 4, DOOR_HEIGHT - 8))
             {
                 collided = true;
                 break;
@@ -86,18 +86,23 @@ void updatePlayer()
                     player.hp -= 1;
                 }
             }
+        }
+        for (i = 0; i < MAX_BULLETS; i++)
+        {
             if (bullet_array[i].data.active)
             {
-                if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, bullet_array[i].data.x, bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT))
+                if (collision_check(player.x + 2, player.y + 1, PLAYER_WIDTH - 4, PLAYER_HEIGHT - 6, bullet_array[i].data.x + 1, bullet_array[i].data.y + 1, BULLET_WIDTH - 2, BULLET_HEIGHT - 2))
                 {
                     player.hurt_cooldown = PLAYER_HURT_COOLDOWN;
                     player.hp -= 1;
                 }
             }
         }
+
         if (player.hurt_cooldown > 0)
         {
             SPR_setAnim(player.sprite, PLAYER_ANIM_HURT);
+            SPR_setPalette(player.sprite, PAL3);
         }
     }
 
@@ -156,6 +161,7 @@ void updatePlayer()
         if (player.hurt_cooldown == 25)
         {
             SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
+            SPR_setPalette(player.sprite, PAL1);
         }
     }
     if (player.attack_cooldown > 0)
@@ -167,6 +173,7 @@ void updatePlayer()
         }
         player.attack_cooldown -= 1;
     }
+    // if nothing is in cooldown, make sure we are in idle
     if (!cooldown_flag)
     {
         SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);

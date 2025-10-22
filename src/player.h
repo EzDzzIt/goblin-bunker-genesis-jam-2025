@@ -32,6 +32,8 @@ struct playerData
     s8 hp;
 };
 
+extern struct playerData player;
+
 void debug_player_info_print();
 void initPlayer();
 void updatePlayer();

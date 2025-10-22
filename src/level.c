@@ -4,24 +4,30 @@
 
 // level objects
 
-struct doorData door_array[5];
+struct doorData door_array[MAX_DOORS];
 
-struct doorData initDoor(u8 x, u8 y)
+void initDoor(u8 x, u8 y)
 {
 
-    struct doorData door;
-
-    door.data.sprite = SPR_addSprite(&door_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
-    door.data.x = x;
-    door.data.y = y;
-    door.data.active = true;
-    door.beastmode = true;
-    door.beastmode_sprite = SPR_addSprite(&doorbeast_sprite, x + 8, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
-    door.beastmode_x = x + 8;
-    door.beastmode_y = y;
-
-    SPR_setAnim(door.data.sprite, DOOR_OPENING_ANIM);
-    return door;
+    u8 i = 0;
+    for (i = 0; i < MAX_DOORS; i++)
+    {
+        if (!door_array[i].data.active)
+        {
+            struct doorData door;
+            door.data.sprite = SPR_addSprite(&door_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+            door.data.x = x;
+            door.data.y = y;
+            door.data.active = true;
+            door.beastmode = true;
+            door.beastmode_sprite = SPR_addSprite(&doorbeast_sprite, x + 8, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+            door.beastmode_x = x + 8;
+            door.beastmode_y = y;
+            SPR_setAnim(door.data.sprite, DOOR_OPENING_ANIM);
+            door_array[i] = door;
+            break;
+        }
+    }
 }
 
 // level initializatin

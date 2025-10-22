@@ -2,6 +2,7 @@
 #include "globals.h"
 #include "resources.h"
 #include "enemy.h"
+#include "player.h"
 
 // game logic
 
@@ -9,7 +10,7 @@ void updateGame(u16 time)
 {
     u8 i = 0;
     // update doors
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < MAX_DOORS; i++)
     {
         if (door_array[i].data.active)
         {
@@ -27,6 +28,8 @@ void updateGame(u16 time)
         if (enemy_array[i].data.active)
         {
             // enemy ai
+            // enemy_array[i].data.x = player.x - 2;
+            // enemy_array[i].data.y = player.y - 2;
             SPR_setPosition(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
         }
     }
@@ -62,9 +65,9 @@ void updateGame(u16 time)
         }
     }
 
-    if (time % 2 == 0)
+    if (time % 60 == 0)
     {
-        SPR_defragVRAM();
+        // SPR_defragVRAM();
     }
 
     // spawn debug
@@ -73,7 +76,7 @@ void updateGame(u16 time)
     {
         // SPR_releaseSprite(door_array[4].data.sprite);
         // SPR_releaseSprite(door_array[4].beastmode_sprite);
-        door_array[0] = initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+        initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
         initBullet(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, 1);
         initBullet(32 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
         initBullet(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
@@ -84,7 +87,7 @@ void updateGame(u16 time)
     }
     else if (time == 200)
     {
-        door_array[1] = initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+        initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
     }
     else if (time == 300)
     {

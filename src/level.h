@@ -19,6 +19,7 @@ struct objectData
 #define DOOR_OPENING_ANIM 1
 #define DOOR_WIDTH 8
 #define DOOR_HEIGHT 16
+#define MAX_DOORS 12
 
 struct doorData
 {
@@ -30,7 +31,7 @@ struct doorData
     bool beastmode_hflip;
 };
 
-struct doorData initDoor(u8 x, u8 y);
+void initDoor(u8 x, u8 y);
 
 extern struct doorData door_array[];
 

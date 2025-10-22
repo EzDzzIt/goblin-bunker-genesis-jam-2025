@@ -31,24 +31,24 @@ void deinitEnemy(u8 i)
 
 // bullet stuff
 
-struct bulletData bullet_array[5];
+struct bulletData bullet_array[MAX_BULLETS];
 
 void initBullet(u8 x, u8 y, f16 x_velocity, f16 y_velocity)
 {
 
-    struct bulletData bul;
-    bul.data.sprite = SPR_addSprite(&bullet_sprite, x, y, TILE_ATTR(PAL2, 0, FALSE, FALSE));
-    bul.data.x = x;
-    bul.data.y = y;
-    bul.data.active = true;
-    bul.velocity.x = x_velocity;
-    bul.velocity.y = y_velocity;
-    SPR_setAnim(bul.data.sprite, 0);
     u8 i = 0;
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < MAX_BULLETS; i++)
     {
         if (!bullet_array[i].data.active)
         {
+            struct bulletData bul;
+            bul.data.sprite = SPR_addSprite(&bullet_sprite, x, y, TILE_ATTR(PAL2, 0, FALSE, FALSE));
+            bul.data.x = x;
+            bul.data.y = y;
+            bul.data.active = true;
+            bul.velocity.x = x_velocity;
+            bul.velocity.y = y_velocity;
+            SPR_setAnim(bul.data.sprite, 0);
             bullet_array[i] = bul;
             break;
         }

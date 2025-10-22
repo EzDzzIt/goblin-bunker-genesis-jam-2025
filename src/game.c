@@ -31,7 +31,7 @@ void updateGame(u16 time)
         }
     }
     // update bullets
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < MAX_BULLETS; i++)
     {
         if (bullet_array[i].data.active)
         {
@@ -62,6 +62,11 @@ void updateGame(u16 time)
         }
     }
 
+    if (time % 2 == 0)
+    {
+        SPR_defragVRAM();
+    }
+
     // spawn debug
 
     if (time == 100)
@@ -70,6 +75,12 @@ void updateGame(u16 time)
         // SPR_releaseSprite(door_array[4].beastmode_sprite);
         door_array[0] = initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
         initBullet(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, 1);
+        initBullet(32 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
+        initBullet(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
+        initBullet(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET, -1, 1);
+        initBullet(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET, 1, 1);
+        initBullet(128 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
+        initBullet(144 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
     }
     else if (time == 200)
     {
@@ -86,13 +97,47 @@ void updateGame(u16 time)
         // SPR_releaseSprite(door_array[0].beastmode_sprite);
         // SPR_defragVRAM();
         // SPR_reset(); // clears all sprites
+        initBullet(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, 1);
+        initBullet(32 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
+        initBullet(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
+        initBullet(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET, -1, 1);
+        initBullet(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET, 1, 1);
+        initBullet(128 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
+        initBullet(144 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
     }
     else if (time == 500)
     {
         // door_array[0] = initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+        initBullet(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, 1);
+        initBullet(32 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
+        initBullet(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
+        initBullet(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET, -1, 1);
+        initBullet(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET, 1, 1);
+        initBullet(128 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
+        initBullet(144 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
+        initBullet(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, 1);
+        initBullet(32 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
+        initBullet(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
+        initBullet(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET, -1, 1);
+        initBullet(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET, 1, 1);
+        initBullet(128 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
+        initBullet(144 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
     }
     else if (time == 600)
     {
-        // door_array[1] = initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+        initBullet(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, 1);
+        initBullet(32 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
+        initBullet(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
+        initBullet(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET, -1, 1);
+        initBullet(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET, 1, 1);
+        initBullet(128 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
+        initBullet(144 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
+        initBullet(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, 1);
+        initBullet(32 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
+        initBullet(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
+        initBullet(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET, -1, 1);
+        initBullet(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET, 1, 1);
+        initBullet(128 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
+        initBullet(144 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
     }
 }

@@ -21,6 +21,7 @@ void deinitEnemy(u8 i);
 
 #define BULLET_WIDTH 8
 #define BULLET_HEIGHT 8
+#define MAX_BULLETS 16
 
 struct bulletData
 {

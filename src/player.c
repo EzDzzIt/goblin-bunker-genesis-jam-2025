@@ -135,8 +135,10 @@ void updatePlayer()
     SPR_setHFlip(player.sprite, player.hflip);
 
     // update timers
+    bool cooldown_flag = false;
     if (player.warp_cooldown > 0)
     {
+        cooldown_flag = true;
         player.warp_cooldown -= 1;
         if (player.warp_cooldown == 60)
         {
@@ -149,12 +151,27 @@ void updatePlayer()
     }
     if (player.hurt_cooldown > 0)
     {
+        cooldown_flag = true;
         player.hurt_cooldown -= 1;
         if (player.hurt_cooldown == 25)
         {
             SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
         }
     }
+    if (player.attack_cooldown > 0)
+    {
+        cooldown_flag = true;
+        if (player.attack_cooldown == PLAYER_ATTACK_COOLDOWN)
+        {
+            SPR_setAnim(player.sprite, PLAYER_ANIM_SPELL);
+        }
+        player.attack_cooldown -= 1;
+    }
+    if (!cooldown_flag)
+    {
+        SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
+    }
+    // are we dead yet
     if (player.hp <= 0)
     {
         game_state = GAME_STATE_OVER;
@@ -183,7 +200,7 @@ void checkInput()
             player.last_input = 0;
             if (player.move_cooldown <= 0)
             {
-                if (state & BUTTON_A && player.warp_cooldown <= 0)
+                if ((state & BUTTON_A) && player.warp_cooldown <= 0)
                 {
 
                     if (state & BUTTON_LEFT)
@@ -245,6 +262,14 @@ void checkInput()
                         player.velocity.y += player.speed;
                         player.last_input = BUTTON_DOWN;
                     }
+                }
+            }
+            // check for attack
+            if (state & BUTTON_B)
+            {
+                if (player.attack_cooldown <= 0)
+                {
+                    player.attack_cooldown = PLAYER_ATTACK_COOLDOWN;
                 }
             }
         }

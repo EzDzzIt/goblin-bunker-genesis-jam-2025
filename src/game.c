@@ -69,48 +69,49 @@ void updateGame(u16 time)
             }
         }
     }
-    // for (i = 0; i < MAX_BULLETS; i++)
-    // {
-    //     if (player_bullet_array[i].data.active)
-    //     {
-    //         // bullet updates
-    //         player_bullet_array[i].data.x += player_bullet_array[i].velocity.x;
-    //         player_bullet_array[i].data.y += player_bullet_array[i].velocity.y;
-    //         SPR_setPosition(player_bullet_array[i].data.sprite, player_bullet_array[i].data.x, player_bullet_array[i].data.y);
-    //         for (i = 0; i < MAX_DOORS; i++)
-    //         {
-    //             if (door_array[i].data.active)
-    //             {
-    //                 if (collision_check(player_bullet_array[i].data.x, player_bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT, door_array[i].data.x, door_array[i].data.y, DOOR_WIDTH, DOOR_HEIGHT))
-    //                 {
-    //                     // SPR_setPalette(door_array[i].data.sprite, PAL3);
-    //                     break;
-    //                 }
-    //             }
-    //         }
+    for (i = 0; i < MAX_BULLETS; i++)
+    {
+        if (player_bullet_array[i].data.active)
+        {
+            // bullet updates
+            player_bullet_array[i].data.x += player_bullet_array[i].velocity.x;
+            player_bullet_array[i].data.y += player_bullet_array[i].velocity.y;
+            SPR_setPosition(player_bullet_array[i].data.sprite, player_bullet_array[i].data.x, player_bullet_array[i].data.y);
 
-    //         if (player_bullet_array[i].data.x >= SCREEN_X_END - BULLET_WIDTH)
-    //         {
-    //             SPR_releaseSprite(player_bullet_array[i].data.sprite);
-    //             player_bullet_array[i].data.active = false;
-    //         }
-    //         else if (player_bullet_array[i].data.x <= SCREEN_X_OFFSET)
-    //         {
-    //             SPR_releaseSprite(player_bullet_array[i].data.sprite);
-    //             player_bullet_array[i].data.active = false;
-    //         }
-    //         if (player_bullet_array[i].data.y >= SCREEN_Y_END - BULLET_HEIGHT)
-    //         {
-    //             SPR_releaseSprite(player_bullet_array[i].data.sprite);
-    //             player_bullet_array[i].data.active = false;
-    //         }
-    //         else if (player_bullet_array[i].data.y <= SCREEN_Y_OFFSET)
-    //         {
-    //             SPR_releaseSprite(player_bullet_array[i].data.sprite);
-    //             player_bullet_array[i].data.active = false;
-    //         }
-    //     }
-    // }
+            //         for (i = 0; i < MAX_DOORS; i++)
+            //         {
+            //             if (door_array[i].data.active)
+            //             {
+            //                 if (collision_check(player_bullet_array[i].data.x, player_bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT, door_array[i].data.x, door_array[i].data.y, DOOR_WIDTH, DOOR_HEIGHT))
+            //                 {
+            //                     // SPR_setPalette(door_array[i].data.sprite, PAL3);
+            //                     break;
+            //                 }
+            //             }
+            //         }
+
+            if (player_bullet_array[i].data.x >= SCREEN_X_END - BULLET_WIDTH)
+            {
+                SPR_releaseSprite(player_bullet_array[i].data.sprite);
+                player_bullet_array[i].data.active = false;
+            }
+            else if (player_bullet_array[i].data.x <= SCREEN_X_OFFSET)
+            {
+                SPR_releaseSprite(player_bullet_array[i].data.sprite);
+                player_bullet_array[i].data.active = false;
+            }
+            if (player_bullet_array[i].data.y >= SCREEN_Y_END - BULLET_HEIGHT)
+            {
+                SPR_releaseSprite(player_bullet_array[i].data.sprite);
+                player_bullet_array[i].data.active = false;
+            }
+            else if (player_bullet_array[i].data.y <= SCREEN_Y_OFFSET)
+            {
+                SPR_releaseSprite(player_bullet_array[i].data.sprite);
+                player_bullet_array[i].data.active = false;
+            }
+        }
+    }
 
     if (time % 60 == 0)
     {

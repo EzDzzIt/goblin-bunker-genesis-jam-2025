@@ -28,6 +28,17 @@ void player_info_print()
     {
         VDP_clearText(11, 21, 1);
     }
+    // attack spell
+    if (player.attack_cooldown <= 0)
+    {
+        // char warp_buffer[4];
+        // sprintf(warp_buffer, "%dHP", player.hp);
+        VDP_drawText("S", 12, 21);
+    }
+    else
+    {
+        VDP_clearText(12, 21, 1);
+    }
 }
 
 void initPlayer()
@@ -188,6 +199,18 @@ void updatePlayer()
         if (player.attack_cooldown == PLAYER_ATTACK_COOLDOWN)
         {
             SPR_setAnim(player.sprite, PLAYER_ANIM_SPELL);
+        }
+        else if (player.attack_cooldown == PLAYER_ATTACK_COOLDOWN - 10)
+        {
+            SPR_setFrame(player.sprite, 1);
+        }
+        else if (player.attack_cooldown == PLAYER_ATTACK_COOLDOWN - 20)
+        {
+            SPR_setFrame(player.sprite, 2);
+        }
+        else if (player.attack_cooldown == PLAYER_ATTACK_COOLDOWN - 60)
+        {
+            SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
         }
         player.attack_cooldown -= 1;
     }

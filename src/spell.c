@@ -9,7 +9,11 @@ void initSpell(u8 spell_type, fix16 x, fix16 y)
 {
     if (spell_type == SPELL_CROSS)
     {
+        initSacredGround(x + 4, y + 8);
         initPlayerBullet(x, y, 0, 1);
+        initPlayerBullet(x, y, 0, -1);
+        initPlayerBullet(x, y, -1, 0);
+        initPlayerBullet(x, y, 1, 0);
     }
 }
 
@@ -34,4 +38,8 @@ void initPlayerBullet(fix16 x, fix16 y, f16 x_velocity, f16 y_velocity)
             break;
         }
     }
+}
+
+void initSacredGround(fix16 x, fix16 y)
+{
 }

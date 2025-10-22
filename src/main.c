@@ -102,9 +102,10 @@ int main()
 					PAL_setPalette(PAL2, palette_1.data, DMA);
 					PAL_setPalette(PAL3, palette_3.data, DMA);
 					VDP_drawBitmapEx(BG_A, &title_screen, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 0, 0, FALSE);
-
-					// VDP_setTextPriority(1);
-					// VDP_drawText("PRESS START TO PLAY", 10 + 9, 9 + 12);
+				}
+				else if (global_counter == 2)
+				{
+					VDP_clearText(10, 7, 12);
 				}
 				if (title_skip)
 				{
@@ -116,10 +117,14 @@ int main()
 					title_counter = 2;
 					global_counter = 0; // reset this to 0 to time the next section
 				}
-				if (global_counter == 300)
+				if (global_counter == 62)
 				{
-					global_counter = 2;
-					// VDP_drawBitmapEx(BG_A, &title_screen, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 0, 0, FALSE);
+
+					VDP_drawText("PRESS START!", 10, 7);
+				}
+				else if (global_counter == 182)
+				{
+					global_counter = 1;
 				}
 			}
 			else if (title_counter == 2)
@@ -145,6 +150,7 @@ int main()
 			// VDP_clearTileMap(BG_B, 0, 200, TRUE);
 			VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
 			VDP_clearTileMapRect(BG_B, 0, 0, 32, 28);
+			VDP_clearSprites();
 			// XGM2_fadeOutAndStop(120);
 			XGM2_stop();
 			SPR_clear();

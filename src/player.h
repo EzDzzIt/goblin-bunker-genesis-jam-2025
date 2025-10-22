@@ -34,7 +34,7 @@ struct playerData
 
 extern struct playerData player;
 
-void debug_player_info_print();
+void player_info_print();
 void initPlayer();
 void updatePlayer();
 void checkInput();

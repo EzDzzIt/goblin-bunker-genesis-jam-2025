@@ -6,11 +6,15 @@
 
 struct playerData player;
 
-void debug_player_info_print()
+void player_info_print()
 {
-    char buffer[16];
-    sprintf(buffer, "%d", player.hp);
-    VDP_drawText(buffer, 0, 0);
+    // hp
+    char buffer[4];
+    sprintf(buffer, "%dHP", player.hp);
+    VDP_drawText(buffer, 7, 21);
+    char score_buffer[8];
+    sprintf(score_buffer, "SC: %d", score);
+    VDP_drawText(score_buffer, 7, 22);
 }
 
 void initPlayer()
@@ -48,10 +52,10 @@ void updatePlayer()
         player.x -= player.velocity.x;
         player.x = SCREEN_X_OFFSET;
     }
-    if (player.y >= SCREEN_Y_END - PLAYER_HEIGHT)
+    if (player.y >= SCREEN_Y_END - PLAYER_HEIGHT - 16) // adjust for bottom gb window layer
     {
         player.y -= player.velocity.y;
-        player.y = SCREEN_Y_END - PLAYER_HEIGHT;
+        player.y = SCREEN_Y_END - PLAYER_HEIGHT - 16; // adjust for bottom gb window layer
     }
     else if (player.y <= SCREEN_Y_OFFSET)
     {
@@ -66,7 +70,7 @@ void updatePlayer()
     {
         if (door_array[i].data.active)
         {
-            if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, door_array[i].data.x + 1, door_array[i].data.y + 3, DOOR_WIDTH - 4, DOOR_HEIGHT - 8))
+            if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, door_array[i].data.x + 2, door_array[i].data.y + 4, DOOR_WIDTH - 4, DOOR_HEIGHT - 12))
             {
                 collided = true;
                 break;
@@ -182,6 +186,7 @@ void updatePlayer()
     if (player.hp <= 0)
     {
         game_state = GAME_STATE_OVER;
+        global_counter = 0; // set this here to make logic easier
     }
 }
 

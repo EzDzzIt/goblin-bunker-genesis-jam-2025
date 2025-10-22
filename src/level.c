@@ -1,6 +1,7 @@
 #include "level.h"
 #include "globals.h"
 #include "resources.h"
+#include "player.h"
 
 // level objects
 
@@ -34,14 +35,13 @@ void initDoor(u8 x, u8 y)
 
 void initLevel(u8 id)
 {
-    // start by cleaning up old level memory
-    VDP_clearTileMap(BG_A, 0, 200, TRUE);
-    // VDP_clearTileMap(BG_B, 0, 200, TRUE);
-    VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
+    clear_graphics(FALSE);
 
     XGM2_setFMVolume(40); // debug
     XGM2_play(xgm2_level0);
     XGM2_fadeIn(150);
+
+    initPlayer();
 
     // load in new level data based on the level id parameter
     VDP_loadTileSet(&level_tileset, 0, DMA);

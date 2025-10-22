@@ -18,5 +18,6 @@ extern const TileSet border_tileset;
 extern const TileMap border_image;
 extern const Bitmap sgdk_logo_image;
 extern const Bitmap title_screen;
+extern const Bitmap over_screen;
 
 #endif // _RES_RESOURCES_H_

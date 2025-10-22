@@ -8,6 +8,11 @@
 
 void updateGame(u16 time)
 {
+
+    if (time % 60 == 0)
+    {
+        score += 1;
+    }
     u8 i = 0;
     // update doors
     for (i = 0; i < MAX_DOORS; i++)

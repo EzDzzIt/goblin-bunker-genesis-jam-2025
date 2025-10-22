@@ -34,5 +34,7 @@ extern enum game_state_enum game_state;
 extern u8 title_counter;
 extern u16 global_counter;
 extern bool title_skip;
+extern u16 score;
 
 extern bool collision_check(f16 x, f16 y, u8 width, u8 height, f16 x2, f16 y2, u8 width2, u8 height2);
+extern void clear_graphics(bool stop_music);

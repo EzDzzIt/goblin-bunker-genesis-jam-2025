@@ -10,6 +10,7 @@ enum game_state_enum game_state = GAME_STATE_TITLE;
 u8 title_counter = 0;
 u16 global_counter = 0;
 bool title_skip = false;
+u16 score = 0;
 
 bool collision_check(f16 x, f16 y, u8 w, u8 h, f16 x2, f16 y2, u8 w2, u8 h2)
 {
@@ -36,5 +37,24 @@ bool collision_check(f16 x, f16 y, u8 w, u8 h, f16 x2, f16 y2, u8 w2, u8 h2)
     else
     {
         return false;
+    }
+}
+
+void clear_graphics(bool stop_music)
+{
+    // start by cleaning up old level memory
+    VDP_clearTileMap(BG_A, 0, 400, TRUE);
+    VDP_clearTileMap(BG_B, 0, 400, TRUE);
+    // VDP_clearTileMap(BG_B, 0, 200, TRUE);
+    VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
+    VDP_clearTileMapRect(BG_B, 0, 0, 32, 28);
+    VDP_clearSprites();
+    SPR_clear();
+    SPR_reset();
+    SPR_defragVRAM();
+    if (stop_music)
+    {
+
+        XGM2_stop();
     }
 }

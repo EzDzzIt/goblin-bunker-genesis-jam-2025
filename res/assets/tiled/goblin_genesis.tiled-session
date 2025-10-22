@@ -13,7 +13,7 @@
             "scale": 4,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 211,
+                "x": 151.25,
                 "y": 163.5
             }
         },
@@ -46,8 +46,8 @@
     ],
     "project": "goblin_genesis.tiled-project",
     "recentFiles": [
-        "tileset0_testing.tsx",
         "level0.tmx",
+        "tileset0_testing.tsx",
         "tileset0.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",

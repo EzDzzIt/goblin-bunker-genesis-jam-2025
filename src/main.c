@@ -15,6 +15,7 @@ int main()
 	SPR_init();
 	JOY_init();
 	JOY_setEventHandler(inGameJoyEvent);
+	VDP_setTextPalette(PAL3);
 	VDP_setBackgroundColor(5); // change this per level?
 
 	while (TRUE)
@@ -80,8 +81,11 @@ int main()
 				{
 					// load title screen 0 into vram and display
 					// PAL_setPalette(PAL3, palette_3.data, DMA);
+					// SPR_init();
 					VDP_drawBitmapEx(BG_A, &sgdk_logo_image, TILE_ATTR_FULL(PAL3, 0, 0, 0, 1), 1, 3, FALSE);
+					XGM2_setFMVolume(100);
 					XGM2_play(xgm2_title);
+					XGM2_fadeIn(15);
 				}
 			}
 			else if (title_counter == 1)
@@ -121,28 +125,32 @@ int main()
 			else if (title_counter == 2)
 			{ // game start!
 				game_state = GAME_STATE_GAME;
-				XGM2_fadeOutAndStop(3);
-				VDP_setTextPalette(PAL3);
+				// XGM2_fadeOutAndStop(3);
+				XGM2_stop();
+
 				global_counter = 0;
 			}
 			SYS_doVBlankProcess();
 		}
 		else if (game_state == GAME_STATE_OVER)
 		{
-			if (global_counter != 1)
-			{
-				// loop for now
-				game_state = GAME_STATE_TITLE;
-				title_counter = 0;
-				title_skip = false;
-				// start by cleaning up old level memory
-				VDP_clearTileMap(BG_A, 0, 200, TRUE);
-				// VDP_clearTileMap(BG_B, 0, 200, TRUE);
-				VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
-				SPR_defragVRAM();
-				SPR_reset();
-				// SPR_end();
-			}
+
+			game_state = GAME_STATE_TITLE;
+			title_counter = 0;
+			global_counter = 0;
+			title_skip = false;
+			// start by cleaning up old level memory
+			VDP_clearTileMap(BG_A, 0, 400, TRUE);
+			VDP_clearTileMap(BG_B, 0, 400, TRUE);
+			// VDP_clearTileMap(BG_B, 0, 200, TRUE);
+			VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
+			VDP_clearTileMapRect(BG_B, 0, 0, 32, 28);
+			// XGM2_fadeOutAndStop(120);
+			XGM2_stop();
+			SPR_clear();
+			SPR_reset();
+			SPR_defragVRAM();
+			// SPR_end();
 			SYS_doVBlankProcess();
 		}
 		else if (game_state == GAME_STATE_WIN)

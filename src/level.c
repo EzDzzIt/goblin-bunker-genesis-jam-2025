@@ -38,6 +38,11 @@ void initLevel(u8 id)
     VDP_clearTileMap(BG_A, 0, 200, TRUE);
     // VDP_clearTileMap(BG_B, 0, 200, TRUE);
     VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
+
+    XGM2_setFMVolume(40); // debug
+    XGM2_play(xgm2_level0);
+    XGM2_fadeIn(150);
+
     // load in new level data based on the level id parameter
     VDP_loadTileSet(&level_tileset, 0, DMA);
     VDP_setTileMapEx(BG_A, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, 0, 0, 20, 18, DMA);

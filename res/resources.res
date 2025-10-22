@@ -14,3 +14,4 @@ TILEMAP border_image "assets/border.png" border_tileset
 BITMAP sgdk_logo_image "res_inc/image/sgdk_logo_2.png" FAST
 BITMAP title_screen "assets/title_screen.png" FAST
 XGM2 xgm2_title "assets/music/title.vgm"
+XGM2 xgm2_level0 "assets/music/level0.vgm"

@@ -2,6 +2,7 @@
 #define _RES_RESOURCES_H_
 
 extern const u8 xgm2_title[1024];
+extern const u8 xgm2_level0[1024];
 extern const Palette palette_0;
 extern const Palette palette_1;
 extern const Palette palette_2;

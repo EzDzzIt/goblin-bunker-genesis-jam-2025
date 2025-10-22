@@ -4,7 +4,8 @@
 
 InputType input;
 
-enum game_state_enum game_state = GAME_STATE_GAME;
+// enum game_state_enum game_state = GAME_STATE_GAME;
+enum game_state_enum game_state = GAME_STATE_TITLE;
 
 u8 title_counter = 0;
 u16 global_counter = 0;

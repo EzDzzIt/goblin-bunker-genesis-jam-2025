@@ -24,6 +24,7 @@ struct playerData
     bool hflip;
     fix16 speed;
     u16 last_input;
+
     Vect2D_f16 velocity;
     s8 warp_cooldown;
     s8 move_cooldown;

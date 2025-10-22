@@ -3,6 +3,7 @@
 #include "resources.h"
 #include "enemy.h"
 #include "player.h"
+#include "spell.h"
 
 // game logic
 
@@ -38,7 +39,7 @@ void updateGame(u16 time)
             SPR_setPosition(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
         }
     }
-    // update bullets
+    // update bullets and player projectiles
     for (i = 0; i < MAX_BULLETS; i++)
     {
         if (bullet_array[i].data.active)
@@ -66,6 +67,36 @@ void updateGame(u16 time)
             {
                 SPR_releaseSprite(bullet_array[i].data.sprite);
                 bullet_array[i].data.active = false;
+            }
+        }
+    }
+    for (i = 0; i < MAX_BULLETS; i++)
+    {
+        if (player_bullet_array[i].data.active)
+        {
+            // bullet updates
+            player_bullet_array[i].data.x += player_bullet_array[i].velocity.x;
+            player_bullet_array[i].data.y += player_bullet_array[i].velocity.y;
+            SPR_setPosition(player_bullet_array[i].data.sprite, player_bullet_array[i].data.x, player_bullet_array[i].data.y);
+            if (player_bullet_array[i].data.x >= SCREEN_X_END - BULLET_WIDTH)
+            {
+                SPR_releaseSprite(player_bullet_array[i].data.sprite);
+                player_bullet_array[i].data.active = false;
+            }
+            else if (player_bullet_array[i].data.x <= SCREEN_X_OFFSET)
+            {
+                SPR_releaseSprite(player_bullet_array[i].data.sprite);
+                player_bullet_array[i].data.active = false;
+            }
+            if (player_bullet_array[i].data.y >= SCREEN_Y_END - BULLET_HEIGHT)
+            {
+                SPR_releaseSprite(player_bullet_array[i].data.sprite);
+                player_bullet_array[i].data.active = false;
+            }
+            else if (player_bullet_array[i].data.y <= SCREEN_Y_OFFSET)
+            {
+                SPR_releaseSprite(player_bullet_array[i].data.sprite);
+                player_bullet_array[i].data.active = false;
             }
         }
     }

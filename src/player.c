@@ -3,6 +3,7 @@
 #include "resources.h"
 #include "level.h"
 #include "enemy.h"
+#include "spell.h"
 
 struct playerData player;
 
@@ -12,9 +13,21 @@ void player_info_print()
     char buffer[4];
     sprintf(buffer, "%dHP", player.hp);
     VDP_drawText(buffer, 7, 21);
+    // score
     char score_buffer[8];
     sprintf(score_buffer, "SC: %d", score);
     VDP_drawText(score_buffer, 7, 22);
+    // dash
+    if (player.warp_cooldown <= 0)
+    {
+        // char warp_buffer[4];
+        // sprintf(warp_buffer, "%dHP", player.hp);
+        VDP_drawText("W", 11, 21);
+    }
+    else
+    {
+        VDP_clearText(11, 21, 1);
+    }
 }
 
 void initPlayer()
@@ -38,6 +51,7 @@ void updatePlayer()
         game_state = GAME_STATE_OVER;
         global_counter = 0;
     }
+
     player.x += player.velocity.x;
     player.y += player.velocity.y;
 
@@ -276,12 +290,13 @@ void checkInput()
                     }
                 }
             }
-            // check for attack
+            // check for attack/spell
             if (state & BUTTON_B)
             {
                 if (player.attack_cooldown <= 0)
                 {
                     player.attack_cooldown = PLAYER_ATTACK_COOLDOWN;
+                    initSpell(SPELL_CROSS, player.x, player.y);
                 }
             }
         }

@@ -13,6 +13,7 @@ void updateGame(u16 time)
     if (time % 60 == 0)
     {
         score += 1;
+        SPR_defragVRAM();
     }
     u8 i = 0;
     // update doors
@@ -38,7 +39,7 @@ void updateGame(u16 time)
             SPR_setPosition(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
         }
     }
-    // update bullets and player projectiles
+    // update enemy bullets
     for (i = 0; i < MAX_BULLETS; i++)
     {
         if (bullet_array[i].data.active)
@@ -69,6 +70,8 @@ void updateGame(u16 time)
             }
         }
     }
+
+    // update player spells and projectiles
     for (i = 0; i < MAX_BULLETS; i++)
     {
         if (player_bullet_array[i].data.active)
@@ -77,45 +80,62 @@ void updateGame(u16 time)
             player_bullet_array[i].data.x += player_bullet_array[i].velocity.x;
             player_bullet_array[i].data.y += player_bullet_array[i].velocity.y;
             SPR_setPosition(player_bullet_array[i].data.sprite, player_bullet_array[i].data.x, player_bullet_array[i].data.y);
-
-            //         for (i = 0; i < MAX_DOORS; i++)
-            //         {
-            //             if (door_array[i].data.active)
-            //             {
-            //                 if (collision_check(player_bullet_array[i].data.x, player_bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT, door_array[i].data.x, door_array[i].data.y, DOOR_WIDTH, DOOR_HEIGHT))
-            //                 {
-            //                     // SPR_setPalette(door_array[i].data.sprite, PAL3);
-            //                     break;
-            //                 }
-            //             }
-            //         }
-
-            if (player_bullet_array[i].data.x >= SCREEN_X_END - BULLET_WIDTH)
+            bool collided = false;
+            u8 j = 0;
+            for (j = 0; j < MAX_DOORS; j++)
+            {
+                if (door_array[j].data.active)
+                {
+                    if (collision_check(player_bullet_array[i].data.x, player_bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
+                    {
+                        SPR_setPalette(door_array[j].data.sprite, PAL3);
+                        collided = true;
+                        break;
+                    }
+                }
+            }
+            if (collided)
             {
                 SPR_releaseSprite(player_bullet_array[i].data.sprite);
                 player_bullet_array[i].data.active = false;
             }
-            else if (player_bullet_array[i].data.x <= SCREEN_X_OFFSET)
+            else
             {
-                SPR_releaseSprite(player_bullet_array[i].data.sprite);
-                player_bullet_array[i].data.active = false;
-            }
-            if (player_bullet_array[i].data.y >= SCREEN_Y_END - BULLET_HEIGHT)
-            {
-                SPR_releaseSprite(player_bullet_array[i].data.sprite);
-                player_bullet_array[i].data.active = false;
-            }
-            else if (player_bullet_array[i].data.y <= SCREEN_Y_OFFSET)
-            {
-                SPR_releaseSprite(player_bullet_array[i].data.sprite);
-                player_bullet_array[i].data.active = false;
+                if (player_bullet_array[i].data.x >= SCREEN_X_END - BULLET_WIDTH)
+                {
+                    SPR_releaseSprite(player_bullet_array[i].data.sprite);
+                    player_bullet_array[i].data.active = false;
+                }
+                else if (player_bullet_array[i].data.x <= SCREEN_X_OFFSET)
+                {
+                    SPR_releaseSprite(player_bullet_array[i].data.sprite);
+                    player_bullet_array[i].data.active = false;
+                }
+                if (player_bullet_array[i].data.y >= SCREEN_Y_END - BULLET_HEIGHT)
+                {
+                    SPR_releaseSprite(player_bullet_array[i].data.sprite);
+                    player_bullet_array[i].data.active = false;
+                }
+                else if (player_bullet_array[i].data.y <= SCREEN_Y_OFFSET)
+                {
+                    SPR_releaseSprite(player_bullet_array[i].data.sprite);
+                    player_bullet_array[i].data.active = false;
+                }
             }
         }
     }
 
-    if (time % 60 == 0)
+    for (i = 0; i < 2; i++)
     {
-        // SPR_defragVRAM();
+        if (sacred_ground_array[i].lifetime > 0)
+        {
+            sacred_ground_array[i].lifetime -= 1;
+            if (sacred_ground_array[i].lifetime == 0)
+            {
+                sacred_ground_array[i].data.active = false;
+                SPR_releaseSprite(sacred_ground_array[i].data.sprite);
+            }
+        }
     }
 
     // spawn debug

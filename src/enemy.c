@@ -25,6 +25,7 @@ struct enemyData initEnemy(u8 x, u8 y)
             en.hp = 4;
             en.data.active = true;
             SPR_setAnim(en.data.sprite, 0);
+            SPR_setAlwaysOnTop(en.data.sprite);
             enemy_array[i] = en;
             break;
         }

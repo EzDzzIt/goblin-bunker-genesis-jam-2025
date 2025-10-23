@@ -13,7 +13,7 @@
 #define PLAYER_HURT_COOLDOWN 50      // frames
 #define PLAYER_MOVE_COOLDOWN 5       // frames
 #define PLAYER_WARP_COOLDOWN 120     // frames
-#define PLAYER_ATTACK_COOLDOWN 60    // frames
+#define PLAYER_ATTACK_COOLDOWN 30    // frames
 #define PLAYER_TELEPORT_CORRECTION 3 // px
 
 struct playerData

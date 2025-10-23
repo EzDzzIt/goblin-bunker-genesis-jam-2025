@@ -90,6 +90,10 @@ void updateLevel(u8 level)
         {
             levelObject.beastmode_chance = 10;
             levelObject.beastmode_time_limit = 200;
+            initDoor(96 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+            initDoor(96 + SCREEN_X_OFFSET, 96 + SCREEN_Y_OFFSET);
+            initDoor(96 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
+            initDoor(96 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
         }
     }
 }

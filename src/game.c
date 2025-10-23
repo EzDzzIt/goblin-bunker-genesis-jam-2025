@@ -25,16 +25,18 @@ void updateGame()
             if (door_array[i].beastmode)
             {
                 SPR_setPosition(door_array[i].beastmode_sprite, door_array[i].beastmode_x, door_array[i].beastmode_y);
+                door_array[i].beastmode_counter += 1;
+                if (door_array[i].beastmode_counter >= levelObject.beastmode_time_limit)
+                {
+                    toggleDoorBeastmode(i);
+                    SPR_setPalette(door_array[i].data.sprite, PAL3); // debug
+                }
             }
             else
             {
                 if ((random() % (1000 - 1 + 1)) + 1 <= levelObject.beastmode_chance)
                 {
-                    door_array[i].beastmode = true;
-                    door_array[i].beastmode_sprite = SPR_addSprite(&doorbeast_sprite, door_array[i].data.x + 8, door_array[i].data.y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
-                    door_array[i].beastmode_x = door_array[i].data.x + 8;
-                    door_array[i].beastmode_y = door_array[i].data.y;
-                    SPR_setAnim(door_array[i].data.sprite, DOOR_OPENING_ANIM);
+                    toggleDoorBeastmode(i);
                 }
             }
         }
@@ -166,10 +168,12 @@ void updateGame()
                 for (j = 0; j < MAX_DOORS; j++)
                 {
                     // collision check between sacred ground and doors needs slight mod to work
-                    if (collision_check(sacred_ground_array[i].data.x - 2, sacred_ground_array[i].data.y - 3, SACRED_GROUND_WIDTH + 2, SACRED_GROUND_HEIGHT + 3, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
+                    if (door_array[j].beastmode)
                     {
-                        SPR_setPalette(door_array[j].data.sprite, PAL3);
-                        // break;
+                        if (collision_check(sacred_ground_array[i].data.x - 2, sacred_ground_array[i].data.y - 3, SACRED_GROUND_WIDTH + 2, SACRED_GROUND_HEIGHT + 3, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
+                        {
+                            toggleDoorBeastmode(j);
+                        }
                     }
                 }
             }

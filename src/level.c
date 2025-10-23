@@ -32,6 +32,25 @@ void initDoor(u8 x, u8 y)
     }
 }
 
+void toggleDoorBeastmode(u8 index)
+{
+    if (!door_array[index].beastmode)
+    {
+        door_array[index].beastmode = true;
+        door_array[index].beastmode_sprite = SPR_addSprite(&doorbeast_sprite, door_array[index].data.x + 8, door_array[index].data.y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+        door_array[index].beastmode_x = door_array[index].data.x + 8;
+        door_array[index].beastmode_y = door_array[index].data.y;
+        SPR_setAnim(door_array[index].data.sprite, DOOR_OPENING_ANIM);
+    }
+    else
+    {
+        door_array[index].beastmode = false;
+        SPR_releaseSprite(door_array[index].beastmode_sprite);
+        SPR_setAnim(door_array[index].data.sprite, 0); // reset to static door
+        door_array[index].beastmode_counter = 0;
+    }
+}
+
 // level initializatin
 
 struct levelData levelObject;
@@ -60,7 +79,8 @@ void updateLevel(u8 level)
     {
         if (global_counter == 2) // 2 is the earliest global counter for spawning stuff
         {
-            levelObject.beastmode_chance = 2;
+            levelObject.beastmode_chance = 1;
+            levelObject.beastmode_time_limit = 300;
             initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
             initDoor(32 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
             initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);

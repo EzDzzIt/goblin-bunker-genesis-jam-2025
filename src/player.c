@@ -53,16 +53,6 @@ void initPlayer()
 
 void updatePlayer()
 {
-    // checkInput();
-    // apply velocity
-    // check collide
-    // is the player dead?
-    if (player.hp <= 0)
-    {
-        game_state = GAME_STATE_OVER;
-        global_counter = 0;
-    }
-
     player.x += player.velocity.x;
     player.y += player.velocity.y;
 
@@ -223,7 +213,7 @@ void updatePlayer()
     {
         SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
     }
-    // are we dead yet
+    // // are we dead yet
     if (player.hp <= 0)
     {
         game_state = GAME_STATE_OVER;
@@ -327,7 +317,7 @@ void checkInput()
                 }
             }
         }
-        else if (game_state == GAME_STATE_TITLE)
+        else if (game_state == GAME_STATE_TITLE || game_state == GAME_STATE_OVER)
         {
             if (state & BUTTON_START && !title_skip)
             {

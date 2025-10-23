@@ -24,6 +24,10 @@ int main(bool resetType)
 
 		if (game_state == GAME_STATE_GAME)
 		{
+			if (global_counter >= 20000)
+			{
+				global_counter = 2;
+			}
 			if (global_counter == 1)
 			{
 				reset_globals();
@@ -38,13 +42,8 @@ int main(bool resetType)
 				// debug PRINTING TEXT TO WINDOW
 				player_info_print();
 				display_stats();
-
-				SYS_doVBlankProcess();
 			}
-			if (global_counter >= 20000)
-			{
-				global_counter = 2;
-			}
+			SYS_doVBlankProcess();
 		}
 		else if (game_state == GAME_STATE_PAUSE)
 		{
@@ -74,7 +73,7 @@ int main(bool resetType)
 					SPR_init();
 					JOY_init();
 					JOY_setEventHandler(inGameJoyEvent);
-					PAL_setPalette(PAL0, palette_1.data, DMA);
+					PAL_setPalette(PAL0, palette_0.data, DMA);
 					PAL_setPalette(PAL1, palette_1.data, DMA);
 					PAL_setPalette(PAL2, palette_2.data, DMA);
 					PAL_setPalette(PAL3, palette_3.data, DMA);
@@ -129,12 +128,16 @@ int main(bool resetType)
 		}
 		else if (game_state == GAME_STATE_OVER)
 		{
+			if (title_skip)
+			{
+				global_counter = 600; // skip to reset
+			}
 
 			if (global_counter == 1)
 			{
+				clear_graphics(TRUE);
 				title_counter = 0; // make sure this is reset
 				title_skip = false;
-				clear_graphics(TRUE);
 				VDP_drawBitmapEx(BG_A, &over_screen, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 0, 0, FALSE);
 			}
 			else if (global_counter < 540)
@@ -147,6 +150,7 @@ int main(bool resetType)
 			{
 				global_counter = 0;
 				game_state = GAME_STATE_TITLE;
+				title_skip = false;
 				clear_graphics(TRUE);
 				SPR_end();
 				SYS_hardReset();

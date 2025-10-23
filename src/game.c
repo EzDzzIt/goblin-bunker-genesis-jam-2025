@@ -10,11 +10,12 @@
 void updateGame()
 {
 
-    if (global_counter % 60 == 0)
+    if (global_counter % 120 == 0)
     {
         // score += 1;
         SPR_defragVRAM();
     }
+
     u8 i = 0;
     // update doors
     for (i = 0; i < MAX_DOORS; i++)

@@ -51,7 +51,7 @@ void initSacredGround(fix16 x, fix16 y)
         if (!sacred_ground_array[i].data.active)
         {
             struct spellData spell;
-            spell.data.sprite = SPR_addSprite(&sacred_ground_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+            spell.data.sprite = SPR_addSprite(&sacred_ground_sprite, x, y, TILE_ATTR(PAL0, 0, FALSE, FALSE));
             SPR_setAlwaysAtBottom(spell.data.sprite);
             spell.data.x = x;
             spell.data.y = y;

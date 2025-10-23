@@ -4,7 +4,7 @@
 #include "resources.h"
 #include "enemy.h"
 
-struct enemyData enemy_array[5];
+struct enemyData enemy_array[MAX_ENEMIES];
 
 struct enemyData initEnemy(u8 x, u8 y)
 {

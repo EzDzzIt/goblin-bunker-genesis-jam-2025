@@ -9,7 +9,7 @@ SPRITE demon_sprite "assets/demon.png" 1 2 FAST 10
 SPRITE bullet_sprite "assets/bullet.png" 1 1 FAST 10
 SPRITE sacred_ground_sprite "assets/sacred_ground.png" 2 2 FAST 5
 TILESET level_tileset "assets/tileset.png" FAST NONE 
-TILEMAP level_map "assets/tiled/level0_small.tmx" "Tile Layer 1" FAST FAST  0
+TILEMAP level_map "assets/tiled/level0_big.tmx" "Tile Layer 1" FAST FAST  0
 TILESET border_tileset "assets/border.png" FAST ALL
 TILEMAP border_image "assets/border.png" border_tileset
 BITMAP sgdk_logo_image "res_inc/image/sgdk_logo_2.png" FAST

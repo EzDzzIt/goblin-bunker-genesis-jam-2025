@@ -29,7 +29,7 @@ void updateGame(u16 time)
         }
     }
     // update enemies
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < MAX_ENEMIES; i++)
     {
         if (enemy_array[i].data.active)
         {
@@ -72,6 +72,7 @@ void updateGame(u16 time)
     }
 
     // update player spells and projectiles
+
     for (i = 0; i < MAX_BULLETS; i++)
     {
         if (player_bullet_array[i].data.active)
@@ -82,13 +83,25 @@ void updateGame(u16 time)
             SPR_setPosition(player_bullet_array[i].data.sprite, player_bullet_array[i].data.x, player_bullet_array[i].data.y);
             bool collided = false;
             u8 j = 0;
-            for (j = 0; j < MAX_DOORS; j++)
+            // for (j = 0; j < MAX_DOORS; j++)
+            // {
+            //     if (door_array[j].data.active)
+            //     {
+            //         if (collision_check(player_bullet_array[i].data.x, player_bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
+            //         {
+            //             SPR_setPalette(door_array[j].data.sprite, PAL3);
+            //             collided = true;
+            //             break;
+            //         }
+            //     }
+            // }
+            for (j = 0; j < MAX_ENEMIES; j++)
             {
-                if (door_array[j].data.active)
+                if (enemy_array[j].data.active)
                 {
-                    if (collision_check(player_bullet_array[i].data.x, player_bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
+                    if (collision_check(player_bullet_array[i].data.x, player_bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT, enemy_array[j].data.x, enemy_array[j].data.y, enemy_array[j].width, enemy_array[j].height))
                     {
-                        SPR_setPalette(door_array[j].data.sprite, PAL3);
+                        SPR_setPalette(enemy_array[j].data.sprite, PAL3);
                         collided = true;
                         break;
                     }
@@ -124,7 +137,7 @@ void updateGame(u16 time)
             }
         }
     }
-
+    // sacred ground
     for (i = 0; i < 2; i++)
     {
         if (sacred_ground_array[i].lifetime > 0)
@@ -134,6 +147,19 @@ void updateGame(u16 time)
             {
                 sacred_ground_array[i].data.active = false;
                 SPR_releaseSprite(sacred_ground_array[i].data.sprite);
+                continue;
+            }
+            if (sacred_ground_array[i].data.active)
+            {
+                u8 j = 0;
+                for (j = 0; j < MAX_DOORS; j++)
+                {
+                    if (collision_check(sacred_ground_array[i].data.x, sacred_ground_array[i].data.y, SACRED_GROUND_WIDTH, SACRED_GROUND_HEIGHT, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
+                    {
+                        SPR_setPalette(door_array[j].data.sprite, PAL3);
+                        break;
+                    }
+                }
             }
         }
     }

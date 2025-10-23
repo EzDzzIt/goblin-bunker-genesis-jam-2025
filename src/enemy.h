@@ -5,6 +5,8 @@
 
 // enemy stuff
 
+#define MAX_ENEMIES 10
+
 struct enemyData
 {
     struct objectData data;

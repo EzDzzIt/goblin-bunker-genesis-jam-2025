@@ -20,11 +20,11 @@ void initDoor(u8 x, u8 y)
             door.data.x = x;
             door.data.y = y;
             door.data.active = true;
-            door.beastmode = true;
-            door.beastmode_sprite = SPR_addSprite(&doorbeast_sprite, x + 8, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
-            door.beastmode_x = x + 8;
-            door.beastmode_y = y;
-            SPR_setAnim(door.data.sprite, DOOR_OPENING_ANIM);
+            door.beastmode = false;
+            // door.beastmode_sprite = SPR_addSprite(&doorbeast_sprite, x + 8, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+            // door.beastmode_x = x + 8;
+            // door.beastmode_y = y;
+            // SPR_setAnim(door.data.sprite, DOOR_OPENING_ANIM);
             door_array[i] = door;
             break;
         }

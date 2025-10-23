@@ -1,4 +1,11 @@
+#include <genesis.h>
+#include "resources.h"
 #include "globals.h"
+#include "player.h"
+#include "level.h"
+#include "enemy.h"
+#include "game.h"
+#include "spell.h"
 
 // global variables
 
@@ -54,7 +61,17 @@ void clear_graphics(bool stop_music)
     SPR_defragVRAM();
     if (stop_music)
     {
-
         XGM2_stop();
+    }
+}
+
+void reset_globals()
+{
+    score = 0; // reset score just in case
+    u8 i = 0;
+    for (i = 0; i < 2; i++)
+    {
+        sacred_ground_array[i].lifetime = 0;
+        sacred_ground_array[i].data.active = false;
     }
 }

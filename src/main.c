@@ -32,7 +32,7 @@ int main()
 		{
 			if (global_counter == 1)
 			{
-				score = 0; // reset score just in case
+				reset_globals();
 				initLevel(0);
 			}
 			else
@@ -42,7 +42,7 @@ int main()
 				SPR_update();
 				// debug PRINTING TEXT TO WINDOW
 				player_info_print();
-				display_stats();
+				// display_stats();
 
 				SYS_doVBlankProcess();
 			}
@@ -99,7 +99,6 @@ int main()
 					title_skip = false;
 					// start by cleaning up old level memory
 					VDP_clearTileMap(BG_A, 0, 200, TRUE);
-					// VDP_clearTileMap(BG_B, 0, 200, TRUE);
 					VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
 					title_counter = 2;
 					global_counter = 0; // reset this to 0 to time the next section
@@ -138,12 +137,12 @@ int main()
 				sprintf(buffer, "SCORE: %d", score);
 				VDP_drawText(buffer, 11, 20);
 			}
-			else
-			{
-				global_counter = 0;
-				game_state = GAME_STATE_TITLE;
-				clear_graphics(FALSE);
-			}
+			// else
+			// {
+			// 	global_counter = 0;
+			// 	game_state = GAME_STATE_TITLE;
+			// 	clear_graphics(FALSE);
+			// }
 			SYS_doVBlankProcess();
 		}
 		else if (game_state == GAME_STATE_WIN)
@@ -167,7 +166,7 @@ void display_stats()
 {
 	char free_mem[16] = "MEM: ";
 	char free_vram[16] = "VRAM: ";
-	VDP_showCPULoad(0, 0);
+	VDP_showCPULoad(12, 25);
 	intToStr(MEM_getAllocated(), &free_mem[5], 1);
 	VDP_drawText(free_mem, 1, 3);
 	intToStr(SPR_getFreeVRAM(), &free_vram[6], 1);

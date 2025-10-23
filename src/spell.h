@@ -7,6 +7,8 @@
 #define SPELL_CROSS 0
 #define PLAYER_BULLET_SPEED_0 2
 #define SACRED_GROUND_ANIM 0
+#define SACRED_GROUND_WIDTH 16
+#define SACRED_GROUND_HEIGHT 16
 
 struct spellData
 {

@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level0.tmx",
+    "activeFile": "tileset0_testing.tsx",
     "expandedProjectPaths": [
         "."
     ],
@@ -13,8 +13,8 @@
             "scale": 4,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 98.75,
-                "y": 163.5
+                "x": 327.375,
+                "y": 169.25
             }
         },
         "level0_small.tmx": {

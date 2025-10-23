@@ -17,12 +17,13 @@ struct enemyData
     f16 x_velocity;
     f16 y_velocity;
     f16 speed;
+    u8 hp;
 };
 
 extern struct enemyData enemy_array[];
 
 struct enemyData initEnemy(u8 x, u8 y);
-void deinitEnemy(u8 i);
+void killEnemy(u8 index);
 extern void enemyAI(u8 index);
 
 // bullet stuff

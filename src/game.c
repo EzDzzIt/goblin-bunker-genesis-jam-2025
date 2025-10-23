@@ -53,6 +53,10 @@ void updateGame()
             enemy_array[i].data.x += enemy_array[i].x_velocity;
             enemy_array[i].data.y += enemy_array[i].y_velocity;
             SPR_setPosition(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
+            if (enemy_array[i].hp <= 0)
+            {
+                killEnemy(i);
+            }
         }
     }
     // update enemy bullets
@@ -116,6 +120,7 @@ void updateGame()
                     if (collision_check(player_bullet_array[i].data.x, player_bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT, enemy_array[j].data.x, enemy_array[j].data.y, enemy_array[j].width, enemy_array[j].height))
                     {
                         SPR_setPalette(enemy_array[j].data.sprite, PAL3);
+                        enemy_array[j].hp -= 1;
                         collided = true;
                         break;
                     }

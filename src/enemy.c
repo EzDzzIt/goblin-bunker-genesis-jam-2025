@@ -22,6 +22,7 @@ struct enemyData initEnemy(u8 x, u8 y)
             en.height = 16;
             en.type = ENEMY_TYPE_DEMON;
             en.speed = 1;
+            en.hp = 4;
             en.data.active = true;
             SPR_setAnim(en.data.sprite, 0);
             enemy_array[i] = en;
@@ -30,10 +31,11 @@ struct enemyData initEnemy(u8 x, u8 y)
     }
 }
 
-void deinitEnemy(u8 i)
+void killEnemy(u8 index)
 {
-    enemy_array[i].data.active = false;
-    // SPR_releaseSprite(enemy_array[i].data.sprite);
+    enemy_array[index].data.active = false;
+    SPR_releaseSprite(enemy_array[index].data.sprite);
+    score += 20;
 }
 
 void enemyAI(u8 index)

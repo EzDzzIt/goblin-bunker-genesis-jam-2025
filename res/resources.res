@@ -7,6 +7,7 @@ SPRITE door_sprite "assets/gfx/door.png" 1 2 FAST 30
 SPRITE doorbeast_sprite "assets/gfx/doorbeast.png" 1 2 FAST 15
 SPRITE demon_sprite "assets/gfx/demon.png" 1 2 FAST 10
 SPRITE bullet_sprite "assets/gfx/bullet.png" 1 1 FAST 10
+SPRITE idol_sprite "assets/gfx/idol.png" 1 1 FAST
 SPRITE sacred_ground_sprite "assets/gfx/sacred_ground.png" 2 2 FAST 5
 TILESET level_tileset "assets/gfx/tileset.png" FAST NONE 
 TILEMAP level_map "assets/tiled/level0_small.tmx" "Tile Layer 1" FAST FAST  0

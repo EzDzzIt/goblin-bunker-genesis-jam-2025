@@ -36,12 +36,15 @@ int main(bool resetType)
 			else
 			{
 				updatePlayer();
-				updateGame();
-				updateLevel(0);
-				SPR_update();
-				// debug PRINTING TEXT TO WINDOW
-				player_info_print();
-				// display_stats();
+				if (player.hp > 0)
+				{
+					updateGame();
+					updateLevel(0);
+					SPR_update();
+					// debug PRINTING TEXT TO WINDOW
+					player_info_print();
+					display_stats();
+				}
 			}
 			SYS_doVBlankProcess();
 		}

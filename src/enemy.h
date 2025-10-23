@@ -17,7 +17,7 @@ struct enemyData
     f16 x_velocity;
     f16 y_velocity;
     f16 speed;
-    u8 hp;
+    s8 hp;
 };
 
 extern struct enemyData enemy_array[];

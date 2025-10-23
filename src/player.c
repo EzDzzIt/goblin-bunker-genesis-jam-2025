@@ -95,7 +95,7 @@ void updatePlayer()
     // cycle through stuff that hurts u, only if you are not invincible &|| warping
     if (player.hurt_cooldown <= 0 && player.warp_cooldown <= 105)
     {
-        for (i = 0; i < 5; i++)
+        for (i = 0; i < MAX_ENEMIES; i++)
         {
             if (enemy_array[i].data.active)
             {

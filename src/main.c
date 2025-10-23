@@ -41,7 +41,7 @@ int main(bool resetType)
 				SPR_update();
 				// debug PRINTING TEXT TO WINDOW
 				player_info_print();
-				display_stats();
+				// display_stats();
 			}
 			SYS_doVBlankProcess();
 		}

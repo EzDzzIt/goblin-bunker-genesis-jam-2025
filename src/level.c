@@ -2,6 +2,7 @@
 #include "globals.h"
 #include "resources.h"
 #include "player.h"
+#include "enemy.h"
 
 // level objects
 
@@ -33,7 +34,9 @@ void initDoor(u8 x, u8 y)
 
 // level initializatin
 
-void initLevel(u8 id)
+struct levelData levelObject;
+
+void initLevel(u8 level)
 {
     clear_graphics(FALSE);
 
@@ -49,4 +52,20 @@ void initLevel(u8 id)
     // this index needs to be adjusted based on the size in tiles of the main level tileset
     VDP_loadTileSet(&border_tileset, 20, DMA);
     VDP_setTileMapEx(BG_B, &border_image, TILE_ATTR_FULL(PAL3, 0, FALSE, FALSE, 20), 0, 0, 0, 0, 32, 28, DMA);
+}
+
+void updateLevel(u8 level)
+{
+    if (level == 0)
+    {
+        if (global_counter == 2) // 2 is the earliest global counter for spawning stuff
+        {
+            levelObject.beastmode_chance = 2;
+            initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+            initDoor(32 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+            initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+            initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
+            initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
+        }
+    }
 }

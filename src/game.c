@@ -7,10 +7,10 @@
 
 // game logic
 
-void updateGame(u16 time)
+void updateGame()
 {
 
-    if (time % 60 == 0)
+    if (global_counter % 60 == 0)
     {
         score += 1;
         SPR_defragVRAM();
@@ -25,6 +25,17 @@ void updateGame(u16 time)
             if (door_array[i].beastmode)
             {
                 SPR_setPosition(door_array[i].beastmode_sprite, door_array[i].beastmode_x, door_array[i].beastmode_y);
+            }
+            else
+            {
+                if ((random() % (1000 - 1 + 1)) + 1 <= levelObject.beastmode_chance)
+                {
+                    door_array[i].beastmode = true;
+                    door_array[i].beastmode_sprite = SPR_addSprite(&doorbeast_sprite, door_array[i].data.x + 8, door_array[i].data.y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+                    door_array[i].beastmode_x = door_array[i].data.x + 8;
+                    door_array[i].beastmode_y = door_array[i].data.y;
+                    SPR_setAnim(door_array[i].data.sprite, DOOR_OPENING_ANIM);
+                }
             }
         }
     }
@@ -154,87 +165,14 @@ void updateGame(u16 time)
                 u8 j = 0;
                 for (j = 0; j < MAX_DOORS; j++)
                 {
-                    if (collision_check(sacred_ground_array[i].data.x, sacred_ground_array[i].data.y, SACRED_GROUND_WIDTH, SACRED_GROUND_HEIGHT, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
+                    // collision check between sacred ground and doors needs slight mod to work
+                    if (collision_check(sacred_ground_array[i].data.x - 2, sacred_ground_array[i].data.y - 3, SACRED_GROUND_WIDTH + 2, SACRED_GROUND_HEIGHT + 3, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
                     {
                         SPR_setPalette(door_array[j].data.sprite, PAL3);
-                        break;
+                        // break;
                     }
                 }
             }
         }
-    }
-
-    // spawn debug
-
-    if (time == 100)
-    {
-        // SPR_releaseSprite(door_array[4].data.sprite);
-        // SPR_releaseSprite(door_array[4].beastmode_sprite);
-        initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-        initBullet(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, 1);
-        initBullet(32 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
-        initBullet(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
-        initBullet(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET, -1, 1);
-        initBullet(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET, 1, 1);
-        initBullet(128 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
-        initBullet(144 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
-    }
-    else if (time == 200)
-    {
-        initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-    }
-    else if (time == 300)
-    {
-
-        enemy_array[0] = initEnemy(100 + SCREEN_X_OFFSET, 50 + SCREEN_Y_OFFSET);
-    }
-    else if (time == 400)
-    {
-        // SPR_releaseSprite(door_array[0].data.sprite);
-        // SPR_releaseSprite(door_array[0].beastmode_sprite);
-        // SPR_defragVRAM();
-        // SPR_reset(); // clears all sprites
-        initBullet(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, 1);
-        initBullet(32 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
-        initBullet(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
-        initBullet(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET, -1, 1);
-        initBullet(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET, 1, 1);
-        initBullet(128 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
-        initBullet(144 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
-    }
-    else if (time == 500)
-    {
-        // door_array[0] = initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-        initBullet(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, 1);
-        initBullet(32 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
-        initBullet(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
-        initBullet(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET, -1, 1);
-        initBullet(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET, 1, 1);
-        initBullet(128 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
-        initBullet(144 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
-        initBullet(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, 1);
-        initBullet(32 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
-        initBullet(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
-        initBullet(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET, -1, 1);
-        initBullet(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET, 1, 1);
-        initBullet(128 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
-        initBullet(144 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
-    }
-    else if (time == 600)
-    {
-        initBullet(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, 1);
-        initBullet(32 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
-        initBullet(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
-        initBullet(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET, -1, 1);
-        initBullet(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET, 1, 1);
-        initBullet(128 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
-        initBullet(144 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
-        initBullet(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, 1);
-        initBullet(32 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
-        initBullet(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
-        initBullet(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET, -1, 1);
-        initBullet(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET, 1, 1);
-        initBullet(128 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 1, -1);
-        initBullet(144 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, -1, 1);
     }
 }

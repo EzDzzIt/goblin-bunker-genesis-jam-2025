@@ -193,6 +193,8 @@ void updatePlayer()
             SPR_setPalette(player.sprite, PAL1);
         }
     }
+
+    // manually adjusting the time for the spellcasting animation
     if (player.attack_cooldown > 0)
     {
         cooldown_flag = true;
@@ -200,11 +202,11 @@ void updatePlayer()
         {
             SPR_setAnim(player.sprite, PLAYER_ANIM_SPELL);
         }
-        else if (player.attack_cooldown == PLAYER_ATTACK_COOLDOWN - 10)
+        else if (player.attack_cooldown == PLAYER_ATTACK_COOLDOWN - 4)
         {
             SPR_setFrame(player.sprite, 1);
         }
-        else if (player.attack_cooldown == PLAYER_ATTACK_COOLDOWN - 20)
+        else if (player.attack_cooldown == PLAYER_ATTACK_COOLDOWN - 8)
         {
             SPR_setFrame(player.sprite, 2);
         }

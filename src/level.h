@@ -37,4 +37,12 @@ extern struct doorData door_array[];
 
 // actual level logic
 
-void initLevel(u8 id);
+struct levelData
+{
+    u8 beastmode_chance;
+};
+
+extern struct levelData levelObject;
+
+void initLevel(u8 level);
+void updateLevel(u8 level);

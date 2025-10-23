@@ -38,7 +38,8 @@ int main()
 			else
 			{
 				updatePlayer();
-				updateGame(global_counter);
+				updateGame();
+				updateLevel(0);
 				SPR_update();
 				// debug PRINTING TEXT TO WINDOW
 				player_info_print();
@@ -101,6 +102,7 @@ int main()
 					VDP_clearTileMap(BG_A, 0, 200, TRUE);
 					VDP_clearTileMapRect(BG_A, 0, 0, 32, 28);
 					title_counter = 2;
+					setRandomSeed(global_counter);
 					global_counter = 0; // reset this to 0 to time the next section
 				}
 				if (global_counter == 122)

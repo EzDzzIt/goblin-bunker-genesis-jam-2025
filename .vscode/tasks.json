@@ -2,12 +2,40 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build project",
+            "label": "make clean",
             "type": "shell",
-            "command": "./build.sh",
+            "command": "./make_clean.sh",
             "group": {
                 "kind": "build",
                 "isDefault": true // Makes this the default build task
+            },
+            "presentation": {
+                "reveal": "always",
+                "close": true,
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "make",
+            "type": "shell",
+            "command": "./make.sh",
+            "group": {
+                "kind": "build",
+                "isDefault": false // Makes this the default build task
+            },
+            "presentation": {
+                "reveal": "always",
+                "close": true,
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "test rom",
+            "type": "shell",
+            "command": "./test_rom.sh",
+            "group": {
+                "kind": "build",
+                "isDefault": false // Makes this the default build task
             },
             "presentation": {
                 "reveal": "always",

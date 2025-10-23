@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "tileset0_testing.tsx",
+    "activeFile": "level0_small.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -21,8 +21,8 @@
             "scale": 8.497222222222222,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 80.02615233736515,
-                "y": 57.90127492644655
+                "x": 137.9274272638117,
+                "y": 107.56456358287022
             }
         },
         "tileset0.tsx": {
@@ -42,12 +42,13 @@
     "map.width": 20,
     "openFiles": [
         "tileset0_testing.tsx",
-        "level0.tmx"
+        "level0_small.tmx"
     ],
     "project": "goblin_genesis.tiled-project",
     "recentFiles": [
-        "level0.tmx",
         "tileset0_testing.tsx",
+        "level0_small.tmx",
+        "level0.tmx",
         "tileset0.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",

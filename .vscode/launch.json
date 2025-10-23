@@ -6,7 +6,7 @@
             "type": "node",
             "request": "launch",
             "program": "${workspaceFolder}/dummy",
-            "preLaunchTask": "build project" // Link to your build task
+            "preLaunchTask": "make clean" // Link to your build task
         }
     ]
 }

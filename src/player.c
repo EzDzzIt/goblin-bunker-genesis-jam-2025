@@ -185,10 +185,10 @@ void updatePlayer()
     if (player.hurt_cooldown > 0)
     {
         cooldown_flag = true;
-        if (player.hurt_cooldown == PLAYER_HURT_COOLDOWN)
+        if (player.hurt_cooldown == PLAYER_HURT_COOLDOWN && player.attack_cooldown <= 0)
         {
             // SPR_defragVRAM();
-            // SPR_setAnim(player.sprite, PLAYER_ANIM_HURT);
+            SPR_setAnim(player.sprite, PLAYER_ANIM_HURT);
             SPR_setPalette(player.sprite, PAL3);
         }
         player.hurt_cooldown -= 1;

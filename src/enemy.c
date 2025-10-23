@@ -7,7 +7,7 @@
 
 struct enemyData enemy_array[MAX_ENEMIES];
 
-struct enemyData initEnemy(u8 x, u8 y)
+struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y)
 {
     u8 i = 0;
     for (i = 0; i < MAX_ENEMIES; i++)
@@ -15,12 +15,23 @@ struct enemyData initEnemy(u8 x, u8 y)
         if (!enemy_array[i].data.active)
         {
             struct enemyData en;
-            en.data.sprite = SPR_addSprite(&demon_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+            if (enemy_type == ENEMY_TYPE_DEMON)
+            {
+                en.data.sprite = SPR_addSprite(&demon_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+                en.width = 8;
+                en.height = 16;
+                en.type = ENEMY_TYPE_DEMON;
+            }
+            else if (enemy_type == ENEMY_TYPE_EYE)
+            {
+                en.data.sprite = SPR_addSprite(&eye_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+                en.width = 16;
+                en.height = 8;
+                en.type = ENEMY_TYPE_EYE;
+            }
             en.data.x = x;
             en.data.y = y;
-            en.width = 8;
-            en.height = 16;
-            en.type = ENEMY_TYPE_DEMON;
+
             en.speed = 1;
             en.hp = 4;
             en.data.active = true;

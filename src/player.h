@@ -27,7 +27,7 @@ struct playerData
     Vect2D_f16 velocity;
     s8 warp_cooldown;
     s8 move_cooldown;
-    s8 hurt_cooldown;
+    u8 hurt_cooldown;
     s8 attack_cooldown;
     s8 hp;
     u8 cast;

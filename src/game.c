@@ -31,7 +31,7 @@ void updateGame()
                 {
                     toggleDoorBeastmode(i);
                     SPR_setAnim(door_array[i].data.sprite, 2);
-                    initEnemy(door_array[i].data.x, door_array[i].data.y);
+                    initEnemy(ENEMY_TYPE_EYE, door_array[i].data.x, door_array[i].data.y);
                     door_array[i].data.active = false;
                 }
             }

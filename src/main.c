@@ -11,18 +11,12 @@
 void inGameJoyEvent(u16 joy, u16 changed, u16 state);
 void display_stats();
 
-int main()
+int main(bool resetType)
 {
-	VDP_setScreenWidth256();
-	SPR_init();
-	JOY_init();
-	JOY_setEventHandler(inGameJoyEvent);
-	PAL_setPalette(PAL0, palette_1.data, DMA);
-	PAL_setPalette(PAL1, palette_1.data, DMA);
-	PAL_setPalette(PAL2, palette_2.data, DMA);
-	PAL_setPalette(PAL3, palette_3.data, DMA);
-	VDP_setTextPalette(PAL1);
-	VDP_setBackgroundColor(5); // change this per level?
+	if (!resetType)
+	{
+		SYS_hardReset();
+	}
 
 	while (TRUE)
 	{
@@ -75,7 +69,17 @@ int main()
 				}
 				else if (global_counter == 1)
 				{
-
+					// ALL INITIALIZATION
+					VDP_setScreenWidth256();
+					SPR_init();
+					JOY_init();
+					JOY_setEventHandler(inGameJoyEvent);
+					PAL_setPalette(PAL0, palette_1.data, DMA);
+					PAL_setPalette(PAL1, palette_1.data, DMA);
+					PAL_setPalette(PAL2, palette_2.data, DMA);
+					PAL_setPalette(PAL3, palette_3.data, DMA);
+					VDP_setTextPalette(PAL1);
+					VDP_setBackgroundColor(5); // change this per level?
 					VDP_drawBitmapEx(BG_A, &sgdk_logo_image, TILE_ATTR_FULL(PAL3, 0, 0, 0, 1), 1, 3, FALSE);
 					XGM2_setFMVolume(100);
 					XGM2_play(xgm2_title);
@@ -139,12 +143,14 @@ int main()
 				sprintf(buffer, "SCORE: %d", score);
 				VDP_drawText(buffer, 11, 20);
 			}
-			// else
-			// {
-			// 	global_counter = 0;
-			// 	game_state = GAME_STATE_TITLE;
-			// 	clear_graphics(FALSE);
-			// }
+			else
+			{
+				global_counter = 0;
+				game_state = GAME_STATE_TITLE;
+				clear_graphics(TRUE);
+				SPR_end();
+				SYS_hardReset();
+			}
 			SYS_doVBlankProcess();
 		}
 		else if (game_state == GAME_STATE_WIN)

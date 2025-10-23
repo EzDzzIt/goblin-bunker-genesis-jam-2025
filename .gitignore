@@ -55,4 +55,4 @@ dkms.conf
 *.dwo
 
 out/*
-res/assets/tiled/*.tiled-session
+res/assets/tiled/goblin_genesis.tiled-session

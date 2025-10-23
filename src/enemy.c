@@ -3,24 +3,31 @@
 #include "resources.h"
 #include "resources.h"
 #include "enemy.h"
+#include "player.h"
 
 struct enemyData enemy_array[MAX_ENEMIES];
 
 struct enemyData initEnemy(u8 x, u8 y)
 {
-
-    struct enemyData en;
-
-    en.data.sprite = SPR_addSprite(&demon_sprite, x, y, TILE_ATTR(PAL2, 0, FALSE, FALSE));
-    en.data.x = x;
-    en.data.y = y;
-    en.width = 8;
-    en.height = 16;
-    en.data.active = true;
-
-    SPR_setAnim(en.data.sprite, 0);
-
-    return en;
+    u8 i = 0;
+    for (i = 0; i < MAX_ENEMIES; i++)
+    {
+        if (!enemy_array[i].data.active)
+        {
+            struct enemyData en;
+            en.data.sprite = SPR_addSprite(&demon_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+            en.data.x = x;
+            en.data.y = y;
+            en.width = 8;
+            en.height = 16;
+            en.type = ENEMY_TYPE_DEMON;
+            en.speed = 1;
+            en.data.active = true;
+            SPR_setAnim(en.data.sprite, 0);
+            enemy_array[i] = en;
+            break;
+        }
+    }
 }
 
 void deinitEnemy(u8 i)
@@ -29,6 +36,37 @@ void deinitEnemy(u8 i)
     // SPR_releaseSprite(enemy_array[i].data.sprite);
 }
 
+void enemyAI(u8 index)
+
+{
+    if (global_counter % 3 == 0)
+    {
+        if (enemy_array[index].type == ENEMY_TYPE_DEMON)
+        {
+            if (enemy_array[index].data.x >= player.x)
+            {
+                enemy_array[index].x_velocity = -1 * enemy_array[index].speed;
+            }
+            else
+            {
+                enemy_array[index].x_velocity = 1 * enemy_array[index].speed;
+            }
+            if (enemy_array[index].data.y >= player.y)
+            {
+                enemy_array[index].y_velocity = -1 * enemy_array[index].speed;
+            }
+            else
+            {
+                enemy_array[index].y_velocity = 1 * enemy_array[index].speed;
+            }
+        }
+    }
+    else
+    {
+        enemy_array[index].x_velocity = 0;
+        enemy_array[index].y_velocity = 0;
+    }
+}
 // bullet stuff
 
 struct bulletData bullet_array[MAX_BULLETS];

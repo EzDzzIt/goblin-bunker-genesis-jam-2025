@@ -12,7 +12,7 @@ void updateGame()
 
     if (global_counter % 60 == 0)
     {
-        score += 1;
+        // score += 1;
         SPR_defragVRAM();
     }
     u8 i = 0;
@@ -29,7 +29,9 @@ void updateGame()
                 if (door_array[i].beastmode_counter >= levelObject.beastmode_time_limit)
                 {
                     toggleDoorBeastmode(i);
-                    SPR_setPalette(door_array[i].data.sprite, PAL3); // debug
+                    SPR_setAnim(door_array[i].data.sprite, 2);
+                    initEnemy(door_array[i].data.x, door_array[i].data.y);
+                    door_array[i].data.active = false;
                 }
             }
             else
@@ -46,9 +48,10 @@ void updateGame()
     {
         if (enemy_array[i].data.active)
         {
-            // enemy ai
-            // enemy_array[i].data.x = player.x - 2;
-            // enemy_array[i].data.y = player.y - 2;
+            enemyAI(i); // ai calc to get x/y velocity
+            // apply velocity
+            enemy_array[i].data.x += enemy_array[i].x_velocity;
+            enemy_array[i].data.y += enemy_array[i].y_velocity;
             SPR_setPosition(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
         }
     }
@@ -83,9 +86,7 @@ void updateGame()
             }
         }
     }
-
     // update player spells and projectiles
-
     for (i = 0; i < MAX_BULLETS; i++)
     {
         if (player_bullet_array[i].data.active)
@@ -150,7 +151,7 @@ void updateGame()
             }
         }
     }
-    // sacred ground
+    // update sacred ground
     for (i = 0; i < 2; i++)
     {
         if (sacred_ground_array[i].lifetime > 0)
@@ -173,6 +174,7 @@ void updateGame()
                         if (collision_check(sacred_ground_array[i].data.x - 2, sacred_ground_array[i].data.y - 3, SACRED_GROUND_WIDTH + 2, SACRED_GROUND_HEIGHT + 3, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
                         {
                             toggleDoorBeastmode(j);
+                            score += 10;
                         }
                     }
                 }

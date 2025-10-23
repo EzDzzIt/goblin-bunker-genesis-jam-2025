@@ -56,6 +56,13 @@ void updatePlayer()
     player.x += player.velocity.x;
     player.y += player.velocity.y;
 
+    // cast a spell last frame?
+    if (player.cast == 1)
+    {
+        initSpell(SPELL_CROSS, player.x, player.y);
+        player.cast = 0;
+    }
+
     // stuff that stops u
     if (player.x >= SCREEN_X_END - PLAYER_WIDTH)
     {
@@ -120,11 +127,11 @@ void updatePlayer()
             }
         }
 
-        if (player.hurt_cooldown > 0)
-        {
-            SPR_setAnim(player.sprite, PLAYER_ANIM_HURT);
-            SPR_setPalette(player.sprite, PAL3);
-        }
+        // if (player.hurt_cooldown == PLAYER_HURT_COOLDOWN)
+        // {
+        //     SPR_setAnim(player.sprite, PLAYER_ANIM_HURT);
+        //     SPR_setPalette(player.sprite, PAL3);
+        // }
     }
 
     if (collided)
@@ -178,11 +185,17 @@ void updatePlayer()
     if (player.hurt_cooldown > 0)
     {
         cooldown_flag = true;
+        if (player.hurt_cooldown == PLAYER_HURT_COOLDOWN)
+        {
+            // SPR_defragVRAM();
+            // SPR_setAnim(player.sprite, PLAYER_ANIM_HURT);
+            SPR_setPalette(player.sprite, PAL3);
+        }
         player.hurt_cooldown -= 1;
         if (player.hurt_cooldown == 25)
         {
             SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
-            SPR_setPalette(player.sprite, PAL1);
+            SPR_setPalette(player.sprite, PAL0);
         }
     }
 
@@ -313,7 +326,7 @@ void checkInput()
                 if (player.attack_cooldown <= 0)
                 {
                     player.attack_cooldown = PLAYER_ATTACK_COOLDOWN;
-                    initSpell(SPELL_CROSS, player.x, player.y);
+                    player.cast = 1;
                 }
             }
         }

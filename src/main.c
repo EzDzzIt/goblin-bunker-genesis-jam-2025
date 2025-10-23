@@ -143,7 +143,7 @@ int main(bool resetType)
 				title_skip = false;
 				VDP_drawBitmapEx(BG_A, &over_screen, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 0, 0, FALSE);
 			}
-			else if (global_counter < 540)
+			else if (global_counter < 60)
 			{
 				char buffer[8];
 				sprintf(buffer, "SCORE: %d", score);

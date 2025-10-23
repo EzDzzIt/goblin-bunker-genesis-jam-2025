@@ -13,7 +13,7 @@
 #define PLAYER_HURT_COOLDOWN 50      // frames
 #define PLAYER_MOVE_COOLDOWN 5       // frames
 #define PLAYER_WARP_COOLDOWN 120     // frames
-#define PLAYER_ATTACK_COOLDOWN 30    // frames
+#define PLAYER_ATTACK_COOLDOWN 20    // frames
 #define PLAYER_TELEPORT_CORRECTION 3 // px
 
 struct playerData
@@ -30,6 +30,7 @@ struct playerData
     s8 hurt_cooldown;
     s8 attack_cooldown;
     s8 hp;
+    u8 cast;
 };
 
 extern struct playerData player;

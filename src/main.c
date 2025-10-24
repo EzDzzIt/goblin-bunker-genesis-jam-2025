@@ -41,8 +41,6 @@ int main(bool resetType)
 					updateGame();
 					updateLevel(0);
 					SPR_update();
-					// debug PRINTING TEXT TO WINDOW
-					// player_info_print();
 					display_stats();
 				}
 			}

@@ -52,7 +52,6 @@ bool collision_check(f16 x, f16 y, u8 w, u8 h, f16 x2, f16 y2, u8 w2, u8 h2)
 
 void setSprite(Sprite *sprite, fix16 x, fix16 y)
 {
-
     SPR_setPosition(sprite, x - SCROLL_X * 8, y - SCROLL_Y * 8);
 }
 

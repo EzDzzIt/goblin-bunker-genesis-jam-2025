@@ -60,7 +60,6 @@ void updateDoors()
         {
             if (UPDATE_SCROLL)
             {
-
                 door_array[i].data.x -= SCROLL_X * 8;
                 door_array[i].data.y -= SCROLL_Y * 8;
                 if (door_array[i].data.y > SCREEN_Y_END || door_array[i].data.y < SCREEN_Y_OFFSET)

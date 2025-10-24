@@ -8,8 +8,8 @@ struct objectData
 {
     bool active;
     Sprite *sprite;
-    u8 x;
-    u8 y;
+    fix16 x;
+    fix16 y;
     bool hflip;
 };
 
@@ -26,8 +26,8 @@ struct doorData
     struct objectData data;
     bool beastmode;
     Sprite *beastmode_sprite;
-    u8 beastmode_x;
-    u8 beastmode_y;
+    fix16 beastmode_x;
+    fix16 beastmode_y;
     bool beastmode_hflip;
     u16 beastmode_counter;
 };

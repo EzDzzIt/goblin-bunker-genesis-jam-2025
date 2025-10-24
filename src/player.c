@@ -122,6 +122,8 @@ void updatePlayer()
                 {
                     player.hurt_cooldown = PLAYER_HURT_COOLDOWN;
                     player.hp -= 1;
+                    SPR_releaseSprite(bullet_array[i].data.sprite);
+                    bullet_array[i].data.active = false;
                     break;
                 }
             }

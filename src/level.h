@@ -34,6 +34,7 @@ struct doorData
 
 void initDoor(u8 x, u8 y);
 void toggleDoorBeastmode(u8 index);
+void updateDoors();
 
 extern struct doorData door_array[];
 
@@ -43,6 +44,7 @@ struct levelData
 {
     u8 beastmode_chance;
     u16 beastmode_time_limit;
+    u8 enemy_shot_chance;
 };
 
 extern struct levelData levelObject;

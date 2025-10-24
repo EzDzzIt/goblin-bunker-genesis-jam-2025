@@ -51,6 +51,37 @@ void toggleDoorBeastmode(u8 index)
     }
 }
 
+void updateDoors()
+{
+    u8 i = 0;
+    for (i = 0; i < MAX_DOORS; i++)
+    {
+        if (door_array[i].data.active)
+        {
+            SPR_setPosition(door_array[i].data.sprite, door_array[i].data.x, door_array[i].data.y);
+            if (door_array[i].beastmode)
+            {
+                SPR_setPosition(door_array[i].beastmode_sprite, door_array[i].beastmode_x, door_array[i].beastmode_y);
+                door_array[i].beastmode_counter += 1;
+                if (door_array[i].beastmode_counter >= levelObject.beastmode_time_limit)
+                {
+                    toggleDoorBeastmode(i);
+                    SPR_setAnim(door_array[i].data.sprite, 2);
+                    initEnemy(ENEMY_TYPE_EYE, door_array[i].data.x, door_array[i].data.y);
+                    door_array[i].data.active = false;
+                }
+            }
+            else
+            {
+                if ((random() % (1000 - 1 + 1)) + 1 <= levelObject.beastmode_chance)
+                {
+                    toggleDoorBeastmode(i);
+                }
+            }
+        }
+    }
+}
+
 // level initializatin
 
 struct levelData levelObject;
@@ -81,6 +112,7 @@ void updateLevel(u8 level)
         {
             levelObject.beastmode_chance = 1;
             levelObject.beastmode_time_limit = 300;
+            levelObject.enemy_shot_chance = 30; // percent
             initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
             initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
             initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);

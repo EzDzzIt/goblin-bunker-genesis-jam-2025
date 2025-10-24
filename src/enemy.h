@@ -25,6 +25,7 @@ extern struct enemyData enemy_array[];
 
 struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y);
 void killEnemy(u8 index);
+extern void updateEnemies();
 extern void enemyAI(u8 index);
 
 // bullet stuff
@@ -37,8 +38,10 @@ struct bulletData
 {
     struct objectData data;
     Vect2D_f16 velocity;
+    u8 lifetime;
 };
 
 extern struct bulletData bullet_array[];
 
 void initBullet(u8 x, u8 y, f16 x_velocity, f16 y_velocity);
+extern void updateEnemyBullets();

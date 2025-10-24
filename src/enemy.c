@@ -58,43 +58,54 @@ void enemyAI(u8 index)
     {
         if (global_counter % 120 == 0)
         {
-            s8 bullet_x_velocity = 0;
-            s8 bullet_y_velocity = 0;
-            if (enemy_array[index].data.x >= player.x + PLAYER_WIDTH)
+            if ((random() % (100 - 1 + 1)) + 1 <= levelObject.enemy_shot_chance)
             {
-                bullet_x_velocity = -1;
+                s8 bullet_x_velocity = 0;
+                s8 bullet_y_velocity = 0;
+                if (enemy_array[index].data.x >= player.x + PLAYER_WIDTH)
+                {
+                    bullet_x_velocity = -1;
+                }
+                else if (enemy_array[index].data.x <= player.x - PLAYER_WIDTH)
+                {
+                    bullet_x_velocity = 1;
+                }
+                if (enemy_array[index].data.y >= player.y + PLAYER_HEIGHT)
+                {
+                    bullet_y_velocity = -1;
+                }
+                else if (enemy_array[index].data.y <= player.y - PLAYER_HEIGHT)
+                {
+                    bullet_y_velocity = 1;
+                }
+                initBullet(enemy_array[index].data.x, enemy_array[index].data.y, bullet_x_velocity, bullet_y_velocity);
             }
-            else if (enemy_array[index].data.x <= player.x - PLAYER_WIDTH)
-            {
-                bullet_x_velocity = 1;
-            }
-            if (enemy_array[index].data.y >= player.y + PLAYER_HEIGHT)
-            {
-                bullet_y_velocity = -1;
-            }
-            else if (enemy_array[index].data.y <= player.y - PLAYER_HEIGHT)
-            {
-                bullet_y_velocity = 1;
-            }
-            initBullet(enemy_array[index].data.x, enemy_array[index].data.y, bullet_x_velocity, bullet_y_velocity);
         }
         else if (global_counter % 3 == 0)
         {
-            if (enemy_array[index].data.x >= player.x)
+            if ((random() % (100 - 1 + 1)) + 1 <= 50)
             {
-                enemy_array[index].x_velocity = -1 * enemy_array[index].speed;
+                if (enemy_array[index].data.x >= player.x)
+                {
+                    enemy_array[index].x_velocity = -1 * enemy_array[index].speed;
+                }
+                else
+                {
+                    enemy_array[index].x_velocity = 1 * enemy_array[index].speed;
+                }
+                if (enemy_array[index].data.y >= player.y)
+                {
+                    enemy_array[index].y_velocity = -1 * enemy_array[index].speed;
+                }
+                else
+                {
+                    enemy_array[index].y_velocity = 1 * enemy_array[index].speed;
+                }
             }
             else
             {
-                enemy_array[index].x_velocity = 1 * enemy_array[index].speed;
-            }
-            if (enemy_array[index].data.y >= player.y)
-            {
-                enemy_array[index].y_velocity = -1 * enemy_array[index].speed;
-            }
-            else
-            {
-                enemy_array[index].y_velocity = 1 * enemy_array[index].speed;
+                enemy_array[index].x_velocity = 0;
+                enemy_array[index].y_velocity = 0;
             }
         }
 
@@ -133,6 +144,28 @@ void enemyAI(u8 index)
         }
     }
 }
+
+// update enemies
+void updateEnemies()
+{
+    u8 i = 0;
+    for (i = 0; i < MAX_ENEMIES; i++)
+    {
+        if (enemy_array[i].data.active)
+        {
+            enemyAI(i); // ai calc to get x/y velocity
+            // apply velocity
+            enemy_array[i].data.x += enemy_array[i].x_velocity;
+            enemy_array[i].data.y += enemy_array[i].y_velocity;
+            SPR_setPosition(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
+            if (enemy_array[i].hp <= 0)
+            {
+                killEnemy(i);
+            }
+        }
+    }
+}
+
 // bullet stuff
 
 struct bulletData bullet_array[MAX_BULLETS];
@@ -152,9 +185,51 @@ void initBullet(u8 x, u8 y, f16 x_velocity, f16 y_velocity)
             bul.data.active = true;
             bul.velocity.x = x_velocity;
             bul.velocity.y = y_velocity;
+            bul.lifetime = 120;
             SPR_setAnim(bul.data.sprite, 0);
             bullet_array[i] = bul;
             break;
+        }
+    }
+}
+
+void updateEnemyBullets()
+{
+    u8 i = 0;
+    for (i = 0; i < MAX_BULLETS; i++)
+    {
+        if (bullet_array[i].data.active)
+        {
+            // bullet updates
+            bullet_array[i].data.x += bullet_array[i].velocity.x;
+            bullet_array[i].data.y += bullet_array[i].velocity.y;
+            SPR_setPosition(bullet_array[i].data.sprite, bullet_array[i].data.x, bullet_array[i].data.y);
+            if (bullet_array[i].data.x >= SCREEN_X_END - BULLET_WIDTH)
+            {
+                SPR_releaseSprite(bullet_array[i].data.sprite);
+                bullet_array[i].data.active = false;
+            }
+            else if (bullet_array[i].data.x <= SCREEN_X_OFFSET)
+            {
+                SPR_releaseSprite(bullet_array[i].data.sprite);
+                bullet_array[i].data.active = false;
+            }
+            if (bullet_array[i].data.y >= SCREEN_Y_END - BULLET_HEIGHT)
+            {
+                SPR_releaseSprite(bullet_array[i].data.sprite);
+                bullet_array[i].data.active = false;
+            }
+            else if (bullet_array[i].data.y <= SCREEN_Y_OFFSET)
+            {
+                SPR_releaseSprite(bullet_array[i].data.sprite);
+                bullet_array[i].data.active = false;
+            }
+            bullet_array[i].lifetime -= 1;
+            if (bullet_array[i].lifetime <= 0)
+            {
+                SPR_releaseSprite(bullet_array[i].data.sprite);
+                bullet_array[i].data.active = false;
+            }
         }
     }
 }

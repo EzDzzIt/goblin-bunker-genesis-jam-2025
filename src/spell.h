@@ -22,3 +22,4 @@ extern struct spellData sacred_ground_array[];
 extern void initSpell(u8 spell_type, fix16 x, fix16 y);
 extern void initPlayerBullet(fix16 x, fix16 y, f16 x_velocity, f16 y_velocity);
 extern void initSacredGround(fix16 x, fix16 y);
+extern void updateSpells();

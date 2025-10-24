@@ -83,7 +83,7 @@ void enemyAI(u8 index)
         }
         else if (global_counter % 3 == 0)
         {
-            if ((random() % (100 - 1 + 1)) + 1 <= 50)
+            if ((random() % (100 - 1 + 1)) + 1 <= 70)
             {
                 if (enemy_array[index].data.x >= player.x)
                 {

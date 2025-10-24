@@ -98,10 +98,11 @@ void initLevel(u8 level)
 
     // load in new level data based on the level id parameter
     VDP_loadTileSet(&level_tileset, 0, DMA);
-    VDP_setTileMapEx(BG_A, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, 0, 0, 20, 18, DMA);
+    VDP_setTileMapEx(BG_B, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, 0, 0, 20, 18, DMA);
+    // VDP_setTileMapEx(BG_A, &window_ui, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 21, 0, 0, 20, 2, DMA);
     // this index needs to be adjusted based on the size in tiles of the main level tileset
     VDP_loadTileSet(&border_tileset, 20, DMA);
-    VDP_setTileMapEx(BG_B, &border_image, TILE_ATTR_FULL(PAL3, 0, FALSE, FALSE, 20), 0, 0, 0, 0, 32, 28, DMA);
+    VDP_setTileMapEx(BG_A, &border_image, TILE_ATTR_FULL(PAL3, 1, FALSE, FALSE, 20), 0, 0, 0, 0, 32, 28, DMA);
 }
 
 void updateLevel(u8 level)

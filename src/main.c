@@ -42,7 +42,7 @@ int main(bool resetType)
 					updateLevel(0);
 					SPR_update();
 					// debug PRINTING TEXT TO WINDOW
-					player_info_print();
+					// player_info_print();
 					display_stats();
 				}
 			}

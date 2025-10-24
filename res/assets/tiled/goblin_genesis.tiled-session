@@ -21,8 +21,8 @@
             "scale": 8.497222222222222,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 91.79470415168356,
-                "y": 86.2634847989539
+                "x": 82.61523373651521,
+                "y": 86.26348479895393
             }
         },
         "tileset0.tsx": {
@@ -35,7 +35,7 @@
         }
     },
     "last.imagePath": "/home/nate/repos/goblin-bunker-genesis-jam-2025/res/assets",
-    "map.height": 18,
+    "map.height": 2,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 8,
     "map.tileWidth": 8,

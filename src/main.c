@@ -71,6 +71,7 @@ int main(bool resetType)
 				{
 					// ALL INITIALIZATION
 					VDP_setScreenWidth256();
+					VDP_setScrollingMode(HSCROLL_TILE, VSCROLL_COLUMN);
 					SPR_init();
 					JOY_init();
 					JOY_setEventHandler(inGameJoyEvent);

@@ -35,7 +35,11 @@ extern u8 title_counter;
 extern u16 global_counter;
 extern bool title_skip;
 extern u16 score;
+extern s16 SCROLL_X;
+extern s16 SCROLL_Y;
+extern bool UPDATE_SCROLL;
 
 extern bool collision_check(f16 x, f16 y, u8 width, u8 height, f16 x2, f16 y2, u8 width2, u8 height2);
 extern void clear_graphics(bool stop_music);
 extern void reset_globals();
+extern void setSprite(Sprite *sprite, fix16 x, fix16 y);

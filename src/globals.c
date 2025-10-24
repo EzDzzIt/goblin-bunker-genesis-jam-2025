@@ -18,6 +18,9 @@ u8 title_counter = 0;
 u16 global_counter = 0;
 bool title_skip = false;
 u16 score = 0;
+s16 SCROLL_X = 0;
+s16 SCROLL_Y = 0;
+bool UPDATE_SCROLL = FALSE;
 
 bool collision_check(f16 x, f16 y, u8 w, u8 h, f16 x2, f16 y2, u8 w2, u8 h2)
 {
@@ -45,6 +48,12 @@ bool collision_check(f16 x, f16 y, u8 w, u8 h, f16 x2, f16 y2, u8 w2, u8 h2)
     {
         return false;
     }
+}
+
+void setSprite(Sprite *sprite, fix16 x, fix16 y)
+{
+
+    SPR_setPosition(sprite, x - SCROLL_X * 8, y - SCROLL_Y * 8);
 }
 
 void clear_graphics(bool stop_music)

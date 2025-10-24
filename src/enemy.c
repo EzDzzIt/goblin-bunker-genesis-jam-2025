@@ -51,7 +51,6 @@ void killEnemy(u8 index)
 }
 
 void enemyAI(u8 index)
-
 {
 
     if (enemy_array[index].type == ENEMY_TYPE_EYE)
@@ -78,7 +77,13 @@ void enemyAI(u8 index)
                 {
                     bullet_y_velocity = 1;
                 }
-                initBullet(enemy_array[index].data.x, enemy_array[index].data.y, bullet_x_velocity, bullet_y_velocity);
+                if (bullet_x_velocity == 0 && bullet_y_velocity == 0)
+                {
+                }
+                else
+                {
+                    initBullet(enemy_array[index].data.x, enemy_array[index].data.y, bullet_x_velocity, bullet_y_velocity);
+                }
             }
         }
         else if (global_counter % 3 == 0)
@@ -155,9 +160,18 @@ void updateEnemies()
         {
             enemyAI(i); // ai calc to get x/y velocity
             // apply velocity
-            enemy_array[i].data.x += enemy_array[i].x_velocity;
-            enemy_array[i].data.y += enemy_array[i].y_velocity;
+            if (UPDATE_SCROLL)
+            {
+                // enemy_array[i].data.x += enemy_array[i].x_velocity + 20 * 8;
+                // enemy_array[i].data.y += enemy_array[i].y_velocity + 20 * 8;
+            }
+            else
+            {
+                enemy_array[i].data.x += enemy_array[i].x_velocity;
+                enemy_array[i].data.y += enemy_array[i].y_velocity;
+            }
             SPR_setPosition(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
+            // setSprite(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
             if (enemy_array[i].hp <= 0)
             {
                 killEnemy(i);

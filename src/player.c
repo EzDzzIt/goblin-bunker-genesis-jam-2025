@@ -22,11 +22,11 @@ void player_info_print()
     {
         // char warp_buffer[4];
         // sprintf(warp_buffer, "%dHP", player.hp);
-        VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1473 + 22), 11, 21, 1, 1); // index 1473 is A
+        VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, 1473 + 22), 11, 21, 1, 1); // index 1473 is A
     }
     else
     {
-        VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 0, 0, 0, 0), 11, 21, 1, 1);
+        VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, 0), 11, 21, 1, 1);
     }
     // attack spell
     if (player.attack_cooldown <= 0)
@@ -54,7 +54,7 @@ void initPlayer()
 void updatePlayer()
 {
 
-    player_info_print();
+    // player_info_print();
 
     player.x += player.velocity.x;
     player.y += player.velocity.y;
@@ -230,6 +230,26 @@ void updatePlayer()
     if (!cooldown_flag)
     {
         SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
+    }
+    // adjust final scroll position based on player
+    if (player.y >= SCREEN_Y_END - 32) // adjust for window
+    {
+        player.y = SCREEN_Y_OFFSET + 2; // send player to top of next area
+        SCROLL_Y += 16;                 // tileset needs to scroll up by 20 tiles
+        UPDATE_SCROLL = TRUE;
+    }
+    else if (player.y < SCREEN_Y_OFFSET + 1)
+    {
+        if (SCROLL_Y <= 0)
+        {
+            SCROLL_Y = 0;
+        }
+        else
+        {
+            player.y = SCREEN_Y_END - 33;
+            SCROLL_Y -= 16;
+            UPDATE_SCROLL = TRUE;
+        }
     }
     // // are we dead yet
     if (player.hp <= 0)

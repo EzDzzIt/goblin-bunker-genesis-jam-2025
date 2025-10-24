@@ -58,6 +58,20 @@ void updateDoors()
     {
         if (door_array[i].data.active)
         {
+            if (UPDATE_SCROLL)
+            {
+
+                door_array[i].data.x -= SCROLL_X * 8;
+                door_array[i].data.y -= SCROLL_Y * 8;
+                if (door_array[i].data.y > SCREEN_Y_END || door_array[i].data.y < SCREEN_Y_OFFSET)
+                {
+                    // SPR_setVisibility(door_array[i].data.sprite, FALSE);
+                }
+                else
+                {
+                    // SPR_setVisibility(door_array[i].data.sprite, TRUE);
+                }
+            }
             SPR_setPosition(door_array[i].data.sprite, door_array[i].data.x, door_array[i].data.y);
             if (door_array[i].beastmode)
             {
@@ -98,7 +112,7 @@ void initLevel(u8 level)
 
     // load in new level data based on the level id parameter
     VDP_loadTileSet(&level_tileset, 0, DMA);
-    VDP_setTileMapEx(BG_B, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, 0, 0, 20, 18, DMA);
+    VDP_setTileMapEx(BG_B, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, SCROLL_X, SCROLL_Y, 20, 16, DMA);
     // VDP_setTileMapEx(BG_A, &window_ui, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 21, 0, 0, 20, 2, DMA);
     // this index needs to be adjusted based on the size in tiles of the main level tileset
     VDP_loadTileSet(&border_tileset, 20, DMA);
@@ -111,22 +125,30 @@ void updateLevel(u8 level)
     {
         if (global_counter == 2) // 2 is the earliest global counter for spawning stuff
         {
-            levelObject.beastmode_chance = 1;
+            levelObject.beastmode_chance = 0;
             levelObject.beastmode_time_limit = 300;
             levelObject.enemy_shot_chance = 30; // percent
             initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-            initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-            initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
-            initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
+            // initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+            // initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
+            // initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
+            // initEnemy(ENEMY_TYPE_DEMON, 50, 50);
         }
         else if (global_counter == 100)
         {
-            levelObject.beastmode_chance = 10;
-            levelObject.beastmode_time_limit = 200;
-            initDoor(96 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-            initDoor(96 + SCREEN_X_OFFSET, 96 + SCREEN_Y_OFFSET);
-            initDoor(96 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
-            initDoor(96 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
+            // levelObject.beastmode_chance = 10;
+            // levelObject.beastmode_time_limit = 200;
+            // initDoor(96 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+            // initDoor(96 + SCREEN_X_OFFSET, 96 + SCREEN_Y_OFFSET);
+            // initDoor(96 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
+            // initDoor(96 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
+        }
+
+        if (UPDATE_SCROLL)
+        {
+            UPDATE_SCROLL = false;
+
+            VDP_setTileMapEx(BG_B, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, SCROLL_X, SCROLL_Y, 20, 16, DMA);
         }
     }
 }

@@ -53,9 +53,32 @@ void killEnemy(u8 index)
 void enemyAI(u8 index)
 
 {
-    if (global_counter % 3 == 0)
+
+    if (enemy_array[index].type == ENEMY_TYPE_EYE)
     {
-        if (enemy_array[index].type == ENEMY_TYPE_DEMON)
+        if (global_counter % 120 == 0)
+        {
+            s8 bullet_x_velocity = 0;
+            s8 bullet_y_velocity = 0;
+            if (enemy_array[index].data.x >= player.x + PLAYER_WIDTH)
+            {
+                bullet_x_velocity = -1;
+            }
+            else if (enemy_array[index].data.x <= player.x - PLAYER_WIDTH)
+            {
+                bullet_x_velocity = 1;
+            }
+            if (enemy_array[index].data.y >= player.y + PLAYER_HEIGHT)
+            {
+                bullet_y_velocity = -1;
+            }
+            else if (enemy_array[index].data.y <= player.y - PLAYER_HEIGHT)
+            {
+                bullet_y_velocity = 1;
+            }
+            initBullet(enemy_array[index].data.x, enemy_array[index].data.y, bullet_x_velocity, bullet_y_velocity);
+        }
+        else if (global_counter % 3 == 0)
         {
             if (enemy_array[index].data.x >= player.x)
             {
@@ -74,11 +97,40 @@ void enemyAI(u8 index)
                 enemy_array[index].y_velocity = 1 * enemy_array[index].speed;
             }
         }
+
+        else
+        {
+            enemy_array[index].x_velocity = 0;
+            enemy_array[index].y_velocity = 0;
+        }
     }
-    else
+    else if (enemy_array[index].type == ENEMY_TYPE_DEMON)
     {
-        enemy_array[index].x_velocity = 0;
-        enemy_array[index].y_velocity = 0;
+        if (global_counter % 3 == 0)
+        {
+            if (enemy_array[index].data.x >= player.x)
+            {
+                enemy_array[index].x_velocity = -1 * enemy_array[index].speed;
+            }
+            else
+            {
+                enemy_array[index].x_velocity = 1 * enemy_array[index].speed;
+            }
+            if (enemy_array[index].data.y >= player.y)
+            {
+                enemy_array[index].y_velocity = -1 * enemy_array[index].speed;
+            }
+            else
+            {
+                enemy_array[index].y_velocity = 1 * enemy_array[index].speed;
+            }
+        }
+
+        else
+        {
+            enemy_array[index].x_velocity = 0;
+            enemy_array[index].y_velocity = 0;
+        }
     }
 }
 // bullet stuff

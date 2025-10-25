@@ -122,7 +122,7 @@ void enemyAI(u8 index)
     }
     else if (enemy_array[index].type == ENEMY_TYPE_DEMON)
     {
-        if (global_counter % 3 == 0)
+        if (global_counter % 2 == 0)
         {
             if (enemy_array[index].data.x >= player.x)
             {

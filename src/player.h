@@ -31,6 +31,7 @@ struct playerData
     s8 attack_cooldown;
     s8 hp;
     u8 cast;
+    u8 spell_list;
 };
 
 extern struct playerData player;

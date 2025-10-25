@@ -80,8 +80,16 @@ void updateDoors()
                 {
                     toggleDoorBeastmode(i);
                     SPR_setAnim(door_array[i].data.sprite, 2);
-                    initEnemy(ENEMY_TYPE_EYE, door_array[i].data.x, door_array[i].data.y);
-                    door_array[i].data.active = false;
+
+                    if ((random() % (100 - 1 + 1)) + 1 <= 25)
+                    {
+                        initEnemy(ENEMY_TYPE_EYE, door_array[i].data.x, door_array[i].data.y);
+                    }
+                    else
+                    {
+                        initEnemy(ENEMY_TYPE_DEMON, door_array[i].data.x, door_array[i].data.y);
+                    }
+                    // door_array[i].data.active = false;
                 }
             }
             else
@@ -126,7 +134,7 @@ void updateLevel(u8 level)
         {
             levelObject.beastmode_chance = 100;
             levelObject.beastmode_time_limit = 200;
-            levelObject.enemy_shot_chance = 30; // percent
+            levelObject.enemy_shot_chance = 60; // percent
             initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
             initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
             initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);

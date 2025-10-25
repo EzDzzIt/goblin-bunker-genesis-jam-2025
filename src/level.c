@@ -124,13 +124,13 @@ void updateLevel(u8 level)
     {
         if (global_counter == 2) // 2 is the earliest global counter for spawning stuff
         {
-            levelObject.beastmode_chance = 0;
-            levelObject.beastmode_time_limit = 300;
+            levelObject.beastmode_chance = 100;
+            levelObject.beastmode_time_limit = 200;
             levelObject.enemy_shot_chance = 30; // percent
             initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-            // initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-            // initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
-            // initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
+            initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+            initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
+            initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
             // initEnemy(ENEMY_TYPE_DEMON, 50, 50);
         }
         else if (global_counter == 100)
@@ -146,8 +146,11 @@ void updateLevel(u8 level)
         if (UPDATE_SCROLL)
         {
             UPDATE_SCROLL = false;
-
-            VDP_setTileMapEx(BG_B, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, SCROLL_X, SCROLL_Y, 20, 16, DMA);
+            MAP_X += SCROLL_X;
+            MAP_Y += SCROLL_Y;
+            SCROLL_X = 0;
+            SCROLL_Y = 0;
+            VDP_setTileMapEx(BG_B, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, MAP_X, MAP_Y, 20, 16, DMA);
         }
     }
 }

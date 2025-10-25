@@ -15,7 +15,9 @@ void player_info_print()
     VDP_drawText(buffer, 7, 21);
     // score
     char score_buffer[8];
-    sprintf(score_buffer, "SC: %d", score);
+    // sprintf(score_buffer, "SC: %d", score);
+    sprintf(score_buffer, "DR: %d", door_array[0].data.y);
+
     VDP_drawText(score_buffer, 7, 22);
     // dash
     if (player.warp_cooldown <= 0)
@@ -54,7 +56,7 @@ void initPlayer()
 void updatePlayer()
 {
 
-    // player_info_print();
+    player_info_print();
 
     player.x += player.velocity.x;
     player.y += player.velocity.y;
@@ -194,10 +196,17 @@ void updatePlayer()
         {
             // SPR_defragVRAM();
             SPR_setAnim(player.sprite, PLAYER_ANIM_HURT);
-            SPR_setPalette(player.sprite, PAL3);
         }
         player.hurt_cooldown -= 1;
-        if (player.hurt_cooldown == 25)
+        if (player.hurt_cooldown % 12 == 0)
+        {
+            SPR_setPalette(player.sprite, PAL2);
+        }
+        else
+        {
+            SPR_setPalette(player.sprite, PAL0);
+        }
+        if (player.hurt_cooldown == 0)
         {
             SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
             SPR_setPalette(player.sprite, PAL0);
@@ -235,19 +244,19 @@ void updatePlayer()
     if (player.y >= SCREEN_Y_END - 32) // adjust for window
     {
         player.y = SCREEN_Y_OFFSET + 2; // send player to top of next area
-        SCROLL_Y += 16;                 // tileset needs to scroll up by 20 tiles
+        SCROLL_Y = 16;                  // tileset needs to scroll up by 16 tiles
         UPDATE_SCROLL = TRUE;
     }
     else if (player.y < SCREEN_Y_OFFSET + 1)
     {
-        if (SCROLL_Y <= 0)
+        if (MAP_Y <= 0)
         {
             SCROLL_Y = 0;
         }
         else
         {
             player.y = SCREEN_Y_END - 33;
-            SCROLL_Y -= 16;
+            SCROLL_Y = -16;
             UPDATE_SCROLL = TRUE;
         }
     }
@@ -346,7 +355,7 @@ void checkInput()
                 }
             }
             // check for attack/spell
-            if (state & BUTTON_B)
+            if (state & BUTTON_B && changed & BUTTON_B)
             {
                 if (player.attack_cooldown <= 0)
                 {

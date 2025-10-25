@@ -18,8 +18,10 @@ u8 title_counter = 0;
 u16 global_counter = 0;
 bool title_skip = false;
 u16 score = 0;
-s16 SCROLL_X = 0;
-s16 SCROLL_Y = 0;
+s8 SCROLL_X = 0;
+s8 SCROLL_Y = 0;
+u8 MAP_X = 0;
+u8 MAP_Y = 0; // these represent the region of the tilemap we are in
 bool UPDATE_SCROLL = FALSE;
 
 bool collision_check(f16 x, f16 y, u8 w, u8 h, f16 x2, f16 y2, u8 w2, u8 h2)

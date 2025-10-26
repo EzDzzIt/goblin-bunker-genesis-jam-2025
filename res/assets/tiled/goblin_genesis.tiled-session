@@ -29,7 +29,7 @@
             "scale": 5.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 48.45454545454545,
+                "x": 48.36363636363636,
                 "y": 47.45454545454545
             }
         },
@@ -74,8 +74,10 @@
             }
         }
     },
+    "last.exportedFilePath": "/home/nate/repos/goblin-bunker-genesis-jam-2025/res/assets/tiled",
     "last.imagePath": "/home/nate/repos/goblin-bunker-genesis-jam-2025/res/assets",
     "map.height": 32,
+    "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 8,
     "map.tileWidth": 8,

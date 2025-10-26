@@ -47,3 +47,8 @@ extern bool collision_check(f16 x, f16 y, u8 width, u8 height, f16 x2, f16 y2, u
 extern void clear_graphics(bool stop_music);
 extern void reset_globals();
 extern void setSprite(Sprite *sprite, fix16 x, fix16 y);
+
+// level collision data
+#define level_3_width 40  // tiles
+#define level_3_height 32 // tiles
+extern const u8 level_3_map_collision[32][40];

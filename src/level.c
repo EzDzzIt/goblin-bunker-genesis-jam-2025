@@ -201,6 +201,7 @@ void updateLevel(u8 level)
 
             levelObject.map_height = 16 * 2 - 16; // 16 tiles per screen height
             levelObject.map_width = 20 * 2 - 20;  // 20 tiles per screen width
+            // levelObject.collision_map = [];
             levelObject.beastmode_chance = 100;
             levelObject.beastmode_time_limit = 200;
             levelObject.enemy_shot_chance = 60; // percent

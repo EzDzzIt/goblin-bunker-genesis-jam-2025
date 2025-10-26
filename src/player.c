@@ -89,6 +89,13 @@ void updatePlayer()
         player.y -= player.velocity.y;
         player.y = SCREEN_Y_OFFSET;
     }
+    u8 tile_x = player.x / 8;
+    u8 tile_y = player.y / 8;
+    if (level_3_map_collision[tile_y][tile_x] == 8)
+    {
+        player.velocity.x = 0;
+        player.velocity.y = 0;
+    }
     u8 i = 0;
     bool collided = false;
     bool hurt = false;

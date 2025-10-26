@@ -23,6 +23,8 @@ s8 SCROLL_Y = 0;
 u8 MAP_X = 0;
 u8 MAP_Y = 0; // these represent the region of the tilemap we are in
 bool UPDATE_SCROLL = FALSE;
+TileMap *currentMap;
+u8 current_level;
 
 bool collision_check(f16 x, f16 y, u8 w, u8 h, f16 x2, f16 y2, u8 w2, u8 h2)
 {
@@ -77,11 +79,54 @@ void clear_graphics(bool stop_music)
 
 void reset_globals()
 {
-    score = 0; // reset score just in case
+
+    global_counter = 1; // reset for new level
+
+    UPDATE_SCROLL = false;
+    MAP_X = 0;
+    MAP_Y = 0;
+    SCROLL_X = 0;
+    SCROLL_Y = 0;
+
     u8 i = 0;
-    for (i = 0; i < 2; i++)
+    for (i = 0; i < MAX_SACRED_GROUND; i++)
     {
-        sacred_ground_array[i].lifetime = 0;
-        sacred_ground_array[i].data.active = false;
+        if (sacred_ground_array[i].data.active)
+        {
+            sacred_ground_array[i].data.active = FALSE;
+            SPR_releaseSprite(sacred_ground_array[i].data.sprite);
+        }
+    }
+    for (i = 0; i < MAX_DOORS; i++)
+    {
+        if (door_array[i].data.active)
+        {
+            door_array[i].data.active = FALSE;
+            SPR_releaseSprite(door_array[i].data.sprite);
+        }
+    }
+    for (i = 0; i < MAX_ENEMIES; i++)
+    {
+        if (enemy_array[i].data.active)
+        {
+            enemy_array[i].data.active = FALSE;
+            SPR_releaseSprite(enemy_array[i].data.sprite);
+        }
+    }
+    for (i = 0; i < MAX_BULLETS; i++)
+    {
+        if (bullet_array[i].data.active)
+        {
+            bullet_array[i].data.active = FALSE;
+            SPR_releaseSprite(bullet_array[i].data.sprite);
+        }
+    }
+    for (i = 0; i < MAX_BULLETS; i++)
+    {
+        if (player_bullet_array[i].data.active)
+        {
+            player_bullet_array[i].data.active = FALSE;
+            SPR_releaseSprite(player_bullet_array[i].data.sprite);
+        }
     }
 }

@@ -40,6 +40,8 @@ extern s8 SCROLL_Y;
 extern u8 MAP_X;
 extern u8 MAP_Y;
 extern bool UPDATE_SCROLL;
+extern TileMap *currentMap;
+extern u8 current_level;
 
 extern bool collision_check(f16 x, f16 y, u8 width, u8 height, f16 x2, f16 y2, u8 width2, u8 height2);
 extern void clear_graphics(bool stop_music);

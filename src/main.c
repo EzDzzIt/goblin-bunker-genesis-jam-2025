@@ -24,14 +24,15 @@ int main(bool resetType)
 
 		if (game_state == GAME_STATE_GAME)
 		{
-			if (global_counter >= 20000)
+			if (global_counter >= 50000)
 			{
 				global_counter = 2;
 			}
 			if (global_counter == 1)
 			{
-				reset_globals();
-				initLevel(0);
+				// stuff we only want to run going in to level 1
+				initLevel(2);
+				initPlayer();
 			}
 			else
 			{
@@ -39,7 +40,7 @@ int main(bool resetType)
 				if (player.hp > 0)
 				{
 					updateGame();
-					updateLevel(0);
+					updateLevel(current_level);
 					SPR_update();
 					display_stats();
 				}

@@ -109,39 +109,83 @@ struct levelData levelObject;
 
 void initLevel(u8 level)
 {
-    clear_graphics(FALSE);
+    // clear_graphics(FALSE);
 
     XGM2_setFMVolume(40); // debug
     XGM2_play(xgm2_level0);
     XGM2_fadeIn(150);
 
-    initPlayer();
+    current_level = level;
 
     // load in new level data based on the level id parameter
     VDP_loadTileSet(&level_tileset, 0, DMA);
-    VDP_setTileMapEx(BG_B, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, SCROLL_X, SCROLL_Y, 20, 16, DMA);
-    // VDP_setTileMapEx(BG_A, &window_ui, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 21, 0, 0, 20, 2, DMA);
-    // this index needs to be adjusted based on the size in tiles of the main level tileset
+
+    if (level == 1)
+    {
+        currentMap = &level_1_map;
+    }
+    else if (level == 2)
+    {
+        currentMap = &level_2_map;
+    }
+    else if (level == 3)
+    {
+        currentMap = &level_3_map;
+    }
+    VDP_setTileMapEx(BG_B, currentMap, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, SCROLL_X, SCROLL_Y, 20, 16, DMA);
     VDP_loadTileSet(&border_tileset, 20, DMA);
     VDP_setTileMapEx(BG_A, &border_image, TILE_ATTR_FULL(PAL3, 1, FALSE, FALSE, 20), 0, 0, 0, 0, 32, 28, DMA);
 }
 
 void updateLevel(u8 level)
 {
-    if (level == 0)
+    if (level == 1)
     {
         if (global_counter == 2) // 2 is the earliest global counter for spawning stuff
         {
-            levelObject.map_height = 16 * 3 - 16; // 16 tiles per screen height
+
+            levelObject.map_height = 16 * 1 - 16; // 16 tiles per screen height
+            levelObject.map_width = 20 * 1 - 20;  // 20 tiles per screen width
+            levelObject.beastmode_chance = 100;
+            levelObject.beastmode_time_limit = 200;
+            levelObject.enemy_shot_chance = 60; // percent
+            // player spawn
+            player.x = 0;
+            player.y = 0;
+            initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET);
+            // initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+            // initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
+            // initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
+            // initEnemy(ENEMY_TYPE_DEMON, 50, 50);
+        }
+        else if (global_counter == 100)
+        {
+            // levelObject.beastmode_chance = 10;
+            // levelObject.beastmode_time_limit = 200;
+            // initDoor(96 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+            // initDoor(96 + SCREEN_X_OFFSET, 96 + SCREEN_Y_OFFSET);
+            // initDoor(96 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
+            // initDoor(96 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
+        }
+    }
+    else if (level == 2)
+    {
+        if (global_counter == 2) // 2 is the earliest global counter for spawning stuff
+        {
+
+            levelObject.map_height = 16 * 1 - 16; // 16 tiles per screen height
             levelObject.map_width = 20 * 2 - 20;  // 20 tiles per screen width
             levelObject.beastmode_chance = 100;
             levelObject.beastmode_time_limit = 200;
             levelObject.enemy_shot_chance = 60; // percent
-            initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-            initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-            initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
-            initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
-            initEnemy(ENEMY_TYPE_DEMON, 50, 50);
+            // player spawn
+            player.x = 0;
+            player.y = 0;
+            initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET);
+            // initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+            // initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
+            // initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
+            // initEnemy(ENEMY_TYPE_DEMON, 50, 50);
         }
         else if (global_counter == 100)
         {
@@ -160,6 +204,6 @@ void updateLevel(u8 level)
         MAP_Y += SCROLL_Y;
         SCROLL_X = 0;
         SCROLL_Y = 0;
-        VDP_setTileMapEx(BG_B, &level_map, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, MAP_X, MAP_Y, 20, 16, DMA);
+        VDP_setTileMapEx(BG_B, currentMap, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, MAP_X, MAP_Y, 20, 16, DMA);
     }
 }

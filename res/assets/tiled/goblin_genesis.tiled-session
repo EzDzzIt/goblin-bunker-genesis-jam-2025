@@ -17,12 +17,44 @@
                 "y": 169.25
             }
         },
-        "level0_small.tmx": {
-            "scale": 8.497222222222222,
+        "level0_big.tmx": {
+            "scale": 3.186458333333333,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 158.0516508662962,
-                "y": 86.2634847989539
+                "x": 159.89539065053938,
+                "y": 192.06276560967638
+            }
+        },
+        "level0_small.tmx": {
+            "scale": 5.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 48.45454545454545,
+                "y": 47.45454545454545
+            }
+        },
+        "level_1.tmx": {
+            "scale": 4,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 158.875,
+                "y": 103.25
+            }
+        },
+        "level_2.tmx": {
+            "scale": 5.44171875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 159.96784104286905,
+                "y": 63.95038332328367
+            }
+        },
+        "level_3.tmx": {
+            "scale": 4.7796875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 159.94769532526973,
+                "y": 128.04184373978427
             }
         },
         "tileset0.tsx": {
@@ -43,11 +75,11 @@
         }
     },
     "last.imagePath": "/home/nate/repos/goblin-bunker-genesis-jam-2025/res/assets",
-    "map.height": 2,
+    "map.height": 32,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 8,
     "map.tileWidth": 8,
-    "map.width": 20,
+    "map.width": 40,
     "openFiles": [
         "tileset0_testing.tsx",
         "level0_small.tmx"

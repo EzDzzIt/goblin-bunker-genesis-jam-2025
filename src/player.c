@@ -260,7 +260,7 @@ void updatePlayer()
             UPDATE_SCROLL = TRUE;
         }
     }
-    if (player.x >= SCREEN_X_END - 17 && MAP_X < levelObject.map_width) // adjust for window
+    if (player.x >= SCREEN_X_END - 8 && MAP_X < levelObject.map_width) // adjust for window
     {
         player.x = SCREEN_X_OFFSET + 2; // send player to top of next area
         SCROLL_X = 20;                  // tileset needs to scroll up by 16 tiles
@@ -274,7 +274,7 @@ void updatePlayer()
         }
         else
         {
-            player.x = SCREEN_X_END - 17;
+            player.x = SCREEN_X_END - 9;
             SCROLL_X = -20;
             UPDATE_SCROLL = TRUE;
         }
@@ -349,6 +349,11 @@ void checkInput()
                     player.attack_cooldown = PLAYER_ATTACK_COOLDOWN;
                     player.cast = 1;
                 }
+            }
+            // DEBUG
+            if (state & BUTTON_START && changed & BUTTON_START)
+            {
+                initLevel(current_level + 1);
             }
         }
         else if (game_state == GAME_STATE_TITLE || game_state == GAME_STATE_OVER)

@@ -112,22 +112,22 @@ void updateSpells()
             }
             else
             {
-                if (player_bullet_array[i].data.x >= SCREEN_X_END - BULLET_WIDTH)
+                if (player_bullet_array[i].data.x > SCREEN_X_END)
                 {
                     SPR_releaseSprite(player_bullet_array[i].data.sprite);
                     player_bullet_array[i].data.active = false;
                 }
-                else if (player_bullet_array[i].data.x <= SCREEN_X_OFFSET)
+                else if (player_bullet_array[i].data.x < SCREEN_X_OFFSET)
                 {
                     SPR_releaseSprite(player_bullet_array[i].data.sprite);
                     player_bullet_array[i].data.active = false;
                 }
-                if (player_bullet_array[i].data.y >= SCREEN_Y_END - BULLET_HEIGHT)
+                if (player_bullet_array[i].data.y > SCREEN_Y_END - BULLET_HEIGHT)
                 {
                     SPR_releaseSprite(player_bullet_array[i].data.sprite);
                     player_bullet_array[i].data.active = false;
                 }
-                else if (player_bullet_array[i].data.y <= SCREEN_Y_OFFSET)
+                else if (player_bullet_array[i].data.y < SCREEN_Y_OFFSET)
                 {
                     SPR_releaseSprite(player_bullet_array[i].data.sprite);
                     player_bullet_array[i].data.active = false;
@@ -136,7 +136,7 @@ void updateSpells()
         }
     }
     // update sacred ground
-    for (i = 0; i < 2; i++)
+    for (i = 0; i < MAX_SACRED_GROUND; i++)
     {
         if (sacred_ground_array[i].lifetime > 0)
         {

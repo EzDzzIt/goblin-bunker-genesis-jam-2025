@@ -170,11 +170,31 @@ void updateEnemies()
                 enemy_array[i].data.x += enemy_array[i].x_velocity;
                 enemy_array[i].data.y += enemy_array[i].y_velocity;
             }
+            if (enemy_array[i].x_velocity < 0)
+            {
+                SPR_setHFlip(enemy_array[i].data.sprite, FALSE);
+            }
+            else
+            {
+                SPR_setHFlip(enemy_array[i].data.sprite, TRUE);
+            }
             SPR_setPosition(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
             // setSprite(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
             if (enemy_array[i].hp <= 0)
             {
                 killEnemy(i);
+            }
+            if (enemy_array[i].hurt_cooldown > 0)
+            {
+                enemy_array[i].hurt_cooldown -= 1;
+                if (enemy_array[i].hurt_cooldown % 2 == 0)
+                {
+                    SPR_setPalette(enemy_array[i].data.sprite, PAL1);
+                }
+                else
+                {
+                    SPR_setPalette(enemy_array[i].data.sprite, PAL3);
+                }
             }
         }
     }

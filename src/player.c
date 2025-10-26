@@ -16,7 +16,7 @@ void player_info_print()
     // score
     char score_buffer[8];
     // sprintf(score_buffer, "SC: %d", score);
-    sprintf(score_buffer, "DR: %d", door_array[0].data.y);
+    sprintf(score_buffer, "DR: %d", MAP_Y);
 
     VDP_drawText(score_buffer, 7, 22);
     // dash
@@ -58,8 +58,10 @@ void updatePlayer()
 
     player_info_print();
 
-    player.x += player.velocity.x;
-    player.y += player.velocity.y;
+    player.x += player.velocity.x + player.boost.x;
+    player.y += player.velocity.y + player.boost.y;
+    player.boost.x = 0;
+    player.boost.y = 0;
 
     // cast a spell last frame?
     if (player.cast == 1)
@@ -241,7 +243,7 @@ void updatePlayer()
         SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
     }
     // adjust final scroll position based on player
-    if (player.y >= SCREEN_Y_END - 32) // adjust for window
+    if (player.y >= SCREEN_Y_END - 32 && MAP_Y < levelObject.map_height) // adjust for window
     {
         player.y = SCREEN_Y_OFFSET + 2; // send player to top of next area
         SCROLL_Y = 16;                  // tileset needs to scroll up by 16 tiles
@@ -257,6 +259,25 @@ void updatePlayer()
         {
             player.y = SCREEN_Y_END - 33;
             SCROLL_Y = -16;
+            UPDATE_SCROLL = TRUE;
+        }
+    }
+    if (player.x >= SCREEN_X_END - 32 && MAP_X < levelObject.map_width) // adjust for window
+    {
+        player.x = SCREEN_X_OFFSET + 2; // send player to top of next area
+        SCROLL_X = 20;                  // tileset needs to scroll up by 16 tiles
+        UPDATE_SCROLL = TRUE;
+    }
+    else if (player.x < SCREEN_X_OFFSET + 1)
+    {
+        if (MAP_X <= 0)
+        {
+            SCROLL_X = 0;
+        }
+        else
+        {
+            player.x = SCREEN_X_END - 33;
+            SCROLL_X = -20;
             UPDATE_SCROLL = TRUE;
         }
     }
@@ -290,68 +311,38 @@ void checkInput()
             player.last_input = 0;
             if (player.move_cooldown <= 0)
             {
-                if ((state & BUTTON_A) && player.warp_cooldown <= 0)
-                {
+                bool boost = false;
 
-                    if (state & BUTTON_LEFT)
-                    {
-                        player.velocity.x -= (player.speed + 2); // keep momentum
-                        // player.x -= 24;                    // warp 24 px
-                        player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
-                        player.hflip = true;
-                        SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
-                        player.last_input = BUTTON_A;
-                    }
-                    if (state & BUTTON_RIGHT)
-                    {
-                        player.velocity.x += (player.speed + 2);
-                        // player.x += 24;                    // warp 24 px
-                        player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
-                        player.hflip = false;
-                        SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
-                        player.last_input = BUTTON_A;
-                    }
-                    if (state & BUTTON_UP)
-                    {
-                        player.velocity.y -= (player.speed + 2);
-                        // player.y -= 24;
-                        player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
-                        SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
-                        player.last_input = BUTTON_A;
-                    }
-                    if (state & BUTTON_DOWN)
-                    {
-                        player.velocity.y += (player.speed + 2);
-                        // player.y += 24;
-                        player.warp_cooldown = PLAYER_WARP_COOLDOWN; // cooldown
-                        SPR_setAnim(player.sprite, PLAYER_ANIM_TELEPORT);
-                        player.last_input = BUTTON_A;
-                    }
-                }
-                else
+                if (state & BUTTON_A && changed & BUTTON_A)
                 {
-                    if (state & BUTTON_LEFT)
+                    boost = true;
+                    SPR_setAnim(player.sprite, PLAYER_ANIM_WARP);
+                }
+                if (state & BUTTON_LEFT)
+                {
+                    player.velocity.x -= (player.speed);
+                    if (boost)
                     {
-                        player.velocity.x -= player.speed;
-                        player.hflip = true;
-                        player.last_input = BUTTON_LEFT;
+                        player.boost.x = -2;
                     }
-                    if (state & BUTTON_RIGHT)
-                    {
-                        player.velocity.x += player.speed;
-                        player.hflip = false;
-                        player.last_input = BUTTON_RIGHT;
-                    }
-                    if (state & BUTTON_UP)
-                    {
-                        player.velocity.y -= player.speed;
-                        player.last_input = BUTTON_UP;
-                    }
-                    if (state & BUTTON_DOWN)
-                    {
-                        player.velocity.y += player.speed;
-                        player.last_input = BUTTON_DOWN;
-                    }
+                    player.hflip = true;
+                    player.last_input = BUTTON_LEFT;
+                }
+                if (state & BUTTON_RIGHT)
+                {
+                    player.velocity.x += (player.speed);
+                    player.hflip = false;
+                    player.last_input = BUTTON_RIGHT;
+                }
+                if (state & BUTTON_UP)
+                {
+                    player.velocity.y -= (player.speed);
+                    player.last_input = BUTTON_UP;
+                }
+                if (state & BUTTON_DOWN)
+                {
+                    player.velocity.y += (player.speed);
+                    player.last_input = BUTTON_DOWN;
                 }
             }
             // check for attack/spell

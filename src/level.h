@@ -45,6 +45,8 @@ struct levelData
     u8 beastmode_chance;
     u16 beastmode_time_limit;
     u8 enemy_shot_chance;
+    u8 map_width;
+    u8 map_height; // tiles
 };
 
 extern struct levelData levelObject;

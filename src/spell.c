@@ -96,7 +96,7 @@ void updateSpells()
                 {
                     if (collision_check(player_bullet_array[i].data.x, player_bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT, enemy_array[j].data.x, enemy_array[j].data.y, enemy_array[j].width, enemy_array[j].height))
                     {
-                        SPR_setPalette(enemy_array[j].data.sprite, PAL3);
+                        enemy_array[j].hurt_cooldown = 60;
                         enemy_array[j].hp -= 1;
                         collided = true;
                         break;
@@ -105,6 +105,7 @@ void updateSpells()
             }
             if (collided)
             {
+
                 SPR_releaseSprite(player_bullet_array[i].data.sprite);
                 player_bullet_array[i].data.active = false;
             }

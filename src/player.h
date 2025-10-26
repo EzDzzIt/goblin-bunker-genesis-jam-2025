@@ -3,7 +3,7 @@
 #include <genesis.h>
 
 #define PLAYER_ANIM_IDLE 0
-#define PLAYER_ANIM_TELEPORT 1
+#define PLAYER_ANIM_WARP 1
 #define PLAYER_ANIM_HURT 2
 #define PLAYER_ANIM_SPELL 3
 
@@ -32,6 +32,7 @@ struct playerData
     s8 hp;
     u8 cast;
     u8 spell_list;
+    Vect2D_f16 boost;
 };
 
 extern struct playerData player;

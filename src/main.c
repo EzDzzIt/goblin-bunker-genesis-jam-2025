@@ -32,7 +32,7 @@ int main(bool resetType)
 			{
 				// stuff we only want to run going in to level 1
 				VDP_loadTileSet(&level_tileset, 0, DMA);
-				initLevel(3); // DEBUG
+				initLevel(1); // DEBUG
 				initPlayer();
 			}
 			else

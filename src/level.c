@@ -22,6 +22,7 @@ void initDoor(u8 x, u8 y)
             door.data.y = y;
             door.data.active = true;
             door.beastmode = false;
+            door.shut_count = 0;
             // door.beastmode_sprite = SPR_addSprite(&doorbeast_sprite, x + 8, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
             // door.beastmode_x = x + 8;
             // door.beastmode_y = y;
@@ -145,13 +146,14 @@ void updateLevel(u8 level)
             levelObject.map_width = 20 * 1 - 20;  // 20 tiles per screen width
             levelObject.beastmode_chance = 100;
             levelObject.beastmode_time_limit = 200;
-            levelObject.enemy_shot_chance = 60; // percent
+            levelObject.enemy_shot_chance = 80; // percent
+            levelObject.doors_closed_limit = 3;
             // player spawn
-            player.x = 0;
-            player.y = 0;
+            player.x = SCREEN_X_OFFSET;
+            player.y = SCREEN_Y_OFFSET;
             initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET);
-            // initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-            // initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
+            initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+            initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
             // initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
             // initEnemy(ENEMY_TYPE_DEMON, 50, 50);
         }
@@ -163,6 +165,10 @@ void updateLevel(u8 level)
             // initDoor(96 + SCREEN_X_OFFSET, 96 + SCREEN_Y_OFFSET);
             // initDoor(96 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
             // initDoor(96 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
+        }
+        if (doors_closed == levelObject.doors_closed_limit)
+        {
+            initLevel(current_level + 1);
         }
     }
     else if (level == 2)
@@ -206,9 +212,9 @@ void updateLevel(u8 level)
             levelObject.beastmode_time_limit = 200;
             levelObject.enemy_shot_chance = 60; // percent
             // player spawn
-            player.x = 0;
-            player.y = 0;
-            initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET);
+            player.x = 50 + SCREEN_X_OFFSET;
+            player.y = 50 + SCREEN_Y_OFFSET;
+            // initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET);
             // initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
             // initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
             // initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);

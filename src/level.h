@@ -8,8 +8,8 @@ struct objectData
 {
     bool active;
     Sprite *sprite;
-    fix16 x;
-    fix16 y;
+    s16 x;
+    s16 y;
     bool hflip;
 };
 
@@ -26,10 +26,11 @@ struct doorData
     struct objectData data;
     bool beastmode;
     Sprite *beastmode_sprite;
-    fix16 beastmode_x;
-    fix16 beastmode_y;
+    s16 beastmode_x;
+    s16 beastmode_y;
     bool beastmode_hflip;
     u16 beastmode_counter;
+    u8 shut_count;
 };
 
 void initDoor(u8 x, u8 y);
@@ -47,6 +48,7 @@ struct levelData
     u8 enemy_shot_chance;
     u8 map_width;
     u8 map_height; // tiles
+    u8 doors_closed_limit;
 };
 
 extern struct levelData levelObject;

@@ -35,6 +35,7 @@ extern u8 title_counter;
 extern u16 global_counter;
 extern bool title_skip;
 extern u16 score;
+extern u8 doors_closed;
 extern s8 SCROLL_X;
 extern s8 SCROLL_Y;
 extern u8 MAP_X;

@@ -16,7 +16,7 @@ void player_info_print()
     // score
     char score_buffer[8];
     // sprintf(score_buffer, "SC: %d", score);
-    sprintf(score_buffer, "DR: %d", enemy_array[0].data.x);
+    sprintf(score_buffer, "DOORS: %d", levelObject.doors_closed_limit - doors_closed);
 
     VDP_drawText(score_buffer, 7, 22);
     // dash
@@ -89,13 +89,16 @@ void updatePlayer()
         player.y -= player.velocity.y;
         player.y = SCREEN_Y_OFFSET;
     }
-    u8 tile_x = player.x / 8;
-    u8 tile_y = player.y / 8;
-    if (level_3_map_collision[tile_y][tile_x] == 8)
-    {
-        player.velocity.x = 0;
-        player.velocity.y = 0;
-    }
+    // wip to implement level collisions
+    // TILES DEBUG
+    // u8 tile_x = (player.x - 48) / 8;
+    // u8 tile_y = (player.y - 40) / 8;
+    // u8 tile_type = level_3_map_collision[tile_y][tile_x];
+    // if (tile_type == 10 || tile_type == 15 || tile_type == 13 || tile_type == 8 || tile_type == 12)
+    // {
+    //     player.x -= player.velocity.x;
+    //     player.y -= player.velocity.y;
+    // }
     u8 i = 0;
     bool collided = false;
     bool hurt = false;
@@ -140,36 +143,30 @@ void updatePlayer()
                 }
             }
         }
-
-        // if (player.hurt_cooldown == PLAYER_HURT_COOLDOWN)
-        // {
-        //     SPR_setAnim(player.sprite, PLAYER_ANIM_HURT);
-        //     SPR_setPalette(player.sprite, PAL3);
-        // }
     }
 
     if (collided)
     {
-        u8 teleport_correction = 0;
-        if (player.last_input == BUTTON_A)
-        {
-            teleport_correction = PLAYER_TELEPORT_CORRECTION;
-        }
+        // u8 teleport_correction = 0;
+        // if (player.last_input == BUTTON_A)
+        // {
+        //     teleport_correction = PLAYER_TELEPORT_CORRECTION;
+        // }
         if (player.velocity.x > 0)
         {
-            player.x -= player.velocity.x + 2 + teleport_correction;
+            player.x -= player.velocity.x + 2; //+ teleport_correction;
         }
         else if (player.velocity.x < 0)
         {
-            player.x -= player.velocity.x - 2 - teleport_correction;
+            player.x -= player.velocity.x - 2; //- teleport_correction;
         }
         if (player.velocity.y > 0)
         {
-            player.y -= player.velocity.y + 2 + teleport_correction;
+            player.y -= player.velocity.y + 2; //+ teleport_correction;
         }
         else if (player.velocity.y < 0)
         {
-            player.y -= player.velocity.y - 2 - teleport_correction;
+            player.y -= player.velocity.y - 2; //- teleport_correction;
         }
 
         player.move_cooldown = PLAYER_MOVE_COOLDOWN;
@@ -269,11 +266,11 @@ void updatePlayer()
     }
     if (player.x >= SCREEN_X_END - 8 && MAP_X < levelObject.map_width) // adjust for window
     {
-        player.x = SCREEN_X_OFFSET + 2; // send player to top of next area
+        player.x = SCREEN_X_OFFSET + 8; // send player to top of next area
         SCROLL_X = 20;                  // tileset needs to scroll up by 16 tiles
         UPDATE_SCROLL = TRUE;
     }
-    else if (player.x < SCREEN_X_OFFSET + 1)
+    else if (player.x < SCREEN_X_OFFSET + 9)
     {
         if (MAP_X <= 0)
         {

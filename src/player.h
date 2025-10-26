@@ -19,8 +19,8 @@
 struct playerData
 {
     Sprite *sprite;
-    fix16 x;
-    fix16 y;
+    s16 x;
+    s16 y;
     bool hflip;
     fix16 speed;
     u16 last_input;
@@ -32,6 +32,8 @@ struct playerData
     s8 hp;
     u8 cast;
     u8 spell_list;
+    u8 tile_x;
+    u8 tile_y;
 };
 
 extern struct playerData player;

@@ -159,6 +159,12 @@ void updateSpells()
                         {
                             toggleDoorBeastmode(j);
                             score += 10;
+                            if (door_array[j].shut_count == 0)
+                            {
+                                doors_closed += 1;
+                            }
+
+                            door_array[j].shut_count += 1;
                         }
                     }
                 }

@@ -16,7 +16,7 @@ void player_info_print()
     // score
     char score_buffer[8];
     // sprintf(score_buffer, "SC: %d", score);
-    sprintf(score_buffer, "DR: %d", MAP_Y);
+    sprintf(score_buffer, "DR: %d", enemy_array[0].data.x);
 
     VDP_drawText(score_buffer, 7, 22);
     // dash

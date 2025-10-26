@@ -60,20 +60,18 @@ void updateDoors()
         {
             if (UPDATE_SCROLL)
             {
-                // door_array[i].data.x -= SCROLL_X * 8;
-                // door_array[i].data.y -= SCROLL_Y * 8;
-                if (door_array[i].data.y > SCREEN_Y_END || door_array[i].data.y < SCREEN_Y_OFFSET)
-                {
-                    // SPR_setVisibility(door_array[i].data.sprite, FALSE);
-                }
-                else
-                {
-                    // SPR_setVisibility(door_array[i].data.sprite, TRUE);
-                }
+                door_array[i].data.x -= SCROLL_X * 8;
+                door_array[i].data.y -= SCROLL_Y * 8;
             }
             SPR_setPosition(door_array[i].data.sprite, door_array[i].data.x, door_array[i].data.y);
             if (door_array[i].beastmode)
             {
+                if (UPDATE_SCROLL)
+                {
+                    door_array[i].beastmode_x -= SCROLL_X * 8;
+                    door_array[i].beastmode_y -= SCROLL_Y * 8;
+                }
+
                 SPR_setPosition(door_array[i].beastmode_sprite, door_array[i].beastmode_x, door_array[i].beastmode_y);
                 door_array[i].beastmode_counter += 1;
                 if (door_array[i].beastmode_counter >= levelObject.beastmode_time_limit)
@@ -215,7 +213,7 @@ void updateLevel(u8 level)
             // initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
             // initEnemy(ENEMY_TYPE_DEMON, 50, 50);
         }
-        else if (global_counter == 100)
+        else if (global_counter == 300)
         {
             // levelObject.beastmode_chance = 10;
             // levelObject.beastmode_time_limit = 200;
@@ -223,6 +221,7 @@ void updateLevel(u8 level)
             // initDoor(96 + SCREEN_X_OFFSET, 96 + SCREEN_Y_OFFSET);
             // initDoor(96 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
             // initDoor(96 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
+            // initEnemy(ENEMY_TYPE_DEMON, 50, 50);
         }
     }
     if (UPDATE_SCROLL)

@@ -160,16 +160,15 @@ void updateEnemies()
         {
             enemyAI(i); // ai calc to get x/y velocity
             // apply velocity
+
             if (UPDATE_SCROLL)
             {
-                // enemy_array[i].data.x += enemy_array[i].x_velocity + 20 * 8;
-                // enemy_array[i].data.y += enemy_array[i].y_velocity + 20 * 8;
+                enemy_array[i].data.x -= SCROLL_X * 8;
+                enemy_array[i].data.y -= SCROLL_Y * 8;
             }
-            else
-            {
-                enemy_array[i].data.x += enemy_array[i].x_velocity;
-                enemy_array[i].data.y += enemy_array[i].y_velocity;
-            }
+            enemy_array[i].data.x += enemy_array[i].x_velocity;
+            enemy_array[i].data.y += enemy_array[i].y_velocity;
+
             if (enemy_array[i].x_velocity < 0)
             {
                 SPR_setHFlip(enemy_array[i].data.sprite, FALSE);

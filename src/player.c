@@ -58,10 +58,8 @@ void updatePlayer()
 
     player_info_print();
 
-    player.x += player.velocity.x + player.boost.x;
-    player.y += player.velocity.y + player.boost.y;
-    player.boost.x = 0;
-    player.boost.y = 0;
+    player.x += player.velocity.x;
+    player.y += player.velocity.y;
 
     // cast a spell last frame?
     if (player.cast == 1)
@@ -262,7 +260,7 @@ void updatePlayer()
             UPDATE_SCROLL = TRUE;
         }
     }
-    if (player.x >= SCREEN_X_END - 32 && MAP_X < levelObject.map_width) // adjust for window
+    if (player.x >= SCREEN_X_END - 17 && MAP_X < levelObject.map_width) // adjust for window
     {
         player.x = SCREEN_X_OFFSET + 2; // send player to top of next area
         SCROLL_X = 20;                  // tileset needs to scroll up by 16 tiles
@@ -276,7 +274,7 @@ void updatePlayer()
         }
         else
         {
-            player.x = SCREEN_X_END - 33;
+            player.x = SCREEN_X_END - 17;
             SCROLL_X = -20;
             UPDATE_SCROLL = TRUE;
         }
@@ -309,22 +307,20 @@ void checkInput()
             player.velocity.x = 0;
             player.velocity.y = 0;
             player.last_input = 0;
+            if (state & BUTTON_A && changed & BUTTON_A)
+            {
+                if (player.warp_cooldown <= 0)
+                {
+
+                    initWarp();
+                }
+            }
             if (player.move_cooldown <= 0)
             {
-                bool boost = false;
 
-                if (state & BUTTON_A && changed & BUTTON_A)
-                {
-                    boost = true;
-                    SPR_setAnim(player.sprite, PLAYER_ANIM_WARP);
-                }
                 if (state & BUTTON_LEFT)
                 {
                     player.velocity.x -= (player.speed);
-                    if (boost)
-                    {
-                        player.boost.x = -2;
-                    }
                     player.hflip = true;
                     player.last_input = BUTTON_LEFT;
                 }

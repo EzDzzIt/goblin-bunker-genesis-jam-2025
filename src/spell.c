@@ -40,13 +40,13 @@ void initPlayerBullet(fix16 x, fix16 y, f16 x_velocity, f16 y_velocity)
     }
 }
 
-struct spellData sacred_ground_array[2];
+struct spellData sacred_ground_array[MAX_SACRED_GROUND];
 
 void initSacredGround(fix16 x, fix16 y)
 {
 
     u8 i = 0;
-    for (i = 0; i < 2; i++)
+    for (i = 0; i < MAX_SACRED_GROUND; i++)
     {
         if (!sacred_ground_array[i].data.active)
         {
@@ -55,6 +55,7 @@ void initSacredGround(fix16 x, fix16 y)
             SPR_setAlwaysAtBottom(spell.data.sprite);
             spell.data.x = x;
             spell.data.y = y;
+
             spell.data.active = true;
             spell.lifetime = 120;
             SPR_setAnim(spell.data.sprite, SACRED_GROUND_ANIM);
@@ -164,4 +165,12 @@ void updateSpells()
             }
         }
     }
+}
+
+void initWarp()
+{
+    player.warp_cooldown = PLAYER_WARP_COOLDOWN;
+    SPR_setAnim(player.sprite, PLAYER_ANIM_WARP);
+    player.x = ((random() % (20 - 1 + 1)) + 1) * 8;
+    player.y = ((random() % (16 - 1 + 2)) + 1) * 8;
 }

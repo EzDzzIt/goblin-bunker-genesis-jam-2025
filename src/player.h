@@ -32,7 +32,6 @@ struct playerData
     s8 hp;
     u8 cast;
     u8 spell_list;
-    Vect2D_f16 boost;
 };
 
 extern struct playerData player;

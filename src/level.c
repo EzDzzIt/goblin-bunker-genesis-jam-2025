@@ -60,8 +60,8 @@ void updateDoors()
         {
             if (UPDATE_SCROLL)
             {
-                door_array[i].data.x -= SCROLL_X * 8;
-                door_array[i].data.y -= SCROLL_Y * 8;
+                // door_array[i].data.x -= SCROLL_X * 8;
+                // door_array[i].data.y -= SCROLL_Y * 8;
                 if (door_array[i].data.y > SCREEN_Y_END || door_array[i].data.y < SCREEN_Y_OFFSET)
                 {
                     // SPR_setVisibility(door_array[i].data.sprite, FALSE);
@@ -137,11 +137,11 @@ void updateLevel(u8 level)
             levelObject.beastmode_chance = 100;
             levelObject.beastmode_time_limit = 200;
             levelObject.enemy_shot_chance = 60; // percent
-            // initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-            // initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
-            // initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
-            // initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
-            // initEnemy(ENEMY_TYPE_DEMON, 50, 50);
+            initDoor(16 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+            initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+            initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
+            initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
+            initEnemy(ENEMY_TYPE_DEMON, 50, 50);
         }
         else if (global_counter == 100)
         {

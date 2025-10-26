@@ -350,6 +350,14 @@ void checkInput()
                     player.cast = 1;
                 }
             }
+            if (state & BUTTON_C && changed & BUTTON_C)
+            {
+                if (player.attack_cooldown <= 0)
+                {
+                    player.attack_cooldown = PLAYER_ATTACK_COOLDOWN;
+                    player.cast = 1;
+                }
+            }
             // DEBUG
             if (state & BUTTON_START && changed & BUTTON_START)
             {

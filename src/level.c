@@ -116,9 +116,8 @@ void initLevel(u8 level)
     XGM2_fadeIn(150);
 
     current_level = level;
-
-    // load in new level data based on the level id parameter
-    VDP_loadTileSet(&level_tileset, 0, DMA);
+    reset_globals();
+    SPR_defragVRAM();
 
     if (level == 1)
     {
@@ -174,6 +173,35 @@ void updateLevel(u8 level)
         {
 
             levelObject.map_height = 16 * 1 - 16; // 16 tiles per screen height
+            levelObject.map_width = 20 * 2 - 20;  // 20 tiles per screen width
+            levelObject.beastmode_chance = 100;
+            levelObject.beastmode_time_limit = 200;
+            levelObject.enemy_shot_chance = 60; // percent
+            // player spawn
+            player.x = 0;
+            player.y = 0;
+            initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET);
+            // initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+            // initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
+            // initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
+            // initEnemy(ENEMY_TYPE_DEMON, 50, 50);
+        }
+        else if (global_counter == 100)
+        {
+            // levelObject.beastmode_chance = 10;
+            // levelObject.beastmode_time_limit = 200;
+            // initDoor(96 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET);
+            // initDoor(96 + SCREEN_X_OFFSET, 96 + SCREEN_Y_OFFSET);
+            // initDoor(96 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
+            // initDoor(96 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
+        }
+    }
+    else if (level == 3)
+    {
+        if (global_counter == 2) // 2 is the earliest global counter for spawning stuff
+        {
+
+            levelObject.map_height = 16 * 2 - 16; // 16 tiles per screen height
             levelObject.map_width = 20 * 2 - 20;  // 20 tiles per screen width
             levelObject.beastmode_chance = 100;
             levelObject.beastmode_time_limit = 200;

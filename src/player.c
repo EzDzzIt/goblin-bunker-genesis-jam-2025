@@ -16,7 +16,7 @@ void player_info_print()
     // score
     char score_buffer[8];
     // sprintf(score_buffer, "SC: %d", score);
-    sprintf(score_buffer, ": %d", level_tileset.numTile);
+    sprintf(score_buffer, "DOORS: %d", levelObject.doors_closed_limit - doors_closed);
 
     VDP_drawText(score_buffer, 7, 22);
     // dash

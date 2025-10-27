@@ -83,18 +83,17 @@ void updateSpells()
             bool collided = false;
             u8 j = 0;
             // collide with doors??? or no?
-            // for (j = 0; j < MAX_DOORS; j++)
-            // {
-            //     if (door_array[j].data.active)
-            //     {
-            //         if (collision_check(player_bullet_array[i].data.x, player_bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
-            //         {
-            //             SPR_setPalette(door_array[j].data.sprite, PAL3);
-            //             collided = true;
-            //             break;
-            //         }
-            //     }
-            // }
+            for (j = 0; j < MAX_DOORS; j++)
+            {
+                if (door_array[j].data.active)
+                {
+                    if (collision_check(player_bullet_array[i].data.x, player_bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
+                    {
+                        collided = true;
+                        break;
+                    }
+                }
+            }
             for (j = 0; j < MAX_ENEMIES; j++)
             {
                 if (enemy_array[j].data.active)
@@ -164,7 +163,7 @@ void updateSpells()
                         // collision check between sacred ground and doors needs slight mod to work
                         if (door_array[j].beastmode)
                         {
-                            if (collision_check(sacred_ground_array[i].data.x - 2, sacred_ground_array[i].data.y - 3, SACRED_GROUND_WIDTH + 2, SACRED_GROUND_HEIGHT + 3, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
+                            if (collision_check(sacred_ground_array[i].data.x - 3, sacred_ground_array[i].data.y - 6, SACRED_GROUND_WIDTH + 3, SACRED_GROUND_HEIGHT + 6, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
                             {
                                 if (door_array[j].close_cooldown == 0)
                                 {

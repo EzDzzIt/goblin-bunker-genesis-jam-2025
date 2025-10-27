@@ -130,9 +130,10 @@ void initLevel(u8 level)
     {
         currentMap = &level_3_map;
     }
+    VDP_loadTileSet(&level_tileset, 0, DMA);
     VDP_setTileMapEx(BG_B, currentMap, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, SCROLL_X, SCROLL_Y, 20, 16, DMA);
-    VDP_loadTileSet(&border_tileset, 20, DMA);
-    VDP_setTileMapEx(BG_A, &border_image, TILE_ATTR_FULL(PAL3, 1, FALSE, FALSE, 20), 0, 0, 0, 0, 32, 28, DMA);
+    VDP_loadTileSet(&border_tileset, level_tileset.numTile, DMA);
+    VDP_setTileMapEx(BG_A, &border_image, TILE_ATTR_FULL(PAL3, 1, FALSE, FALSE, level_tileset.numTile), 0, 0, 0, 0, 32, 28, DMA);
 }
 
 void updateLevel(u8 level)

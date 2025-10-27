@@ -10,10 +10,10 @@ SPRITE eye_sprite "assets/gfx/eye.png" 2 1 FAST 10
 SPRITE bullet_sprite "assets/gfx/bullet.png" 1 1 FAST 10
 SPRITE idol_sprite "assets/gfx/idol.png" 1 1 FAST
 SPRITE sacred_ground_sprite "assets/gfx/sacred_ground.png" 2 2 FAST 5
-TILESET level_tileset "assets/gfx/tileset.png" FAST NONE 
-TILEMAP level_1_map "assets/tiled/level_1.tmx" "Tile Layer 1" FAST FAST  0
-TILEMAP level_2_map "assets/tiled/level_2.tmx" "Tile Layer 1" FAST FAST  0
-TILEMAP level_3_map "assets/tiled/level_3.tmx" "Tile Layer 1" FAST FAST  0
+TILESET level_tileset "assets/gfx/tileset.png" NONE NONE
+TILEMAP level_1_map "assets/tiles/level_1.tmx" "Tile Layer 1" FAST FAST  0
+TILEMAP level_2_map "assets/tiles/level_2.tmx" "Tile Layer 1" FAST FAST  0
+TILEMAP level_3_map "assets/tiles/level_3.tmx" "Tile Layer 1" FAST FAST  0
 TILESET border_tileset "assets/gfx/border_with_window.png" FAST ALL
 TILEMAP border_image "assets/gfx/border_with_window.png" border_tileset
 BITMAP sgdk_logo_image "res_inc/image/sgdk_logo_2.png" FAST

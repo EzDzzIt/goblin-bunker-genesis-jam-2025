@@ -62,9 +62,14 @@ void updatePlayer()
     player.y += player.velocity.y;
 
     // cast a spell last frame?
-    if (player.cast == 1)
+    if (player.cast == SPELL_SACRED)
     {
-        initSpell(SPELL_CROSS, player.x, player.y);
+        initSpell(SPELL_SACRED, player.x, player.y);
+        player.cast = 0;
+    }
+    else if (player.cast == SPELL_SHOT)
+    {
+        initSpell(SPELL_SHOT, player.x, player.y);
         player.cast = 0;
     }
 
@@ -223,21 +228,29 @@ void updatePlayer()
         cooldown_flag = true;
         if (player.attack_cooldown == PLAYER_ATTACK_COOLDOWN)
         {
-            SPR_setAnim(player.sprite, PLAYER_ANIM_SPELL);
+            SPR_setAnim(player.sprite, PLAYER_ANIM_SHOT);
         }
-        else if (player.attack_cooldown == PLAYER_ATTACK_COOLDOWN - 4)
-        {
-            SPR_setFrame(player.sprite, 1);
-        }
-        else if (player.attack_cooldown == PLAYER_ATTACK_COOLDOWN - 8)
-        {
-            SPR_setFrame(player.sprite, 2);
-        }
-        else if (player.attack_cooldown == PLAYER_ATTACK_COOLDOWN - 60)
+
+        else if (player.attack_cooldown == 10)
         {
             SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
         }
         player.attack_cooldown -= 1;
+    }
+    // sacred ground
+    if (player.sacred_cooldown > 0)
+    {
+        cooldown_flag = true;
+        if (player.sacred_cooldown == PLAYER_SACRED_COOLDOWN)
+        {
+            SPR_setAnim(player.sprite, PLAYER_ANIM_SACRED);
+        }
+
+        else if (player.sacred_cooldown == PLAYER_SACRED_COOLDOWN - 60)
+        {
+            SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
+        }
+        player.sacred_cooldown -= 1;
     }
     // if nothing is in cooldown, make sure we are in idle
     if (!cooldown_flag)
@@ -311,14 +324,7 @@ void checkInput()
             player.velocity.x = 0;
             player.velocity.y = 0;
             player.last_input = 0;
-            if (state & BUTTON_A && changed & BUTTON_A)
-            {
-                if (player.warp_cooldown <= 0)
-                {
 
-                    initWarp();
-                }
-            }
             if (player.move_cooldown <= 0)
             {
 
@@ -346,20 +352,28 @@ void checkInput()
                 }
             }
             // check for attack/spell
+            if (state & BUTTON_C && changed & BUTTON_C)
+            {
+                if (player.warp_cooldown <= 0)
+                {
+
+                    initWarp();
+                }
+            }
             if (state & BUTTON_B && changed & BUTTON_B)
             {
                 if (player.attack_cooldown <= 0)
                 {
                     player.attack_cooldown = PLAYER_ATTACK_COOLDOWN;
-                    player.cast = 1;
+                    player.cast = SPELL_SHOT;
                 }
             }
-            if (state & BUTTON_C && changed & BUTTON_C)
+            if (state & BUTTON_A && changed & BUTTON_A)
             {
-                if (player.attack_cooldown <= 0)
+                if (player.sacred_cooldown <= 0)
                 {
-                    player.attack_cooldown = PLAYER_ATTACK_COOLDOWN;
-                    player.cast = 1;
+                    player.sacred_cooldown = PLAYER_SACRED_COOLDOWN;
+                    player.cast = SPELL_SACRED;
                 }
             }
             // DEBUG

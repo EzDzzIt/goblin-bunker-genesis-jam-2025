@@ -4,7 +4,9 @@
 
 #include "player.h"
 
-#define SPELL_CROSS 0
+#define SPELL_SACRED 1
+#define SPELL_SHOT 2
+
 #define PLAYER_BULLET_SPEED_0 2
 #define SACRED_GROUND_ANIM 0
 #define SACRED_GROUND_WIDTH 16

@@ -7,13 +7,17 @@
 
 void initSpell(u8 spell_type, fix16 x, fix16 y)
 {
-    if (spell_type == SPELL_CROSS)
+    if (spell_type == SPELL_SHOT)
     {
-        initSacredGround(x - 4, y + 8);
+
         initPlayerBullet(x, y, 0, 1);
         initPlayerBullet(x, y, 0, -1);
         initPlayerBullet(x, y, -1, 0);
         initPlayerBullet(x, y, 1, 0);
+    }
+    else if (spell_type == SPELL_SACRED)
+    {
+        initSacredGround(x - 4, y + 8);
     }
 }
 

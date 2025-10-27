@@ -150,8 +150,8 @@ int main(bool resetType)
 				sprintf(buffer, "SCORE: %d", score);
 				VDP_drawText(buffer, 11, 18);
 				char buffer2[12];
-				sprintf(buffer2, "DOORS CLOSED: %d", doors_closed);
-				VDP_drawText(buffer2, 9, 20);
+				sprintf(buffer2, "DOORS SEALED: %d", doors_closed);
+				VDP_drawText(buffer2, 8, 20);
 			}
 			else
 			{

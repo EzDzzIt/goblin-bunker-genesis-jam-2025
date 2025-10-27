@@ -177,10 +177,11 @@ int main(bool resetType)
 			else if (global_counter == 1)
 			{
 				SYS_disableInts();
+				SPR_clear();
 				VDP_loadTileSet(&blank_tileset, 0, DMA);
 				VDP_setTileMapEx(BG_B, &blank, TILE_ATTR_FULL(PAL1, FALSE, FALSE, FALSE, 0), 0, 0, 0, 0, 32, 28, DMA);
-				VDP_loadTileSet(&border_transition_tileset, 11, DMA);
-				VDP_setTileMapEx(BG_A, &border_image_transition, TILE_ATTR_FULL(PAL3, 1, FALSE, FALSE, 11), 0, 0, 0, 0, 32, 28, DMA);
+				// VDP_loadTileSet(&border_transition_tileset, 11, DMA);
+				// VDP_setTileMapEx(BG_A, &border_image_transition, TILE_ATTR_FULL(PAL3, 1, FALSE, FALSE, 11), 0, 0, 0, 0, 32, 28, DMA);
 				SYS_enableInts();
 				if (current_level == 0)
 				{
@@ -192,15 +193,15 @@ int main(bool resetType)
 					VDP_drawText("...THE", 9 + 5, 9 + 6);
 					VDP_drawText("...DOORS", 10 + 5, 10 + 6);
 				}
-				else if (current_level == 1)
+				else if (current_level == 1) // level id - 1
 				{
-					VDP_drawText("THE TIME IS", 2 + 5, 1 + 6);
-					VDP_drawText("TOO EARLY;", 3 + 5, 2 + 6);
-					VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
-					VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
-					VDP_drawText("...SEAL...", 6 + 5, 8 + 6);
-					VDP_drawText("...THE...", 7 + 5, 9 + 6);
-					VDP_drawText("...DOORS...", 8 + 5, 10 + 6);
+					VDP_drawText("FIND THE KEY...", 2 + 5, 3 + 6);
+					VDP_drawText("TO SEAL THIS DOOR;", 3 + 5, 4 + 6);
+					// VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
+					// VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
+					// VDP_drawText("...SEAL...", 6 + 5, 8 + 6);
+					// VDP_drawText("...THE...", 7 + 5, 9 + 6);
+					// VDP_drawText("...DOORS...", 8 + 5, 10 + 6);
 				}
 				else if (current_level == 2)
 				{

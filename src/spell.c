@@ -9,11 +9,28 @@ void initSpell(u8 spell_type, fix16 x, fix16 y)
 {
     if (spell_type == SPELL_SHOT)
     {
-
-        initPlayerBullet(x, y, 0, 1);
-        initPlayerBullet(x, y, 0, -1);
-        initPlayerBullet(x, y, -1, 0);
-        initPlayerBullet(x, y, 1, 0);
+        s8 bul_x_velocity = 0;
+        s8 bul_y_velocity = 0;
+        if (player.last_input & BUTTON_LEFT)
+        {
+            bul_x_velocity = -1;
+        }
+        else if (player.last_input & BUTTON_RIGHT)
+        {
+            bul_x_velocity = 1;
+        }
+        if (player.last_input & BUTTON_UP)
+        {
+            bul_y_velocity = -1;
+        }
+        else if (player.last_input & BUTTON_DOWN)
+        {
+            bul_y_velocity = 1;
+        }
+        initPlayerBullet(x, y, bul_x_velocity, bul_y_velocity);
+        // initPlayerBullet(x, y, 0, -1);
+        // initPlayerBullet(x, y, -1, 0);
+        // initPlayerBullet(x, y, 1, 0);
     }
     else if (spell_type == SPELL_SACRED)
     {
@@ -163,7 +180,7 @@ void updateSpells()
                         // collision check between sacred ground and doors needs slight mod to work
                         if (door_array[j].beastmode)
                         {
-                            if (collision_check(sacred_ground_array[i].data.x - 3, sacred_ground_array[i].data.y - 6, SACRED_GROUND_WIDTH + 3, SACRED_GROUND_HEIGHT + 6, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
+                            if (collision_check(sacred_ground_array[i].data.x - 3, sacred_ground_array[i].data.y - 3, SACRED_GROUND_WIDTH + 6, SACRED_GROUND_HEIGHT + 6, door_array[j].data.x - 2, door_array[j].data.y, DOOR_WIDTH + 4, DOOR_HEIGHT))
                             {
                                 if (door_array[j].close_cooldown == 0)
                                 {

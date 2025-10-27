@@ -233,10 +233,10 @@ void updateLevel(u8 level)
             player.y = SCREEN_Y_OFFSET;
             // on screen 1
             initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
-            initDoor(96 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
-            initDoor(64 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
+            // initDoor(96 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
+            // initDoor(64 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
             // on screen 2
-            initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 20, 0);
+            // initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 20, 0);
 
             applyDoorOffsets();
         }

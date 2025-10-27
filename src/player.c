@@ -236,6 +236,14 @@ void updatePlayer()
             SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
         }
         player.attack_cooldown -= 1;
+        if (player.attack_cooldown == 0)
+        {
+            if (BUTTON_B & JOY_readJoypad(JOY_1))
+            {
+                initSpell(SPELL_SHOT, player.x, player.y);
+                player.attack_cooldown = PLAYER_ATTACK_COOLDOWN;
+            }
+        }
     }
     // sacred ground
     if (player.sacred_cooldown > 0)
@@ -323,7 +331,10 @@ void checkInput()
             // BUTTON_START
             player.velocity.x = 0;
             player.velocity.y = 0;
-            player.last_input = 0;
+            if (movement_mask > 0)
+            {
+                player.last_input = 0;
+            }
 
             if (player.move_cooldown <= 0)
             {
@@ -332,23 +343,23 @@ void checkInput()
                 {
                     player.velocity.x -= (player.speed);
                     player.hflip = true;
-                    player.last_input = BUTTON_LEFT;
+                    player.last_input = player.last_input | BUTTON_LEFT;
                 }
                 if (state & BUTTON_RIGHT)
                 {
                     player.velocity.x += (player.speed);
                     player.hflip = false;
-                    player.last_input = BUTTON_RIGHT;
+                    player.last_input = player.last_input | BUTTON_RIGHT;
                 }
                 if (state & BUTTON_UP)
                 {
                     player.velocity.y -= (player.speed);
-                    player.last_input = BUTTON_UP;
+                    player.last_input = player.last_input | BUTTON_UP;
                 }
                 if (state & BUTTON_DOWN)
                 {
                     player.velocity.y += (player.speed);
-                    player.last_input = BUTTON_DOWN;
+                    player.last_input = player.last_input | BUTTON_DOWN;
                 }
             }
             // check for attack/spell
@@ -356,7 +367,6 @@ void checkInput()
             {
                 if (player.warp_cooldown <= 0)
                 {
-
                     initWarp();
                 }
             }

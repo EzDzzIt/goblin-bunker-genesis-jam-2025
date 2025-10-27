@@ -33,7 +33,8 @@ struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y)
             }
             en.data.x = x;
             en.data.y = y;
-
+            en.passthrough = true; // start true so you don't collide with the door
+            en.collided_cooldown = 0;
             en.speed = 1;
 
             en.data.active = true;
@@ -82,9 +83,16 @@ void enemyAI(u8 index)
                 if (bullet_x_velocity == 0 && bullet_y_velocity == 0)
                 {
                 }
+                // offscreen enemeies can't fire though
+                else if (enemy_array[index].data.x >= SCREEN_X_END || enemy_array[index].data.x <= SCREEN_X_OFFSET)
+                {
+                }
+                else if (enemy_array[index].data.y >= SCREEN_Y_END || enemy_array[index].data.y <= SCREEN_Y_OFFSET)
+                {
+                }
                 else
                 {
-                    initBullet(enemy_array[index].data.x, enemy_array[index].data.y, bullet_x_velocity, bullet_y_velocity);
+                    initBullet(enemy_array[index].data.x + 4, enemy_array[index].data.y + 2, bullet_x_velocity, bullet_y_velocity);
                 }
             }
         }
@@ -170,6 +178,26 @@ void updateEnemies()
             }
             enemy_array[i].data.x += enemy_array[i].x_velocity;
             enemy_array[i].data.y += enemy_array[i].y_velocity;
+
+            // door collide
+            u8 j = 0;
+            // collide with doors??? or no?
+            if (!enemy_array[i].passthrough)
+            {
+                for (j = 0; j < MAX_DOORS; j++)
+                {
+                    if (door_array[j].data.active)
+                    {
+                        if (collision_check(enemy_array[i].data.x, enemy_array[i].data.y, enemy_array[i].width, enemy_array[i].height, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
+                        {
+                            enemy_array[i].collided_cooldown = 70; // bump cooldown basically
+                            enemy_array[i].data.x -= enemy_array[i].x_velocity;
+                            enemy_array[i].data.y -= enemy_array[i].y_velocity;
+                            break;
+                        }
+                    }
+                }
+            }
 
             if (enemy_array[i].x_velocity < 0)
             {
@@ -261,6 +289,11 @@ void updateEnemyBullets()
             }
             bullet_array[i].lifetime -= 1;
             if (bullet_array[i].lifetime <= 0)
+            {
+                SPR_releaseSprite(bullet_array[i].data.sprite);
+                bullet_array[i].data.active = false;
+            }
+            if (UPDATE_SCROLL)
             {
                 SPR_releaseSprite(bullet_array[i].data.sprite);
                 bullet_array[i].data.active = false;

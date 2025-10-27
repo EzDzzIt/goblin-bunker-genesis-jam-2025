@@ -19,7 +19,9 @@ struct enemyData
     f16 y_velocity;
     f16 speed;
     s8 hp;
-    u8 hurt_cooldown;
+    s8 hurt_cooldown;
+    s8 collided_cooldown;
+    bool passthrough;
 };
 
 extern struct enemyData enemy_array[];

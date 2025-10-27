@@ -86,7 +86,7 @@ void updateDoors()
                     }
                     else
                     {
-                        initEnemy(ENEMY_TYPE_DEMON, door_array[i].data.x, door_array[i].data.y);
+                        initEnemy(ENEMY_TYPE_EYE, door_array[i].data.x, door_array[i].data.y);
                     }
                 }
             }

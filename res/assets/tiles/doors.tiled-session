@@ -3,10 +3,31 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "level_1.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
+        "level_1.tmx": {
+            "scale": 3.241875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 122.45999614420668,
+                "y": 63.851937536148064
+            }
+        },
+        "level_2.tmx": {
+            "scale": 3.241875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 110.73838442259495,
+                "y": 63.851937536148064
+            }
+        },
+        "main.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        }
     },
     "last.imagePath": "/home/nate/repos/goblin-bunker-genesis-jam-2025/res/assets/gfx",
     "map.height": 16,
@@ -15,9 +36,15 @@
     "map.tileWidth": 8,
     "map.width": 20,
     "openFiles": [
+        "main.tsx",
+        "level_1.tmx",
+        "level_2.tmx"
     ],
     "project": "doors.tiled-project",
     "recentFiles": [
+        "main.tsx",
+        "level_2.tmx",
+        "level_1.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

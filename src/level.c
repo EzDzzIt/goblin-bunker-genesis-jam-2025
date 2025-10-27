@@ -20,6 +20,7 @@ void initDoor(u8 x, u8 y, u8 push_x, u8 push_y)
             door.data.x = x;
             door.data.y = y;
             door.data.sprite = SPR_addSprite(&door_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+            SPR_setAnim(door.data.sprite, 0);
             door.data.active = true;
             door.beastmode = false;
             door.shut_count = 0;
@@ -80,9 +81,9 @@ void updateDoors()
                     // toggleDoorBeastmode(i);
                     door_array[i].beastmode_counter = 0;
 
-                    if ((random() % (100 - 1 + 1)) + 1 <= 25)
+                    if ((random() % (100 - 1 + 1)) + 1 <= 15)
                     {
-                        initEnemy(ENEMY_TYPE_EYE, door_array[i].data.x, door_array[i].data.y);
+                        initEnemy(ENEMY_TYPE_DEMON, door_array[i].data.x, door_array[i].data.y);
                     }
                     else
                     {
@@ -121,6 +122,7 @@ void shutDoor(u8 index)
         door_array[index].sealed = true;
         SPR_setAnim(door_array[index].data.sprite, DOOR_SEALED_ANIM);
         doors_closed += 1;
+        total_doors_closed += 1;
         score += 50;
     }
     else
@@ -190,14 +192,14 @@ void updateLevel(u8 level)
             levelObject.beastmode_chance = 100;
             levelObject.beastmode_time_limit = 200;
             levelObject.enemy_shot_chance = 100; // percent
-            levelObject.doors_closed_limit = 3;
-            levelObject.shuts_to_seal = 3; // 3 times to seal
+            levelObject.doors_closed_limit = 1;
+            levelObject.shuts_to_seal = 2; // 3 times to seal
             // door position fix
             applyDoorOffsets();
             // player spawn
             player.x = SCREEN_X_OFFSET;
             player.y = SCREEN_Y_OFFSET;
-            // initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET);
+            initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
             // initDoor(64 + SCREEN_X_OFFSET + 20 * 8, 16 + SCREEN_Y_OFFSET);
             // initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
             // initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
@@ -212,10 +214,6 @@ void updateLevel(u8 level)
             // initDoor(96 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
             // initDoor(96 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
         }
-        if (doors_closed == levelObject.doors_closed_limit)
-        {
-            initLevel(current_level + 1);
-        }
     }
     else if (level == 2)
     {
@@ -228,13 +226,15 @@ void updateLevel(u8 level)
             levelObject.beastmode_time_limit = 200;
             levelObject.enemy_shot_chance = 100; // percent
             levelObject.doors_closed_limit = 3;
-            levelObject.shuts_to_seal = 3; // 3 times to seal
+            levelObject.shuts_to_seal = 2; // 3 times to seal
 
             // player spawn
             player.x = SCREEN_X_OFFSET;
             player.y = SCREEN_Y_OFFSET;
             // on screen 1
             initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
+            initDoor(96 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
+            initDoor(64 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
             // on screen 2
             initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 20, 0);
 
@@ -279,5 +279,9 @@ void updateLevel(u8 level)
         SCROLL_X = 0;
         SCROLL_Y = 0;
         VDP_setTileMapEx(BG_B, currentMap, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, MAP_X, MAP_Y, 20, 16, DMA);
+    }
+    if (doors_closed >= levelObject.doors_closed_limit)
+    {
+        game_state = GAME_STATE_TRANSITION;
     }
 }

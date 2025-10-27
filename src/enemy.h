@@ -18,6 +18,8 @@ struct enemyData
     f16 x_velocity;
     f16 y_velocity;
     f16 speed;
+    bool reverse_ai;
+    u16 enemy_ai_counter;
     s8 hp;
     s8 hurt_cooldown;
     s8 collided_cooldown;

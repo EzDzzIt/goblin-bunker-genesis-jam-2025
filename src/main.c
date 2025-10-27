@@ -32,8 +32,8 @@ int main(bool resetType)
 			{
 				// stuff we only want to run going in to level 1
 
-				initLevel(2); // DEBUG
-				initPlayer();
+				// initLevel(current_level); // DEBUG
+				// initPlayer();
 			}
 			else
 			{
@@ -46,15 +46,11 @@ int main(bool resetType)
 					display_stats();
 				}
 			}
-			SYS_doVBlankProcess();
+			// SYS_doVBlankProcess();
 		}
 		else if (game_state == GAME_STATE_PAUSE)
 		{
-			SYS_doVBlankProcess();
-		}
-		else if (game_state == GAME_STATE_TRANSITION)
-		{
-			SYS_doVBlankProcess();
+			// SYS_doVBlankProcess();
 		}
 		else if (game_state == GAME_STATE_TITLE)
 		{
@@ -123,12 +119,12 @@ int main(bool resetType)
 			}
 			else if (title_counter == 2)
 			{
-				// game start!
-				game_state = GAME_STATE_GAME;
+				// game start transition
+				game_state = GAME_STATE_TRANSITION;
 				XGM2_stop();
 				global_counter = 0;
 			}
-			SYS_doVBlankProcess();
+			// SYS_doVBlankProcess();
 		}
 		else if (game_state == GAME_STATE_OVER)
 		{
@@ -150,7 +146,7 @@ int main(bool resetType)
 				sprintf(buffer, "SCORE: %d", score);
 				VDP_drawText(buffer, 11, 18);
 				char buffer2[12];
-				sprintf(buffer2, "DOORS SEALED: %d", doors_closed);
+				sprintf(buffer2, "DOORS SEALED: %d", total_doors_closed);
 				VDP_drawText(buffer2, 8, 20);
 			}
 			else
@@ -162,12 +158,25 @@ int main(bool resetType)
 				SPR_end();
 				SYS_hardReset();
 			}
-			SYS_doVBlankProcess();
+			// SYS_doVBlankProcess();
 		}
-		else if (game_state == GAME_STATE_WIN)
+		else if (game_state == GAME_STATE_TRANSITION)
 		{
-			SYS_doVBlankProcess();
+			if (global_counter == 120 && current_level == 0)
+			{
+				// game start
+				game_state = GAME_STATE_GAME;
+				global_counter = 0;
+				initPlayer();
+				initLevel(current_level + 1);
+			}
+			else if (global_counter == 1)
+			{
+				VDP_loadTileSet(&border_transition_tileset, level_tileset.numTile, DMA);
+				VDP_setTileMapEx(BG_A, &border_image_transition, TILE_ATTR_FULL(PAL3, 1, FALSE, FALSE, level_tileset.numTile), 0, 0, 0, 0, 32, 28, DMA);
+			}
 		}
+		SYS_doVBlankProcess();
 	}
 
 	return 0;

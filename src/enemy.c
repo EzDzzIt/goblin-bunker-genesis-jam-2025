@@ -36,7 +36,8 @@ struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y)
             en.passthrough = true; // start true so you don't collide with the door
             en.collided_cooldown = 0;
             en.speed = 1;
-
+            en.enemy_ai_counter = 1;
+            en.reverse_ai = false;
             en.data.active = true;
             SPR_setAnim(en.data.sprite, 0);
             SPR_setAlwaysOnTop(en.data.sprite);
@@ -58,7 +59,22 @@ void enemyAI(u8 index)
 
     if (enemy_array[index].type == ENEMY_TYPE_EYE)
     {
-        if (global_counter % 120 == 0)
+        if (enemy_array[index].enemy_ai_counter % 110 == 0)
+        {
+            if ((random() % (2 - 1 + 1)) + 1 <= 1)
+            {
+                enemy_array[index].reverse_ai = !enemy_array[index].reverse_ai;
+            }
+            if (enemy_array[index].data.x >= SCREEN_X_END || enemy_array[index].data.x <= SCREEN_X_OFFSET || enemy_array[index].data.y >= SCREEN_Y_END || enemy_array[index].data.y <= SCREEN_Y_OFFSET)
+            {
+                enemy_array[index].reverse_ai = false;
+            }
+        }
+        // else if (enemy_array[index].reverse_ai || enemy_array[index].enemy_ai_counter % 70 == 0)
+        // {
+        //     enemy_array[index].reverse_ai = false;
+        // }
+        else if (global_counter % 90 == 0)
         {
             if ((random() % (100 - 1 + 1)) + 1 <= levelObject.enemy_shot_chance)
             {
@@ -96,25 +112,31 @@ void enemyAI(u8 index)
                 }
             }
         }
-        else if (global_counter % 3 == 0)
+        else if (enemy_array[index].enemy_ai_counter % 3 == 0)
         {
+
             if ((random() % (100 - 1 + 1)) + 1 <= 70)
             {
+                s8 flip = 1;
+                if (enemy_array[index].reverse_ai)
+                {
+                    flip = -1;
+                }
                 if (enemy_array[index].data.x >= player.x)
                 {
-                    enemy_array[index].x_velocity = -1 * enemy_array[index].speed;
+                    enemy_array[index].x_velocity = -1 * enemy_array[index].speed * flip;
                 }
                 else
                 {
-                    enemy_array[index].x_velocity = 1 * enemy_array[index].speed;
+                    enemy_array[index].x_velocity = 1 * enemy_array[index].speed * flip;
                 }
                 if (enemy_array[index].data.y >= player.y)
                 {
-                    enemy_array[index].y_velocity = -1 * enemy_array[index].speed;
+                    enemy_array[index].y_velocity = -1 * enemy_array[index].speed * flip;
                 }
                 else
                 {
-                    enemy_array[index].y_velocity = 1 * enemy_array[index].speed;
+                    enemy_array[index].y_velocity = 1 * enemy_array[index].speed * flip;
                 }
             }
             else
@@ -132,7 +154,7 @@ void enemyAI(u8 index)
     }
     else if (enemy_array[index].type == ENEMY_TYPE_DEMON)
     {
-        if (global_counter % 2 == 0)
+        if (enemy_array[index].enemy_ai_counter % 2 == 0)
         {
             if (enemy_array[index].data.x >= player.x)
             {
@@ -149,6 +171,14 @@ void enemyAI(u8 index)
             else
             {
                 enemy_array[index].y_velocity = 1 * enemy_array[index].speed;
+            }
+        }
+        else if (enemy_array[index].enemy_ai_counter % 240 == 0)
+        {
+            if ((random() % (2 - 1 + 1)) + 1 <= 1)
+            {
+                enemy_array[index].x_velocity = 0;
+                enemy_array[index].y_velocity = 0;
             }
         }
 
@@ -224,6 +254,11 @@ void updateEnemies()
                 {
                     SPR_setPalette(enemy_array[i].data.sprite, PAL3);
                 }
+            }
+            enemy_array[i].enemy_ai_counter += 1;
+            if (enemy_array[i].enemy_ai_counter > 2000)
+            {
+                enemy_array[i].enemy_ai_counter = 1;
             }
         }
     }

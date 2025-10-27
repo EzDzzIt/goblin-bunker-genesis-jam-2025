@@ -30,21 +30,20 @@ int main(bool resetType)
 			}
 			if (global_counter == 1)
 			{
-				// stuff we only want to run going in to level 1
-
-				// initLevel(current_level); // DEBUG
-				// initPlayer();
 			}
 			else
 			{
 				updatePlayer();
-				if (player.hp > 0)
-				{
-					updateGame();
-					updateLevel(current_level);
-					SPR_update();
-					display_stats();
-				}
+				// if (player.hp > 0)
+				// {
+				updateGame();
+				updateLevel(current_level);
+				// if (game_state == GAME_STATE_GAME)
+				// {
+				SPR_update();
+				display_stats();
+				// }
+				// }
 			}
 			// SYS_doVBlankProcess();
 		}
@@ -162,18 +161,67 @@ int main(bool resetType)
 		}
 		else if (game_state == GAME_STATE_TRANSITION)
 		{
-			if (global_counter == 120 && current_level == 0)
+
+			if (global_counter == 241 || title_skip)
 			{
+				if (current_level == 0)
+				{
+					initPlayer();
+				}
 				// game start
 				game_state = GAME_STATE_GAME;
-				global_counter = 0;
-				initPlayer();
+				global_counter = 1;
 				initLevel(current_level + 1);
+				title_skip = false;
 			}
 			else if (global_counter == 1)
 			{
-				VDP_loadTileSet(&border_transition_tileset, level_tileset.numTile, DMA);
-				VDP_setTileMapEx(BG_A, &border_image_transition, TILE_ATTR_FULL(PAL3, 1, FALSE, FALSE, level_tileset.numTile), 0, 0, 0, 0, 32, 28, DMA);
+				SYS_disableInts();
+				VDP_loadTileSet(&blank_tileset, 0, DMA);
+				VDP_setTileMapEx(BG_B, &blank, TILE_ATTR_FULL(PAL1, FALSE, FALSE, FALSE, 0), 0, 0, 0, 0, 32, 28, DMA);
+				VDP_loadTileSet(&border_transition_tileset, 11, DMA);
+				VDP_setTileMapEx(BG_A, &border_image_transition, TILE_ATTR_FULL(PAL3, 1, FALSE, FALSE, 11), 0, 0, 0, 0, 32, 28, DMA);
+				SYS_enableInts();
+				if (current_level == 0)
+				{
+					VDP_drawText("THE TIME IS", 2 + 5, 1 + 6);
+					VDP_drawText("TOO EARLY;", 3 + 5, 2 + 6);
+					VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
+					VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
+					VDP_drawText("...SEAL", 8 + 5, 8 + 6);
+					VDP_drawText("...THE", 9 + 5, 9 + 6);
+					VDP_drawText("...DOORS", 10 + 5, 10 + 6);
+				}
+				else if (current_level == 1)
+				{
+					VDP_drawText("THE TIME IS", 2 + 5, 1 + 6);
+					VDP_drawText("TOO EARLY;", 3 + 5, 2 + 6);
+					VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
+					VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
+					VDP_drawText("...SEAL...", 6 + 5, 8 + 6);
+					VDP_drawText("...THE...", 7 + 5, 9 + 6);
+					VDP_drawText("...DOORS...", 8 + 5, 10 + 6);
+				}
+				else if (current_level == 2)
+				{
+					VDP_drawText("THE TIME IS", 2 + 5, 1 + 6);
+					VDP_drawText("TOO EARLY;", 3 + 5, 2 + 6);
+					VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
+					VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
+					VDP_drawText("...SEAL...", 6 + 5, 8 + 6);
+					VDP_drawText("...THE...", 7 + 5, 9 + 6);
+					VDP_drawText("...DOORS...", 8 + 5, 10 + 6);
+				}
+				else if (current_level == 3)
+				{
+					VDP_drawText("THE TIME IS", 2 + 5, 1 + 6);
+					VDP_drawText("TOO EARLY;", 3 + 5, 2 + 6);
+					VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
+					VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
+					VDP_drawText("...SEAL...", 6 + 5, 8 + 6);
+					VDP_drawText("...THE...", 7 + 5, 9 + 6);
+					VDP_drawText("...DOORS...", 8 + 5, 10 + 6);
+				}
 			}
 		}
 		SYS_doVBlankProcess();

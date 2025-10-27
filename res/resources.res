@@ -16,8 +16,10 @@ TILEMAP level_2_map "assets/tiles/level_2.tmx" "Tile Layer 1" FAST FAST  0
 TILEMAP level_3_map "assets/tiles/level_3.tmx" "Tile Layer 1" FAST FAST  0
 TILESET border_tileset "assets/gfx/border_with_window.png" FAST ALL
 TILESET border_transition_tileset "assets/gfx/border.png" FAST ALL
+TILESET blank_tileset "assets/gfx/blank_screen.png" FAST ALL
 TILEMAP border_image "assets/gfx/border_with_window.png" border_tileset
 TILEMAP border_image_transition "assets/gfx/border.png" border_transition_tileset
+TILEMAP blank "assets/gfx/blank_screen.png" blank_tileset
 BITMAP sgdk_logo_image "res_inc/image/sgdk_logo_2.png" FAST
 BITMAP title_screen "assets/gfx/title_screen.png" FAST
 BITMAP over_screen "assets/gfx/over_screen.png" FAST

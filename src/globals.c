@@ -96,6 +96,7 @@ void reset_globals()
     {
         if (sacred_ground_array[i].data.active)
         {
+            sacred_ground_array[i].lifetime = 0;
             sacred_ground_array[i].data.active = FALSE;
             SPR_releaseSprite(sacred_ground_array[i].data.sprite);
         }
@@ -109,8 +110,9 @@ void reset_globals()
             if (door_array[i].beastmode)
             {
                 door_array[i].beastmode = FALSE;
-                SPR_releaseSprite(door_array[i].beastmode_sprite);
+                // SPR_releaseSprite(door_array[i].beastmode_sprite);
             }
+            SPR_releaseSprite(door_array[i].beastmode_sprite);
         }
     }
     for (i = 0; i < MAX_ENEMIES; i++)

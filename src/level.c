@@ -174,10 +174,12 @@ void initLevel(u8 level)
     {
         currentMap = &level_3_map;
     }
+    SYS_disableInts();
     VDP_loadTileSet(&level_tileset, 0, DMA);
     VDP_setTileMapEx(BG_B, currentMap, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, SCROLL_X, SCROLL_Y, 20, 16, DMA);
     VDP_loadTileSet(&border_tileset, level_tileset.numTile, DMA);
     VDP_setTileMapEx(BG_A, &border_image, TILE_ATTR_FULL(PAL3, 1, FALSE, FALSE, level_tileset.numTile), 0, 0, 0, 0, 32, 28, DMA);
+    SYS_enableInts();
 }
 
 void updateLevel(u8 level)
@@ -194,8 +196,6 @@ void updateLevel(u8 level)
             levelObject.enemy_shot_chance = 100; // percent
             levelObject.doors_closed_limit = 1;
             levelObject.shuts_to_seal = 2; // 3 times to seal
-            // door position fix
-            applyDoorOffsets();
             // player spawn
             player.x = SCREEN_X_OFFSET;
             player.y = SCREEN_Y_OFFSET;
@@ -278,10 +278,13 @@ void updateLevel(u8 level)
         MAP_Y += SCROLL_Y;
         SCROLL_X = 0;
         SCROLL_Y = 0;
+        SYS_disableInts();
         VDP_setTileMapEx(BG_B, currentMap, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, MAP_X, MAP_Y, 20, 16, DMA);
+        SYS_enableInts();
     }
     if (doors_closed >= levelObject.doors_closed_limit)
     {
+        global_counter = 0;
         game_state = GAME_STATE_TRANSITION;
     }
 }

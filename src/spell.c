@@ -57,7 +57,7 @@ void initSacredGround(fix16 x, fix16 y)
             spell.data.y = y;
 
             spell.data.active = true;
-            spell.lifetime = 120;
+            spell.lifetime = 60;
             SPR_setAnim(spell.data.sprite, SACRED_GROUND_ANIM);
             sacred_ground_array[i] = spell;
             break;
@@ -157,14 +157,10 @@ void updateSpells()
                     {
                         if (collision_check(sacred_ground_array[i].data.x - 2, sacred_ground_array[i].data.y - 3, SACRED_GROUND_WIDTH + 2, SACRED_GROUND_HEIGHT + 3, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
                         {
-                            toggleDoorBeastmode(j);
-                            score += 10;
-                            if (door_array[j].shut_count == 0)
+                            if (door_array[j].close_cooldown == 0)
                             {
-                                doors_closed += 1;
+                                shutDoor(j);
                             }
-
-                            door_array[j].shut_count += 1;
                         }
                     }
                 }
@@ -178,5 +174,5 @@ void initWarp()
     player.warp_cooldown = PLAYER_WARP_COOLDOWN;
     SPR_setAnim(player.sprite, PLAYER_ANIM_WARP);
     player.x = ((random() % (20 - 1 + 1)) + 1) * 8;
-    player.y = ((random() % (16 - 1 + 2)) + 1) * 8;
+    player.y = ((random() % (16 - 1 + 1)) + 1) * 8;
 }

@@ -4,6 +4,9 @@
         "genesis.h": "c",
         "player.h": "c",
         "resources.h": "c",
-        "spell.h": "c"
+        "spell.h": "c",
+        "chrono": "c",
+        "ranges": "c",
+        "variant": "c"
     }
 }

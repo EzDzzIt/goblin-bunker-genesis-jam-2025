@@ -32,7 +32,7 @@ int main(bool resetType)
 			{
 				// stuff we only want to run going in to level 1
 
-				initLevel(1); // DEBUG
+				initLevel(2); // DEBUG
 				initPlayer();
 			}
 			else
@@ -144,11 +144,14 @@ int main(bool resetType)
 				title_skip = false;
 				VDP_drawBitmapEx(BG_A, &over_screen, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 0, 0, FALSE);
 			}
-			else if (global_counter < 60)
+			else if (!title_skip)
 			{
 				char buffer[8];
 				sprintf(buffer, "SCORE: %d", score);
-				VDP_drawText(buffer, 11, 20);
+				VDP_drawText(buffer, 11, 18);
+				char buffer2[12];
+				sprintf(buffer2, "DOORS CLOSED: %d", doors_closed);
+				VDP_drawText(buffer2, 9, 20);
 			}
 			else
 			{

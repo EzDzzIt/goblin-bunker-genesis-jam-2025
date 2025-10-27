@@ -17,6 +17,7 @@ struct objectData
 
 #define DOOR_OBJECT 0
 #define DOOR_OPENING_ANIM 1
+#define DOOR_SEALED_ANIM 2
 #define DOOR_WIDTH 8
 #define DOOR_HEIGHT 16
 #define MAX_DOORS 12
@@ -31,13 +32,20 @@ struct doorData
     bool beastmode_hflip;
     u16 beastmode_counter;
     u8 shut_count;
+    bool sealed;
+    u8 close_cooldown;
+    u8 push_x;
+    u8 push_y;
 };
 
-void initDoor(u8 x, u8 y);
+void initDoor(u8 x, u8 y, u8 push_x, u8 push_y);
 void toggleDoorBeastmode(u8 index);
 void updateDoors();
+void shutDoor(u8 index);
+void applyDoorOffsets();
 
 extern struct doorData door_array[];
+// extern struct objectData sealed_door_array[];
 
 // actual level logic
 
@@ -49,6 +57,7 @@ struct levelData
     u8 map_width;
     u8 map_height; // tiles
     u8 doors_closed_limit;
+    u8 shuts_to_seal; // how many times you have to shgut a door to seal it in a level
 };
 
 extern struct levelData levelObject;

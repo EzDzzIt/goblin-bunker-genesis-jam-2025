@@ -99,16 +99,19 @@ void updateSpells()
             {
                 if (enemy_array[j].data.active)
                 {
-                    if (collision_check(player_bullet_array[i].data.x, player_bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT, enemy_array[j].data.x, enemy_array[j].data.y, enemy_array[j].width, enemy_array[j].height))
+                    if (enemy_array[j].hurt_cooldown <= 0)
                     {
-                        enemy_array[j].hurt_cooldown = 60;
-                        enemy_array[j].hp -= 1;
-                        collided = true;
-                        break;
+                        if (collision_check(player_bullet_array[i].data.x, player_bullet_array[i].data.y, BULLET_WIDTH, BULLET_HEIGHT, enemy_array[j].data.x, enemy_array[j].data.y, enemy_array[j].width, enemy_array[j].height))
+                        {
+                            enemy_array[j].hurt_cooldown = 20;
+                            enemy_array[j].hp -= 1;
+                            collided = true;
+                            break;
+                        }
                     }
                 }
             }
-            if (collided)
+            if (collided || UPDATE_SCROLL)
             {
 
                 SPR_releaseSprite(player_bullet_array[i].data.sprite);
@@ -153,20 +156,28 @@ void updateSpells()
             }
             if (sacred_ground_array[i].data.active)
             {
-                u8 j = 0;
-                for (j = 0; j < MAX_DOORS; j++)
+                if (!UPDATE_SCROLL)
                 {
-                    // collision check between sacred ground and doors needs slight mod to work
-                    if (door_array[j].beastmode)
+                    u8 j = 0;
+                    for (j = 0; j < MAX_DOORS; j++)
                     {
-                        if (collision_check(sacred_ground_array[i].data.x - 2, sacred_ground_array[i].data.y - 3, SACRED_GROUND_WIDTH + 2, SACRED_GROUND_HEIGHT + 3, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
+                        // collision check between sacred ground and doors needs slight mod to work
+                        if (door_array[j].beastmode)
                         {
-                            if (door_array[j].close_cooldown == 0)
+                            if (collision_check(sacred_ground_array[i].data.x - 2, sacred_ground_array[i].data.y - 3, SACRED_GROUND_WIDTH + 2, SACRED_GROUND_HEIGHT + 3, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
                             {
-                                shutDoor(j);
+                                if (door_array[j].close_cooldown == 0)
+                                {
+                                    shutDoor(j);
+                                }
                             }
                         }
                     }
+                }
+                else
+                {
+                    sacred_ground_array[i].data.active = false;
+                    SPR_releaseSprite(sacred_ground_array[i].data.sprite);
                 }
             }
         }

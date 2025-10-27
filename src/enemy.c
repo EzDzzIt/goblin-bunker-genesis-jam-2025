@@ -20,6 +20,7 @@ struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y)
                 en.data.sprite = SPR_addSprite(&demon_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
                 en.width = 8;
                 en.height = 16;
+                en.hp = 4;
                 en.type = ENEMY_TYPE_DEMON;
             }
             else if (enemy_type == ENEMY_TYPE_EYE)
@@ -27,13 +28,14 @@ struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y)
                 en.data.sprite = SPR_addSprite(&eye_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
                 en.width = 16;
                 en.height = 8;
+                en.hp = 2;
                 en.type = ENEMY_TYPE_EYE;
             }
             en.data.x = x;
             en.data.y = y;
 
             en.speed = 1;
-            en.hp = 4;
+
             en.data.active = true;
             SPR_setAnim(en.data.sprite, 0);
             SPR_setAlwaysOnTop(en.data.sprite);

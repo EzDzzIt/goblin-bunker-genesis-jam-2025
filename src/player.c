@@ -31,7 +31,7 @@ void player_info_print()
         VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, 0), 11, 21, 1, 1);
     }
     // attack spell
-    if (player.attack_cooldown <= 0)
+    if (player.sacred_cooldown <= 0)
     {
         // char warp_buffer[4];
         // sprintf(warp_buffer, "%dHP", player.hp);

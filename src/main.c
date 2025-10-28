@@ -174,7 +174,7 @@ int main(bool resetType)
 				VDP_loadTileSet(&blank_tileset, 0, DMA);
 				VDP_setTileMapEx(BG_B, &blank, TILE_ATTR_FULL(PAL1, FALSE, FALSE, FALSE, 0), 0, 0, 0, 0, 32, 28, DMA);
 				SYS_enableInts();
-				XGM2_setFMVolume(75);
+				XGM2_setFMVolume(60);
 				XGM2_play(xgm2_level0);
 				if (current_level == 0)
 				{

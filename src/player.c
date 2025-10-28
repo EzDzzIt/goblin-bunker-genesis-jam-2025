@@ -133,6 +133,7 @@ void updatePlayer()
                 {
                     player.hurt_cooldown = PLAYER_HURT_COOLDOWN;
                     player.hp -= 1;
+                    XGM2_playPCM(wav_player_hurt, sizeof(wav_player_hurt), SOUND_PCM_CH_AUTO);
                     break;
                 }
             }

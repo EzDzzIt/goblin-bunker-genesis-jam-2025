@@ -126,6 +126,7 @@ void updateSpells()
                             enemy_array[j].hurt_cooldown = 20;
                             enemy_array[j].hp -= 1;
                             collided = true;
+                            XGM2_playPCM(wav_en_hurt, sizeof(wav_en_hurt), SOUND_PCM_CH_AUTO);
                             break;
                         }
                     }

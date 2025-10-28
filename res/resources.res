@@ -30,6 +30,9 @@ XGM2 xgm2_level0 "assets/music/level.vgm"
 XGM2 xgm2_over "assets/music/over.vgm"
 WAV wav_shot "assets/sound/laser gun 4.wav" XGM2 6650
 WAV wav_en_shot "assets/sound/laser gun 6.wav" XGM2 6650
+WAV wav_player_hurt "assets/sound/body hit with grunt 1.wav" XGM2 6650
+WAV wav_en_hurt "assets/sound/body hit with grunt 1.wav" XGM2 6650
+WAV wav_door_beastmode "assets/sound/alien computer 2.wav" XGM2 6650
 WAV wav_sacred "assets/sound/metal hit 2.wav" XGM2 6650
 WAV wav_door_sealed "assets/sound/wood and metal cabinet closed 2.wav" XGM2 6650
 //WAV wav_en_death "assets/sound/alien machine 10.wav" XGM2 6650

@@ -3,6 +3,9 @@
 
 extern const u8 wav_shot[6656];
 extern const u8 wav_en_shot[7168];
+extern const u8 wav_player_hurt[2816];
+extern const u8 wav_en_hurt[2816];
+extern const u8 wav_door_beastmode[10240];
 extern const u8 wav_sacred[50176];
 extern const u8 wav_door_sealed[3584];
 extern const u8 wav_en_death[16384];

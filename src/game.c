@@ -18,6 +18,8 @@ void updateGame()
 
     // update doors
     updateDoors();
+    // update objects
+    updateObjects();
     // update enemies
     updateEnemies();
     // update enemy bullets

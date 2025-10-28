@@ -153,6 +153,19 @@ void updatePlayer()
             }
         }
     }
+    // cycle through level objects
+    for (i = 0; i < MAX_OBJECTS; i++)
+    {
+        if (level_object_array[i].data.active)
+        {
+            if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, level_object_array[i].data.x, level_object_array[i].data.y, 8, 8))
+            {
+                SPR_releaseSprite(level_object_array[i].data.sprite);
+                level_object_array[i].data.active = false;
+                break;
+            }
+        }
+    }
 
     if (collided)
     {

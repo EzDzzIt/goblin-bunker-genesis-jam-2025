@@ -4,7 +4,7 @@
 #include "player.h"
 #include "enemy.h"
 
-// level objects
+// doors
 
 struct doorData door_array[MAX_DOORS];
 
@@ -134,7 +134,53 @@ void shutDoor(u8 index)
     }
 }
 
-void initObject(u8 object_type, s16 x, s16 y)
+struct levelObjectData level_object_array[MAX_OBJECTS];
+
+void initObject(u8 object_type, u8 x, u8 y, u8 push_x, u8 push_y)
+{
+    u8 i = 0;
+    for (i = 0; i < MAX_OBJECTS; i++)
+    {
+        if (!level_object_array[i].data.active)
+        {
+            struct levelObjectData obj;
+            obj.data.x = x;
+            obj.data.y = y;
+            if (object_type == OBJECT_TYPE_IDOL)
+            {
+                obj.data.sprite = SPR_addSprite(&idol_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+            }
+            else if (object_type == OBJECT_TYPE_KEY)
+            {
+                obj.data.sprite = SPR_addSprite(&idol_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+            }
+            obj.data.active = true;
+            obj.push_x = push_x;
+            obj.push_y = push_y;
+            level_object_array[i] = obj;
+            break;
+        }
+    }
+}
+
+void updateObjects()
+{
+    u8 i = 0;
+    for (i = 0; i < MAX_OBJECTS; i++)
+    {
+        if (level_object_array[i].data.active)
+        {
+            if (UPDATE_SCROLL)
+            {
+                level_object_array[i].data.x -= SCROLL_X * 8;
+                level_object_array[i].data.y -= SCROLL_Y * 8;
+            }
+            SPR_setPosition(level_object_array[i].data.sprite, level_object_array[i].data.x, level_object_array[i].data.y);
+        }
+    }
+}
+
+void pickupObject(u8 index)
 {
 }
 
@@ -147,6 +193,14 @@ void applyObjectOffsets()
         {
             door_array[i].data.x += door_array[i].push_x * 8;
             door_array[i].data.y += door_array[i].push_y * 8;
+        }
+    }
+    for (i = 0; i < MAX_OBJECTS; i++)
+    {
+        if (level_object_array[i].data.active)
+        {
+            level_object_array[i].data.x += level_object_array[i].push_x * 8;
+            level_object_array[i].data.y += level_object_array[i].push_y * 8;
         }
     }
 }
@@ -207,6 +261,7 @@ void updateLevel(u8 level)
             // initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
             // initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
             // initEnemy(ENEMY_TYPE_DEMON, 50, 50);
+            initObject(OBJECT_TYPE_IDOL, 96 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
             // apply object offsets to other screens if needed
             applyObjectOffsets();
         }
@@ -262,6 +317,7 @@ void updateLevel(u8 level)
     }
     if (doors_closed >= level_data.doors_closed_limit)
     {
+        // go to the next level
         global_counter = 0;
         game_state = GAME_STATE_TRANSITION;
     }

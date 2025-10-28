@@ -37,6 +37,7 @@ int main(bool resetType)
 				updateGame();
 				updateLevel(current_level);
 				SPR_update();
+				display_stats();
 			}
 		}
 		else if (game_state == GAME_STATE_PAUSE)

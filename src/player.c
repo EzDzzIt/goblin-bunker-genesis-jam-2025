@@ -15,11 +15,13 @@ void player_info_print()
     VDP_drawText(buffer, 7, 21);
     // score
     char score_buffer[8];
-    // sprintf(score_buffer, "SC: %d", score);
-    sprintf(score_buffer, "DOORS: %d", level_data.doors_closed_limit - doors_closed);
-
-    VDP_drawText(score_buffer, 7, 22);
-    // dash
+    sprintf(score_buffer, "SC:%d", score);
+    VDP_drawText(score_buffer, 18, 21);
+    // doors left
+    char door_buffer[2];
+    sprintf(door_buffer, "DOORS:%d", level_data.doors_closed_limit - doors_closed);
+    VDP_drawText(door_buffer, 7, 22);
+    // warp
     if (player.warp_cooldown <= 0)
     {
         // char warp_buffer[4];
@@ -30,7 +32,7 @@ void player_info_print()
     {
         VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, 0), 11, 21, 1, 1);
     }
-    // attack spell
+    // seal spell
     if (player.sacred_cooldown <= 0)
     {
         // char warp_buffer[4];
@@ -160,8 +162,7 @@ void updatePlayer()
         {
             if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, level_object_array[i].data.x, level_object_array[i].data.y, 8, 8))
             {
-                SPR_releaseSprite(level_object_array[i].data.sprite);
-                level_object_array[i].data.active = false;
+                pickupObject(i);
                 break;
             }
         }

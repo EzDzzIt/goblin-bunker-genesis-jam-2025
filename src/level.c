@@ -152,7 +152,7 @@ void initObject(u8 object_type, u8 x, u8 y, u8 push_x, u8 push_y)
             }
             else if (object_type == OBJECT_TYPE_KEY)
             {
-                obj.data.sprite = SPR_addSprite(&idol_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+                obj.data.sprite = SPR_addSprite(&key_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
             }
             obj.data.active = true;
             obj.push_x = push_x;
@@ -182,6 +182,13 @@ void updateObjects()
 
 void pickupObject(u8 index)
 {
+    SPR_releaseSprite(level_object_array[index].data.sprite);
+    level_object_array[index].data.active = false;
+
+    if (level_object_array[index].object_type == OBJECT_TYPE_IDOL)
+    {
+        player.hp += 1;
+    }
 }
 
 void applyObjectOffsets()
@@ -279,7 +286,7 @@ void updateLevel(u8 level)
             level_data.beastmode_chance = 100;
             level_data.beastmode_time_limit = 200;
             level_data.enemy_shot_chance = 100; // percent
-            level_data.doors_closed_limit = 3;
+            level_data.doors_closed_limit = 1;
             level_data.shuts_to_seal = 2; // 3 times to seal
 
             // player spawn
@@ -290,6 +297,7 @@ void updateLevel(u8 level)
             // initDoor(96 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
             // initDoor(64 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
             // on screen 2
+            initObject(OBJECT_TYPE_KEY, 96 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 20, 0);
             // initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 20, 0);
 
             applyObjectOffsets();

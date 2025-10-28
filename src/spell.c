@@ -28,9 +28,6 @@ void initSpell(u8 spell_type, fix16 x, fix16 y)
             bul_y_velocity = 1;
         }
         initPlayerBullet(x, y, bul_x_velocity, bul_y_velocity);
-        // initPlayerBullet(x, y, 0, -1);
-        // initPlayerBullet(x, y, -1, 0);
-        // initPlayerBullet(x, y, 1, 0);
     }
     else if (spell_type == SPELL_SACRED)
     {
@@ -48,7 +45,7 @@ void initPlayerBullet(fix16 x, fix16 y, f16 x_velocity, f16 y_velocity)
         if (!player_bullet_array[i].data.active)
         {
             struct bulletData bul;
-            bul.data.sprite = SPR_addSprite(&bullet_sprite, x, y, TILE_ATTR(PAL0, 0, FALSE, FALSE));
+            bul.data.sprite = SPR_addSprite(&bullet_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
             bul.data.x = x + 3;
             bul.data.y = y + 4;
             bul.data.active = true;
@@ -76,11 +73,10 @@ void initSacredGround(fix16 x, fix16 y)
         if (!sacred_ground_array[i].data.active)
         {
             struct spellData spell;
-            spell.data.sprite = SPR_addSprite(&sacred_ground_sprite, x, y, TILE_ATTR(PAL0, 0, FALSE, FALSE));
+            spell.data.sprite = SPR_addSprite(&sacred_ground_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
             SPR_setAlwaysAtBottom(spell.data.sprite);
             spell.data.x = x;
             spell.data.y = y;
-
             spell.data.active = true;
             spell.lifetime = 60;
             SPR_setAnim(spell.data.sprite, SACRED_GROUND_ANIM);

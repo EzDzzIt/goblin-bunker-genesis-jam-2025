@@ -59,7 +59,7 @@ void enemyAI(u8 index)
 
     if (enemy_array[index].type == ENEMY_TYPE_EYE)
     {
-        if (enemy_array[index].enemy_ai_counter % 110 == 0)
+        if (enemy_array[index].enemy_ai_counter % 140 == 0)
         {
             if ((random() % (2 - 1 + 1)) + 1 <= 1)
             {

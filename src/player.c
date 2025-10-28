@@ -45,7 +45,7 @@ void player_info_print()
 
 void initPlayer()
 {
-    player.sprite = SPR_addSprite(&player_sprite, SCREEN_X_OFFSET, SCREEN_Y_OFFSET, TILE_ATTR(PAL0, 0, FALSE, FALSE));
+    player.sprite = SPR_addSprite(&player_sprite, SCREEN_X_OFFSET, SCREEN_Y_OFFSET, TILE_ATTR(PAL1, 0, FALSE, FALSE));
     player.speed = 1.8;
     player.x = SCREEN_X_OFFSET;
     player.y = SCREEN_Y_OFFSET;
@@ -213,12 +213,12 @@ void updatePlayer()
         }
         else
         {
-            SPR_setPalette(player.sprite, PAL0);
+            SPR_setPalette(player.sprite, PAL1);
         }
         if (player.hurt_cooldown == 0)
         {
             SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
-            SPR_setPalette(player.sprite, PAL0);
+            SPR_setPalette(player.sprite, PAL1);
         }
     }
 

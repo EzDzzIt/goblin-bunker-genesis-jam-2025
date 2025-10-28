@@ -45,6 +45,7 @@ struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y)
             break;
         }
     }
+    XGM2_playPCM(wav_en_spawn, sizeof(wav_en_spawn), SOUND_PCM_CH_AUTO);
 }
 
 void killEnemy(u8 index)
@@ -52,6 +53,7 @@ void killEnemy(u8 index)
     enemy_array[index].data.active = false;
     SPR_releaseSprite(enemy_array[index].data.sprite);
     score += 20;
+    XGM2_playPCM(wav_en_death, sizeof(wav_en_death), SOUND_PCM_CH_AUTO);
 }
 
 void enemyAI(u8 index)
@@ -74,7 +76,7 @@ void enemyAI(u8 index)
         // {
         //     enemy_array[index].reverse_ai = false;
         // }
-        else if (global_counter % 90 == 0)
+        else if (enemy_array[index].enemy_ai_counter % 90 == 0)
         {
             if ((random() % (100 - 1 + 1)) + 1 <= levelObject.enemy_shot_chance)
             {
@@ -108,6 +110,7 @@ void enemyAI(u8 index)
                 }
                 else
                 {
+                    XGM2_playPCM(wav_en_shot, sizeof(wav_shot), SOUND_PCM_CH_AUTO);
                     initBullet(enemy_array[index].data.x + 4, enemy_array[index].data.y + 2, bullet_x_velocity, bullet_y_velocity);
                 }
             }

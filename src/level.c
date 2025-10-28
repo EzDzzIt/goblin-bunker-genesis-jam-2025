@@ -116,6 +116,7 @@ void shutDoor(u8 index)
 {
     toggleDoorBeastmode(index);
     score += 10;
+    XGM2_playPCM(wav_door_sealed, sizeof(wav_door_sealed), SOUND_PCM_CH_AUTO);
     if (door_array[index].shut_count >= levelObject.shuts_to_seal)
     {
         // seal door
@@ -153,10 +154,6 @@ struct levelData levelObject;
 void initLevel(u8 level)
 {
     // clear_graphics(FALSE);
-
-    XGM2_setFMVolume(40); // debug
-    XGM2_play(xgm2_level0);
-    XGM2_fadeIn(150);
 
     current_level = level;
     reset_globals();

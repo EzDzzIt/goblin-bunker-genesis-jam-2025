@@ -66,11 +66,14 @@ void updatePlayer()
     {
         initSpell(SPELL_SACRED, player.x, player.y);
         player.cast = 0;
+        XGM2_playPCM(wav_sacred, sizeof(wav_sacred), SOUND_PCM_CH_AUTO);
     }
     else if (player.cast == SPELL_SHOT)
     {
         initSpell(SPELL_SHOT, player.x, player.y);
         player.cast = 0;
+        // SND_PCM_startPlay(wav_laser, sizeof(wav_laser), SOUND_PCM_RATE_13400, SOUND_PAN_CENTER, FALSE);
+        XGM2_playPCM(wav_shot, sizeof(wav_shot), SOUND_PCM_CH_AUTO);
     }
 
     // stuff that stops u
@@ -242,6 +245,7 @@ void updatePlayer()
             {
                 initSpell(SPELL_SHOT, player.x, player.y);
                 player.attack_cooldown = PLAYER_ATTACK_COOLDOWN;
+                XGM2_playPCM(wav_shot, sizeof(wav_shot), SOUND_PCM_CH_AUTO);
             }
         }
     }

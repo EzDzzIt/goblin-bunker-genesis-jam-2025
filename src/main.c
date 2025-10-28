@@ -73,7 +73,7 @@ int main(bool resetType)
 					VDP_drawBitmapEx(BG_A, &sgdk_logo_image, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 1, 3, FALSE);
 					XGM2_setFMVolume(100);
 					XGM2_play(xgm2_title);
-					XGM2_fadeIn(15);
+					XGM2_fadeIn(120);
 				}
 			}
 			else if (title_counter == 1) // press start screen
@@ -128,6 +128,9 @@ int main(bool resetType)
 				clear_graphics(TRUE);
 				title_counter = 0; // make sure this is reset
 				title_skip = false;
+				XGM2_stop();
+				XGM2_setFMVolume(100);
+				XGM2_play(xgm2_over);
 				VDP_drawBitmapEx(BG_A, &over_screen, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 0, 0, FALSE);
 			}
 			else if (!title_skip)
@@ -171,15 +174,17 @@ int main(bool resetType)
 				VDP_loadTileSet(&blank_tileset, 0, DMA);
 				VDP_setTileMapEx(BG_B, &blank, TILE_ATTR_FULL(PAL1, FALSE, FALSE, FALSE, 0), 0, 0, 0, 0, 32, 28, DMA);
 				SYS_enableInts();
+				XGM2_setFMVolume(75);
+				XGM2_play(xgm2_level0);
 				if (current_level == 0)
 				{
 					VDP_drawText("THE TIME IS", 2 + 5, 1 + 6);
 					VDP_drawText("TOO EARLY;", 3 + 5, 2 + 6);
 					VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
 					VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
-					VDP_drawText("...SEAL", 8 + 5, 8 + 6);
-					VDP_drawText("...THE", 9 + 5, 9 + 6);
-					VDP_drawText("...DOORS", 10 + 5, 10 + 6);
+					VDP_drawText("Press A", 8 + 5, 8 + 6);
+					VDP_drawText("to seal", 9 + 5, 9 + 6);
+					VDP_drawText("the DOORS", 10 + 5, 10 + 6);
 				}
 				else if (current_level == 1) // level id - 1
 				{

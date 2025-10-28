@@ -49,12 +49,16 @@ void initPlayerBullet(fix16 x, fix16 y, f16 x_velocity, f16 y_velocity)
         {
             struct bulletData bul;
             bul.data.sprite = SPR_addSprite(&bullet_sprite, x, y, TILE_ATTR(PAL0, 0, FALSE, FALSE));
-            bul.data.x = x;
-            bul.data.y = y;
+            bul.data.x = x + 3;
+            bul.data.y = y + 4;
             bul.data.active = true;
             bul.velocity.x = x_velocity * PLAYER_BULLET_SPEED_0;
             bul.velocity.y = y_velocity * PLAYER_BULLET_SPEED_0;
             SPR_setAnim(bul.data.sprite, 0);
+            if (x_velocity == 0 && y_velocity == 0)
+            {
+                bul.velocity.x = 1;
+            }
             player_bullet_array[i] = bul;
             break;
         }

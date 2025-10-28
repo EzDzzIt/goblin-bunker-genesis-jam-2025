@@ -25,5 +25,13 @@ TILEMAP blank "assets/gfx/blank_screen.png" blank_tileset
 BITMAP sgdk_logo_image "res_inc/image/sgdk_logo_2.png" FAST
 BITMAP title_screen "assets/gfx/title_screen.png" FAST
 BITMAP over_screen "assets/gfx/over_screen.png" FAST
-XGM2 xgm2_title "assets/music/title.vgm"
-XGM2 xgm2_level0 "assets/music/level0.vgm"
+XGM2 xgm2_title "assets/music/title2.vgm"
+XGM2 xgm2_level0 "assets/music/level.vgm"
+XGM2 xgm2_over "assets/music/over.vgm"
+WAV wav_shot "assets/sound/laser gun 4.wav" XGM2 6650
+WAV wav_en_shot "assets/sound/laser gun 6.wav" XGM2 6650
+WAV wav_sacred "assets/sound/metal hit 2.wav" XGM2 6650
+WAV wav_door_sealed "assets/sound/wood and metal cabinet closed 2.wav" XGM2 6650
+//WAV wav_en_death "assets/sound/alien machine 10.wav" XGM2 6650
+WAV wav_en_death "assets/sound/goo 3.wav" XGM2 6650
+WAV wav_en_spawn "assets/sound/bug people 14.wav" XGM2 6650

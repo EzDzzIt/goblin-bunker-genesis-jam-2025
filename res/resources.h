@@ -1,8 +1,15 @@
 #ifndef _RES_RESOURCES_H_
 #define _RES_RESOURCES_H_
 
-extern const u8 xgm2_title[1024];
-extern const u8 xgm2_level0[1024];
+extern const u8 wav_shot[6656];
+extern const u8 wav_en_shot[7168];
+extern const u8 wav_sacred[50176];
+extern const u8 wav_door_sealed[3584];
+extern const u8 wav_en_death[16384];
+extern const u8 wav_en_spawn[9728];
+extern const u8 xgm2_title[1280];
+extern const u8 xgm2_level0[1280];
+extern const u8 xgm2_over[1024];
 extern const Palette palette_0;
 extern const Palette palette_1;
 extern const Palette palette_2;

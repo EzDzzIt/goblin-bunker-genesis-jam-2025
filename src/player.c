@@ -16,7 +16,7 @@ void player_info_print()
     // score
     char score_buffer[8];
     // sprintf(score_buffer, "SC: %d", score);
-    sprintf(score_buffer, "DOORS: %d", levelObject.doors_closed_limit - doors_closed);
+    sprintf(score_buffer, "DOORS: %d", level_data.doors_closed_limit - doors_closed);
 
     VDP_drawText(score_buffer, 7, 22);
     // dash
@@ -271,7 +271,7 @@ void updatePlayer()
         SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
     }
     // adjust final scroll position based on player
-    if (player.y >= SCREEN_Y_END - 32 && MAP_Y < levelObject.map_height) // adjust for window
+    if (player.y >= SCREEN_Y_END - 32 && MAP_Y < level_data.map_height) // adjust for window
     {
         player.y = SCREEN_Y_OFFSET + 2; // send player to top of next area
         SCROLL_Y = 16;                  // tileset needs to scroll up by 16 tiles
@@ -290,7 +290,7 @@ void updatePlayer()
             UPDATE_SCROLL = TRUE;
         }
     }
-    if (player.x >= SCREEN_X_END - 8 && MAP_X < levelObject.map_width) // adjust for window
+    if (player.x >= SCREEN_X_END - 8 && MAP_X < level_data.map_width) // adjust for window
     {
         player.x = SCREEN_X_OFFSET + 8; // send player to top of next area
         SCROLL_X = 20;                  // tileset needs to scroll up by 16 tiles

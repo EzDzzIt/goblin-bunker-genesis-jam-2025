@@ -78,7 +78,7 @@ void enemyAI(u8 index)
         // }
         else if (enemy_array[index].enemy_ai_counter % 90 == 0)
         {
-            if ((random() % (100 - 1 + 1)) + 1 <= levelObject.enemy_shot_chance)
+            if ((random() % (100 - 1 + 1)) + 1 <= level_data.enemy_shot_chance)
             {
                 s8 bullet_x_velocity = 0;
                 s8 bullet_y_velocity = 0;

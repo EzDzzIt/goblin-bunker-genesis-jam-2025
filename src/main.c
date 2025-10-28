@@ -189,7 +189,7 @@ int main(bool resetType)
 				else if (current_level == 1) // level id - 1
 				{
 					VDP_drawText("FIND THE KEY...", 2 + 5, 3 + 6);
-					VDP_drawText("TO SEAL THIS DOOR;", 3 + 5, 4 + 6);
+					VDP_drawText("TO SEAL THIS DOOR", 3 + 5, 5 + 6);
 					// VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
 					// VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
 					// VDP_drawText("...SEAL...", 6 + 5, 8 + 6);

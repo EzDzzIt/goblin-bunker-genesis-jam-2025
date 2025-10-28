@@ -42,10 +42,24 @@ void initDoor(u8 x, u8 y, u8 push_x, u8 push_y);
 void toggleDoorBeastmode(u8 index);
 void updateDoors();
 void shutDoor(u8 index);
-void applyDoorOffsets();
+void applyObjectOffsets();
 
 extern struct doorData door_array[];
-// extern struct objectData sealed_door_array[];
+
+// other level entities (keys, idols, hidden blocks)
+
+#define MAX_OBJECTS 12
+
+struct levelObjectData
+{
+    struct objectData data;
+    u8 object_type;
+};
+
+// level objects
+
+extern struct levelObjectData level_object_array[];
+void initObject(u8 object_type, s16 x, s16 y);
 
 // actual level logic
 
@@ -60,7 +74,7 @@ struct levelData
     u8 shuts_to_seal; // how many times you have to shgut a door to seal it in a level
 };
 
-extern struct levelData levelObject;
+extern struct levelData level_data;
 
 void initLevel(u8 level);
 void updateLevel(u8 level);

@@ -170,11 +170,11 @@ void updatePlayer()
         u8 tile_y = 0;
         if (player.velocity.x > 0)
         {
-            tile_x = (player.x - SCREEN_X_OFFSET + 2) / 8 + MAP_X;
+            tile_x = (player.x - SCREEN_X_OFFSET + 5) / 8 + MAP_X;
         }
         else if (player.velocity.x <= 0)
         {
-            tile_x = (player.x - SCREEN_X_OFFSET + 2) / 8 + MAP_X;
+            tile_x = (player.x - SCREEN_X_OFFSET + 5) / 8 + MAP_X;
         }
         if (player.velocity.y > 0)
         {

@@ -36,11 +36,15 @@ extern u16 global_counter;
 extern bool title_skip;
 extern u16 score;
 extern u8 doors_closed;
+extern u8 secrets_found;
+extern u8 enemies_killed;
 extern u8 total_doors_closed;
+extern u16 total_enemies_killed;
 extern s8 SCROLL_X;
 extern s8 SCROLL_Y;
 extern u8 MAP_X;
 extern u8 MAP_Y;
+// extern u8 current_level_map[][];
 extern bool UPDATE_SCROLL;
 extern TileMap *currentMap;
 extern u8 current_level;
@@ -50,7 +54,7 @@ extern void clear_graphics(bool stop_music);
 extern void reset_globals();
 extern void setSprite(Sprite *sprite, fix16 x, fix16 y);
 
-// level collision data
-#define level_3_width 40  // tiles
-#define level_3_height 32 // tiles
-extern const u8 level_3_map_collision[32][40];
+// level tile data
+extern const u8 level_1_map_data[16][20];
+extern const u8 level_2_map_data[16][40];
+extern const u8 level_3_map_data[32][40];

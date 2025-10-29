@@ -15,7 +15,8 @@ void player_info_print()
     VDP_drawText(buffer, 7, 21);
     // score
     char score_buffer[8];
-    sprintf(score_buffer, "SC:%d", score);
+    sprintf(score_buffer, "ti:%d", level_2_map_data[player.tile_y][player.tile_x]);
+    VDP_clearTextArea(18, 21, 6, 1);
     VDP_drawText(score_buffer, 18, 21);
     // doors left
     char door_buffer[2];
@@ -54,6 +55,9 @@ void initPlayer()
     player.hp = 3;
     SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
 }
+
+// u8 (*level_1_map_data_pointer)[16][20];
+// level_1_map_data_pointer = &level_1_map_data;
 
 void updatePlayer()
 {
@@ -99,16 +103,7 @@ void updatePlayer()
         player.y -= player.velocity.y;
         player.y = SCREEN_Y_OFFSET;
     }
-    // wip to implement level collisions
-    // TILES DEBUG
-    // u8 tile_x = (player.x - 48) / 8;
-    // u8 tile_y = (player.y - 40) / 8;
-    // u8 tile_type = level_3_map_collision[tile_y][tile_x];
-    // if (tile_type == 10 || tile_type == 15 || tile_type == 13 || tile_type == 8 || tile_type == 12)
-    // {
-    //     player.x -= player.velocity.x;
-    //     player.y -= player.velocity.y;
-    // }
+
     u8 i = 0;
     bool collided = false;
     bool hurt = false;
@@ -168,13 +163,36 @@ void updatePlayer()
         }
     }
 
+    // TILES DEBUG
+    if (!(player.velocity.x == 0 && player.velocity.y == 0))
+    {
+        u8 tile_x;
+        u8 tile_y;
+        if (player.velocity.x > 0)
+        {
+            tile_x = (player.x - SCREEN_X_OFFSET + PLAYER_WIDTH) / 8 + MAP_X;
+        }
+        else if (player.velocity.x <= 0)
+        {
+            tile_x = (player.x - SCREEN_X_OFFSET + PLAYER_WIDTH) / 8 + MAP_X;
+        }
+        if (player.velocity.y > 0)
+        {
+            tile_y = (player.y - SCREEN_Y_OFFSET + PLAYER_HEIGHT) / 8 + MAP_Y;
+        }
+        else if (player.velocity.y <= 0)
+        {
+            tile_y = (player.y - SCREEN_Y_OFFSET + PLAYER_HEIGHT) / 8 + MAP_Y;
+        }
+        u8 tile_type = (level_1_map_data)[tile_y][tile_x];
+        if ((tile_type >= 2 && tile_type <= 9))
+        {
+            collided = true;
+        }
+    }
+
     if (collided)
     {
-        // u8 teleport_correction = 0;
-        // if (player.last_input == BUTTON_A)
-        // {
-        //     teleport_correction = PLAYER_TELEPORT_CORRECTION;
-        // }
         if (player.velocity.x > 0)
         {
             player.x -= player.velocity.x + 2; //+ teleport_correction;

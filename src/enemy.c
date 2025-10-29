@@ -50,9 +50,10 @@ struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y)
 
 void killEnemy(u8 index)
 {
+    enemies_killed += 1;
+    total_enemies_killed += 1;
     enemy_array[index].data.active = false;
     SPR_releaseSprite(enemy_array[index].data.sprite);
-    score += 20;
     XGM2_playPCM(wav_en_death, sizeof(wav_en_death), SOUND_PCM_CH_AUTO);
 }
 
@@ -63,9 +64,13 @@ void enemyAI(u8 index)
     {
         if (enemy_array[index].enemy_ai_counter % 140 == 0)
         {
-            if ((random() % (2 - 1 + 1)) + 1 <= 1)
+            if ((random() % (4 - 1 + 1)) + 1 <= 1)
             {
-                enemy_array[index].reverse_ai = !enemy_array[index].reverse_ai;
+                enemy_array[index].reverse_ai = true;
+            }
+            else
+            {
+                enemy_array[index].reverse_ai = false;
             }
             if (enemy_array[index].data.x >= SCREEN_X_END || enemy_array[index].data.x <= SCREEN_X_OFFSET || enemy_array[index].data.y >= SCREEN_Y_END || enemy_array[index].data.y <= SCREEN_Y_OFFSET)
             {

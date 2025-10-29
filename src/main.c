@@ -137,11 +137,17 @@ int main(bool resetType)
 			else if (!title_skip)
 			{
 				char buffer[8];
-				sprintf(buffer, "SCORE: %d", score);
-				VDP_drawText(buffer, 11, 18);
+				sprintf(buffer, "SCORE:%d", score);
+				VDP_drawText(buffer, 10, 17);
 				char buffer2[12];
-				sprintf(buffer2, "DOORS SEALED: %d", total_doors_closed);
-				VDP_drawText(buffer2, 8, 20);
+				sprintf(buffer2, "DOORS SEALED:%d", total_doors_closed);
+				VDP_drawText(buffer2, 10, 18);
+				char buffer3[12];
+				sprintf(buffer3, "ENEMIES SLAIN:%d", total_enemies_killed);
+				VDP_drawText(buffer3, 10, 19);
+				char buffer4[12];
+				sprintf(buffer4, "SECRETS:%d", secrets_found);
+				VDP_drawText(buffer4, 10, 20);
 			}
 			else
 			{

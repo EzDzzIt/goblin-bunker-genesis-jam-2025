@@ -312,6 +312,24 @@ void updateLevel(u8 level)
     {
         if (global_counter == 2) // 2 is the earliest global counter for spawning stuff
         {
+            level_data.map_height = 16 * 1 - 16; // 16 tiles per screen height
+            level_data.map_width = 20 * 1 - 20;  // 20 tiles per screen width
+            level_data.beastmode_chance = 45;
+            level_data.beastmode_time_limit = 300;
+            level_data.enemy_shot_chance = 100; // percent
+            level_data.doors_closed_limit = 1;  // seal one door to win the level
+            level_data.shuts_to_seal = 2;       // shut each door 3 times to seal
+            level_data.level_timer_max = 30;    // seconds on the clock
+            level_timer = level_data.level_timer_max;
+            // player spawn
+            player.x = SCREEN_X_OFFSET + 4 * 8;
+            player.y = SCREEN_Y_OFFSET + 10 * 8;
+            player.hp += 1; // heal a bit each round
+            // level objects
+            initDoor(17 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 0, 0);
+            initObject(OBJECT_TYPE_KEY, SCREEN_X_OFFSET + 17 * 8, SCREEN_Y_OFFSET + 2 * 8, 0, 0);
+            // apply object offsets to other screens if needed
+            applyObjectOffsets();
         }
     }
     // deal with level timer
@@ -320,7 +338,7 @@ void updateLevel(u8 level)
         level_timer -= 1;
         if (level_timer <= 0)
         {
-            player.hp = 0;
+            player.hp = 0; // you have died
         }
     }
     if (UPDATE_SCROLL)

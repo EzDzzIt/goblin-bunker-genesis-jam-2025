@@ -158,7 +158,7 @@ void updatePlayer()
     {
         if (level_object_array[i].data.active)
         {
-            if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, level_object_array[i].data.x, level_object_array[i].data.y, 8, 8))
+            if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, level_object_array[i].data.x + 2, level_object_array[i].data.y + 2, 4, 4))
             {
                 pickupObject(i);
                 break;
@@ -429,7 +429,7 @@ void checkInput()
             // DEBUG
             if (state & BUTTON_START && changed & BUTTON_START)
             {
-                // initLevel(current_level + 1);
+                initLevel(current_level + 1);
             }
         }
         else if (game_state == GAME_STATE_TITLE || game_state == GAME_STATE_OVER || game_state == GAME_STATE_TRANSITION)

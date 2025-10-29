@@ -35,7 +35,7 @@ void initSpell(u8 spell_type, fix16 x, fix16 y)
     }
     else if (spell_type == SPELL_SACRED)
     {
-        initSacredGround(x - 4, y + 8);
+        initSacredGround(x - 4, y + 6);
     }
 }
 
@@ -193,7 +193,7 @@ void updateSpells()
                         // collision check between sacred ground and doors needs slight mod to work
                         if (door_array[j].beastmode)
                         {
-                            if (collision_check(sacred_ground_array[i].data.x - 3, sacred_ground_array[i].data.y - 3, SACRED_GROUND_WIDTH + 6, SACRED_GROUND_HEIGHT + 6, door_array[j].data.x - 2, door_array[j].data.y, DOOR_WIDTH + 4, DOOR_HEIGHT))
+                            if (collision_check(sacred_ground_array[i].data.x - 3, sacred_ground_array[i].data.y - 2, SACRED_GROUND_WIDTH + 6, SACRED_GROUND_HEIGHT + 4, door_array[j].data.x - 2, door_array[j].data.y, DOOR_WIDTH + 4, DOOR_HEIGHT))
                             {
                                 if (door_array[j].close_cooldown == 0)
                                 {

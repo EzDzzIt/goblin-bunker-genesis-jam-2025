@@ -228,16 +228,19 @@ void initLevel(u8 level)
     {
         currentMap = &level_1_map;
         current_map_data = level_1_map_data;
+        current_map_data_columns = 20;
     }
     else if (level == 2)
     {
         currentMap = &level_2_map;
         current_map_data = level_2_map_data;
+        current_map_data_columns = 20;
     }
     else if (level == 3)
     {
         currentMap = &level_3_map;
         current_map_data = level_3_map_data;
+        current_map_data_columns = 20;
     }
     SYS_disableInts();
     VDP_loadTileSet(&level_tileset, 0, DMA);
@@ -261,17 +264,14 @@ void updateLevel(u8 level)
             level_data.enemy_shot_chance = 100; // percent
             level_data.doors_closed_limit = 1;  // seal one door to win the level
             level_data.shuts_to_seal = 2;       // shut each door 3 times to seal
+            level_data.level_timer_max = 30;    // seconds on the clock
+            level_timer = level_data.level_timer_max;
             // player spawn
             player.x = SCREEN_X_OFFSET + 8;
             player.y = SCREEN_Y_OFFSET + 8;
             player.hp += 1; // heal a bit each round
             // level objects
             initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
-            // initDoor(64 + SCREEN_X_OFFSET + 20 * 8, 16 + SCREEN_Y_OFFSET);
-            // initDoor(16 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET);
-            // initDoor(16 + SCREEN_X_OFFSET, 64 + SCREEN_Y_OFFSET);
-            // initEnemy(ENEMY_TYPE_DEMON, 50, 50);
-            initObject(OBJECT_TYPE_IDOL, 96 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
             // apply object offsets to other screens if needed
             applyObjectOffsets();
         }
@@ -314,6 +314,15 @@ void updateLevel(u8 level)
         {
         }
     }
+    // deal with level timer
+    if (global_counter % 60 == 0)
+    {
+        level_timer -= 1;
+        if (level_timer <= 0)
+        {
+            player.hp = 0;
+        }
+    }
     if (UPDATE_SCROLL)
     {
         UPDATE_SCROLL = false;
@@ -329,6 +338,7 @@ void updateLevel(u8 level)
     {
         // go to the next level
         global_counter = 0;
+        score += level_timer;
         game_state = GAME_STATE_TRANSITION;
     }
 }

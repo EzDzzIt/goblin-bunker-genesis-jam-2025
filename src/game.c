@@ -10,13 +10,13 @@
 void updateGame()
 {
 
-    if (global_counter % 120 == 0)
+    if (global_counter % 360 == 0)
     {
         // score += 1;
         SPR_defragVRAM();
     }
 
-    // update doors
+        // update doors
     updateDoors();
     // update objects
     updateObjects();

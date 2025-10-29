@@ -162,7 +162,7 @@ int main(bool resetType)
 		else if (game_state == GAME_STATE_TRANSITION)
 		{
 
-			if (global_counter == 241 || title_skip)
+			if (global_counter == 60 * 5 || title_skip)
 			{
 				if (current_level == 0)
 				{
@@ -180,33 +180,36 @@ int main(bool resetType)
 				SPR_clear();
 				VDP_loadTileSet(&blank_tileset, 0, DMA);
 				VDP_setTileMapEx(BG_B, &blank, TILE_ATTR_FULL(PAL1, FALSE, FALSE, FALSE, 0), 0, 0, 0, 0, 32, 28, DMA);
+				VDP_loadTileSet(&border_tileset, level_tileset.numTile, DMA);
+				VDP_setTileMapEx(BG_A, &border_image, TILE_ATTR_FULL(PAL3, 1, FALSE, FALSE, level_tileset.numTile), 0, 0, 0, 0, 32, 28, DMA);
 				SYS_enableInts();
 				XGM2_setFMVolume(60);
 				XGM2_play(xgm2_level0);
 				if (current_level == 0)
 				{
 					VDP_drawText("THE TIME IS", 2 + 5, 1 + 6);
-					VDP_drawText("TOO EARLY;", 3 + 5, 2 + 6);
+					VDP_drawText("TOO EARLY", 3 + 5, 2 + 6);
 					VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
 					VDP_drawText("DOTH NOT SHINE;", 5 + 5, 5 + 6);
 					VDP_drawText("Press A", 8 + 5, 8 + 6);
 					VDP_drawText("to seal", 9 + 5, 9 + 6);
-					VDP_drawText("the DOORS", 10 + 5, 10 + 6);
+					// VDP_drawText("the DOORS", 10 + 5, 10 + 6);
 				}
 				else if (current_level == 1) // level id - 1
 				{
-					VDP_drawText("THEY WILL NOT", 2 + 5, 3 + 6);
+					VDP_drawText("THEY CAN NOT", 2 + 5, 3 + 6);
 					VDP_drawText("HOLD YOU;", 3 + 5, 5 + 6);
 					// VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
 					// VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
 					VDP_drawText("Press C", 8 + 5, 8 + 6);
-					VDP_drawText("to warp", 9 + 5, 9 + 6);
-					VDP_drawText("randomly", 10 + 5, 10 + 6);
+					VDP_drawText("to blink", 9 + 5, 9 + 6);
+					// VDP_drawText("randomly", 10 + 5, 10 + 6);
 				}
 				else if (current_level == 2)
 				{
-					VDP_drawText("RETRIEVE THE", 2 + 5, 1 + 6);
-					VDP_drawText("KEY, CHILD;", 3 + 5, 2 + 6);
+					VDP_drawText("RETRIEVE THE", 2 + 5, 3 + 6);
+					VDP_drawText("KEY, CHILD;", 3 + 5, 5 + 6);
+					// VDP_drawText("KEY, CHILD;", 3 + 5, 5 + 6);
 					// VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
 					// VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
 					// VDP_drawText("...SEAL...", 6 + 5, 8 + 6);

@@ -78,6 +78,7 @@ struct levelData
     u8 map_height; // tiles
     u8 doors_closed_limit;
     u8 shuts_to_seal; // how many times you have to shgut a door to seal it in a level
+    u8 level_timer_max;
 };
 
 extern struct levelData level_data;

@@ -22,6 +22,9 @@ void player_info_print()
     char door_buffer[2];
     sprintf(door_buffer, "DOORS:%d", level_data.doors_closed_limit - doors_closed);
     VDP_drawText(door_buffer, 7, 22);
+    char time_buffer[2];
+    sprintf(door_buffer, "TIME:%d", level_timer);
+    VDP_drawText(door_buffer, 14, 21);
     // warp
     // if (player.warp_cooldown <= 0)
     // {
@@ -120,7 +123,7 @@ void updatePlayer()
         }
     }
     // cycle through stuff that hurts u, only if you are not invincible &|| warping
-    if (player.hurt_cooldown <= 0 && player.warp_cooldown <= 105)
+    if (player.hurt_cooldown <= 0 && player.warp_cooldown <= 95)
     {
         for (i = 0; i < MAX_ENEMIES; i++)
         {
@@ -184,7 +187,7 @@ void updatePlayer()
         {
             tile_y = (player.y - SCREEN_Y_OFFSET + 8) / 8 + MAP_Y;
         }
-        u8 tile_type = ((u8(*)[20])current_map_data)[tile_y][tile_x];
+        u8 tile_type = ((u8(*)[current_map_data_columns])current_map_data)[tile_y][tile_x];
         if ((tile_type >= 2 && tile_type <= 9))
         {
             collided = true;
@@ -210,7 +213,7 @@ void updatePlayer()
             player.y -= player.velocity.y - 3; //- teleport_correction;
         }
 
-        player.move_cooldown = PLAYER_MOVE_COOLDOWN;
+        // player.move_cooldown = PLAYER_MOVE_COOLDOWN;
         player.velocity.y = 0;
         player.velocity.x = 0;
     }

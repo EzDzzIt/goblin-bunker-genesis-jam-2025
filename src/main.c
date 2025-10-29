@@ -188,30 +188,30 @@ int main(bool resetType)
 					VDP_drawText("THE TIME IS", 2 + 5, 1 + 6);
 					VDP_drawText("TOO EARLY;", 3 + 5, 2 + 6);
 					VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
-					VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
+					VDP_drawText("DOTH NOT SHINE;", 5 + 5, 5 + 6);
 					VDP_drawText("Press A", 8 + 5, 8 + 6);
 					VDP_drawText("to seal", 9 + 5, 9 + 6);
 					VDP_drawText("the DOORS", 10 + 5, 10 + 6);
 				}
 				else if (current_level == 1) // level id - 1
 				{
-					VDP_drawText("FIND THE KEY...", 2 + 5, 3 + 6);
-					VDP_drawText("TO SEAL THIS DOOR", 3 + 5, 5 + 6);
+					VDP_drawText("THEY WILL NOT", 2 + 5, 3 + 6);
+					VDP_drawText("HOLD YOU;", 3 + 5, 5 + 6);
+					// VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
+					// VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
+					VDP_drawText("Press C", 8 + 5, 8 + 6);
+					VDP_drawText("to warp", 9 + 5, 9 + 6);
+					VDP_drawText("randomly", 10 + 5, 10 + 6);
+				}
+				else if (current_level == 2)
+				{
+					VDP_drawText("RETRIEVE THE", 2 + 5, 1 + 6);
+					VDP_drawText("KEY, CHILD;", 3 + 5, 2 + 6);
 					// VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
 					// VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
 					// VDP_drawText("...SEAL...", 6 + 5, 8 + 6);
 					// VDP_drawText("...THE...", 7 + 5, 9 + 6);
 					// VDP_drawText("...DOORS...", 8 + 5, 10 + 6);
-				}
-				else if (current_level == 2)
-				{
-					VDP_drawText("THE TIME IS", 2 + 5, 1 + 6);
-					VDP_drawText("TOO EARLY;", 3 + 5, 2 + 6);
-					VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
-					VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
-					VDP_drawText("...SEAL...", 6 + 5, 8 + 6);
-					VDP_drawText("...THE...", 7 + 5, 9 + 6);
-					VDP_drawText("...DOORS...", 8 + 5, 10 + 6);
 				}
 				else if (current_level == 3)
 				{

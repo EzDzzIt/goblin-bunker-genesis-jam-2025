@@ -14,36 +14,36 @@ void player_info_print()
     sprintf(buffer, "%dHP", player.hp);
     VDP_drawText(buffer, 7, 21);
     // score
-    char score_buffer[8];
-    sprintf(score_buffer, "ti:%d", player.x);
-    VDP_clearTextArea(18, 21, 6, 1);
-    VDP_drawText(score_buffer, 18, 21);
+    // char score_buffer[8];
+    // sprintf(score_buffer, "ti:%d", player.x);
+    // VDP_clearTextArea(18, 21, 6, 1);
+    // VDP_drawText(score_buffer, 18, 21);
     // doors left
     char door_buffer[2];
     sprintf(door_buffer, "DOORS:%d", level_data.doors_closed_limit - doors_closed);
     VDP_drawText(door_buffer, 7, 22);
     // warp
-    if (player.warp_cooldown <= 0)
-    {
-        // char warp_buffer[4];
-        // sprintf(warp_buffer, "%dHP", player.hp);
-        VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, 1473 + 22), 11, 21, 1, 1); // index 1473 is A
-    }
-    else
-    {
-        VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, 0), 11, 21, 1, 1);
-    }
-    // seal spell
-    if (player.sacred_cooldown <= 0)
-    {
-        // char warp_buffer[4];
-        // sprintf(warp_buffer, "%dHP", player.hp);
-        VDP_drawText("S", 12, 21);
-    }
-    else
-    {
-        VDP_clearText(12, 21, 1);
-    }
+    // if (player.warp_cooldown <= 0)
+    // {
+    //     // char warp_buffer[4];
+    //     // sprintf(warp_buffer, "%dHP", player.hp);
+    //     VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, 1473 + 22), 11, 21, 1, 1); // index 1473 is A
+    // }
+    // else
+    // {
+    //     VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, 0), 11, 21, 1, 1);
+    // }
+    // // seal spell
+    // if (player.sacred_cooldown <= 0)
+    // {
+    //     // char warp_buffer[4];
+    //     // sprintf(warp_buffer, "%dHP", player.hp);
+    //     VDP_drawText("S", 12, 21);
+    // }
+    // else
+    // {
+    //     VDP_clearText(12, 21, 1);
+    // }
 }
 
 void initPlayer()
@@ -184,7 +184,7 @@ void updatePlayer()
         {
             tile_y = (player.y - SCREEN_Y_OFFSET + 8) / 8 + MAP_Y;
         }
-        u8 tile_type = (level_2_map_data)[tile_y][tile_x];
+        u8 tile_type = ((u8(*)[20])current_map_data)[tile_y][tile_x];
         if ((tile_type >= 2 && tile_type <= 9))
         {
             collided = true;
@@ -195,19 +195,19 @@ void updatePlayer()
     {
         if (player.velocity.x > 0)
         {
-            player.x -= player.velocity.x + 2; //+ teleport_correction;
+            player.x -= player.velocity.x + 3; //+ teleport_correction;
         }
         else if (player.velocity.x < 0)
         {
-            player.x -= player.velocity.x - 2; //- teleport_correction;
+            player.x -= player.velocity.x - 3; //- teleport_correction;
         }
         if (player.velocity.y > 0)
         {
-            player.y -= player.velocity.y + 2; //+ teleport_correction;
+            player.y -= player.velocity.y + 3; //+ teleport_correction;
         }
         else if (player.velocity.y < 0)
         {
-            player.y -= player.velocity.y - 2; //- teleport_correction;
+            player.y -= player.velocity.y - 3; //- teleport_correction;
         }
 
         player.move_cooldown = PLAYER_MOVE_COOLDOWN;

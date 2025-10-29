@@ -28,11 +28,23 @@ void initSpell(u8 spell_type, fix16 x, fix16 y)
             bul_y_velocity = 1;
         }
         initPlayerBullet(x, y, bul_x_velocity, bul_y_velocity);
+        initPlayerBullet(x, y, 1, 0);
+        initPlayerBullet(x, y, 0, 1);
+        initPlayerBullet(x, y, -1, 0);
+        initPlayerBullet(x, y, 0, -1);
     }
     else if (spell_type == SPELL_SACRED)
     {
         initSacredGround(x - 4, y + 8);
     }
+}
+
+void initWarp()
+{
+    player.warp_cooldown = PLAYER_WARP_COOLDOWN;
+    SPR_setAnim(player.sprite, PLAYER_ANIM_WARP);
+    player.x = (((random() % (18 - 2 + 1)) + 2) + 6) * 8;
+    player.y = (((random() % (14 - 2 + 1)) + 2) + 5) * 8;
 }
 
 struct bulletData player_bullet_array[MAX_BULLETS];
@@ -199,12 +211,4 @@ void updateSpells()
             }
         }
     }
-}
-
-void initWarp()
-{
-    player.warp_cooldown = PLAYER_WARP_COOLDOWN;
-    SPR_setAnim(player.sprite, PLAYER_ANIM_WARP);
-    player.x = ((random() % (20 - 1 + 1)) + 1) * 8;
-    player.y = ((random() % (16 - 1 + 1)) + 1) * 8;
 }

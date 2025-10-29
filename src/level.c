@@ -227,15 +227,17 @@ void initLevel(u8 level)
     if (level == 1)
     {
         currentMap = &level_1_map;
-        // current_level_map = level_1_map_data;
+        current_map_data = level_1_map_data;
     }
     else if (level == 2)
     {
         currentMap = &level_2_map;
+        current_map_data = level_2_map_data;
     }
     else if (level == 3)
     {
         currentMap = &level_3_map;
+        current_map_data = level_3_map_data;
     }
     SYS_disableInts();
     VDP_loadTileSet(&level_tileset, 0, DMA);
@@ -283,22 +285,21 @@ void updateLevel(u8 level)
         {
 
             level_data.map_height = 16 * 1 - 16; // 16 tiles per screen height
-            level_data.map_width = 20 * 2 - 20;  // 20 tiles per screen width
-            level_data.beastmode_chance = 100;
+            level_data.map_width = 20 * 1 - 20;  // 20 tiles per screen width
+            level_data.beastmode_chance = 45;
             level_data.beastmode_time_limit = 200;
             level_data.enemy_shot_chance = 100; // percent
             level_data.doors_closed_limit = 1;
             level_data.shuts_to_seal = 2; // 3 times to seal
 
             // player spawn
-            player.x = SCREEN_X_OFFSET + 8;
-            player.y = SCREEN_Y_OFFSET + 8;
+            player.x = SCREEN_X_OFFSET + 2 * 8;
+            player.y = SCREEN_Y_OFFSET + 11 * 8;
             // on screen 1
-            initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
-            // initDoor(96 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
-            // initDoor(64 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
+            initDoor(80 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET, 0, 0);
+
             // on screen 2
-            initObject(OBJECT_TYPE_KEY, 96 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 20, 0);
+            // initObject(OBJECT_TYPE_KEY, 96 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 20, 0);
             // initDoor(64 + SCREEN_X_OFFSET, 16 + SCREEN_Y_OFFSET, 20, 0);
 
             applyObjectOffsets();

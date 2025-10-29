@@ -126,7 +126,7 @@ void updatePlayer()
     {
         for (i = 0; i < MAX_ENEMIES; i++)
         {
-            if (enemy_array[i].data.active)
+            if (enemy_array[i].data.active && enemy_array[i].type != ENEMY_TYPE_SECRET)
             {
                 if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, enemy_array[i].data.x, enemy_array[i].data.y, enemy_array[i].width, enemy_array[i].height))
                 {

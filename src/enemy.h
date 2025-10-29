@@ -8,6 +8,7 @@
 #define MAX_ENEMIES 10
 #define ENEMY_TYPE_DEMON 0
 #define ENEMY_TYPE_EYE 1
+#define ENEMY_TYPE_SECRET 2
 
 struct enemyData
 {
@@ -28,7 +29,7 @@ struct enemyData
 
 extern struct enemyData enemy_array[];
 
-struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y);
+struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y, u8 push_x, u8 push_y);
 void killEnemy(u8 index);
 extern void updateEnemies();
 extern void enemyAI(u8 index);

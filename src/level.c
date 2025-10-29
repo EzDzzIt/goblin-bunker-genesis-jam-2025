@@ -83,11 +83,11 @@ void updateDoors()
 
                     if ((random() % (100 - 1 + 1)) + 1 <= 15)
                     {
-                        initEnemy(ENEMY_TYPE_DEMON, door_array[i].data.x, door_array[i].data.y);
+                        initEnemy(ENEMY_TYPE_DEMON, door_array[i].data.x, door_array[i].data.y, 0, 0);
                     }
                     else
                     {
-                        initEnemy(ENEMY_TYPE_EYE, door_array[i].data.x, door_array[i].data.y);
+                        initEnemy(ENEMY_TYPE_EYE, door_array[i].data.x, door_array[i].data.y, 0, 0);
                     }
                 }
             }
@@ -277,6 +277,7 @@ void updateLevel(u8 level)
             player.hp += 1; // heal a bit each round
             // level objects
             initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
+            initEnemy(ENEMY_TYPE_SECRET, SCREEN_X_OFFSET, 14 * 8 + SCREEN_Y_OFFSET, 0, 0);
             // apply object offsets to other screens if needed
             applyObjectOffsets();
         }

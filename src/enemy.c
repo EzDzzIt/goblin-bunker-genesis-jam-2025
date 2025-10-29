@@ -7,7 +7,7 @@
 
 struct enemyData enemy_array[MAX_ENEMIES];
 
-struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y)
+struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y, u8 push_x, u8 push_y)
 {
     u8 i = 0;
     for (i = 0; i < MAX_ENEMIES; i++)
@@ -31,6 +31,16 @@ struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y)
                 en.hp = 2;
                 en.type = ENEMY_TYPE_EYE;
             }
+            else if (enemy_type == ENEMY_TYPE_SECRET)
+            {
+                en.data.sprite = SPR_addSprite(&secret_left_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+                en.width = 8;
+                en.height = 8;
+                en.hp = 3;
+                en.type = ENEMY_TYPE_SECRET;
+                SPR_setHFlip(en.data.sprite, false);
+            }
+
             en.data.x = x;
             en.data.y = y;
             en.passthrough = true; // start true so you don't collide with the door
@@ -50,11 +60,20 @@ struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y)
 
 void killEnemy(u8 index)
 {
-    enemies_killed += 1;
-    total_enemies_killed += 1;
-    enemy_array[index].data.active = false;
-    SPR_releaseSprite(enemy_array[index].data.sprite);
-    XGM2_playPCM(wav_en_death, sizeof(wav_en_death), SOUND_PCM_CH_AUTO);
+    if (enemy_array[index].type != ENEMY_TYPE_SECRET)
+    {
+        enemies_killed += 1;
+        total_enemies_killed += 1;
+        enemy_array[index].data.active = false;
+        SPR_releaseSprite(enemy_array[index].data.sprite);
+        XGM2_playPCM(wav_en_death, sizeof(wav_en_death), SOUND_PCM_CH_AUTO);
+    }
+    else
+    {
+        secrets_found += 1;
+        enemy_array[index].data.active = false;
+        SPR_releaseSprite(enemy_array[index].data.sprite);
+    }
 }
 
 void enemyAI(u8 index)
@@ -206,67 +225,97 @@ void updateEnemies()
     {
         if (enemy_array[i].data.active)
         {
-            enemyAI(i); // ai calc to get x/y velocity
-            // apply velocity
-
-            if (UPDATE_SCROLL)
+            if (enemy_array[i].type == ENEMY_TYPE_SECRET)
             {
-                enemy_array[i].data.x -= SCROLL_X * 8;
-                enemy_array[i].data.y -= SCROLL_Y * 8;
-            }
-            enemy_array[i].data.x += enemy_array[i].x_velocity;
-            enemy_array[i].data.y += enemy_array[i].y_velocity;
-
-            // door collide
-            u8 j = 0;
-            // collide with doors??? or no?
-            if (!enemy_array[i].passthrough)
-            {
-                for (j = 0; j < MAX_DOORS; j++)
+                if (UPDATE_SCROLL)
                 {
-                    if (door_array[j].data.active)
+                    enemy_array[i].data.x -= SCROLL_X * 8;
+                    enemy_array[i].data.y -= SCROLL_Y * 8;
+                }
+
+                SPR_setPosition(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
+                // setSprite(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
+                if (enemy_array[i].hp <= 0)
+                {
+                    killEnemy(i);
+                }
+                if (enemy_array[i].hurt_cooldown > 0)
+                {
+                    enemy_array[i].hurt_cooldown -= 1;
+                    if (enemy_array[i].hurt_cooldown % 2 == 0)
                     {
-                        if (collision_check(enemy_array[i].data.x, enemy_array[i].data.y, enemy_array[i].width, enemy_array[i].height, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
-                        {
-                            enemy_array[i].collided_cooldown = 70; // bump cooldown basically
-                            enemy_array[i].data.x -= enemy_array[i].x_velocity;
-                            enemy_array[i].data.y -= enemy_array[i].y_velocity;
-                            break;
-                        }
+                        SPR_setPalette(enemy_array[i].data.sprite, PAL1);
+                    }
+                    else
+                    {
+                        SPR_setPalette(enemy_array[i].data.sprite, PAL3);
                     }
                 }
             }
-
-            if (enemy_array[i].x_velocity < 0)
-            {
-                SPR_setHFlip(enemy_array[i].data.sprite, FALSE);
-            }
             else
             {
-                SPR_setHFlip(enemy_array[i].data.sprite, TRUE);
-            }
-            SPR_setPosition(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
-            // setSprite(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
-            if (enemy_array[i].hp <= 0)
-            {
-                killEnemy(i);
-            }
-            if (enemy_array[i].hurt_cooldown > 0)
-            {
-                enemy_array[i].hurt_cooldown -= 1;
-                if (enemy_array[i].hurt_cooldown % 2 == 0)
+                enemyAI(i); // ai calc to get x/y velocity
+                // apply velocity
+
+                if (UPDATE_SCROLL)
                 {
-                    SPR_setPalette(enemy_array[i].data.sprite, PAL1);
+                    enemy_array[i].data.x -= SCROLL_X * 8;
+                    enemy_array[i].data.y -= SCROLL_Y * 8;
+                }
+                enemy_array[i].data.x += enemy_array[i].x_velocity;
+                enemy_array[i].data.y += enemy_array[i].y_velocity;
+
+                // door collide
+                u8 j = 0;
+                // collide with doors??? or no?
+                if (!enemy_array[i].passthrough)
+                {
+                    for (j = 0; j < MAX_DOORS; j++)
+                    {
+                        if (door_array[j].data.active)
+                        {
+                            if (collision_check(enemy_array[i].data.x, enemy_array[i].data.y, enemy_array[i].width, enemy_array[i].height, door_array[j].data.x, door_array[j].data.y, DOOR_WIDTH, DOOR_HEIGHT))
+                            {
+                                enemy_array[i].collided_cooldown = 70; // bump cooldown basically
+                                enemy_array[i].data.x -= enemy_array[i].x_velocity;
+                                enemy_array[i].data.y -= enemy_array[i].y_velocity;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (enemy_array[i].x_velocity < 0)
+                {
+                    SPR_setHFlip(enemy_array[i].data.sprite, FALSE);
                 }
                 else
                 {
-                    SPR_setPalette(enemy_array[i].data.sprite, PAL3);
+                    SPR_setHFlip(enemy_array[i].data.sprite, TRUE);
                 }
-            }
-            enemy_array[i].enemy_ai_counter += 1;
-            if (enemy_array[i].enemy_ai_counter > 2000)
-            {
-                enemy_array[i].enemy_ai_counter = 1;
+                SPR_setPosition(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
+                // setSprite(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
+                if (enemy_array[i].hp <= 0)
+                {
+                    killEnemy(i);
+                }
+                if (enemy_array[i].hurt_cooldown > 0)
+                {
+                    enemy_array[i].hurt_cooldown -= 1;
+                    if (enemy_array[i].hurt_cooldown % 2 == 0)
+                    {
+                        SPR_setPalette(enemy_array[i].data.sprite, PAL1);
+                    }
+                    else
+                    {
+                        SPR_setPalette(enemy_array[i].data.sprite, PAL3);
+                    }
+                }
+                enemy_array[i].enemy_ai_counter += 1;
+                if (enemy_array[i].enemy_ai_counter > 2000)
+                {
+                    enemy_array[i].enemy_ai_counter = 1;
+                }
             }
         }
     }

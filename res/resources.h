@@ -25,6 +25,7 @@ extern const SpriteDefinition eye_sprite;
 extern const SpriteDefinition bullet_sprite;
 extern const SpriteDefinition idol_sprite;
 extern const SpriteDefinition key_sprite;
+extern const SpriteDefinition secret_left_sprite;
 extern const SpriteDefinition sacred_ground_sprite;
 extern const TileSet level_tileset;
 extern const TileMap level_1_map;

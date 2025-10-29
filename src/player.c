@@ -15,7 +15,7 @@ void player_info_print()
     VDP_drawText(buffer, 7, 21);
     // score
     char score_buffer[8];
-    sprintf(score_buffer, "ti:%d", level_2_map_data[player.tile_y][player.tile_x]);
+    sprintf(score_buffer, "ti:%d", player.x);
     VDP_clearTextArea(18, 21, 6, 1);
     VDP_drawText(score_buffer, 18, 21);
     // doors left
@@ -62,7 +62,7 @@ void initPlayer()
 void updatePlayer()
 {
 
-    player_info_print();
+    player_info_print(); // 20% CPU cycles loloolol
 
     player.x += player.velocity.x;
     player.y += player.velocity.y;
@@ -82,27 +82,27 @@ void updatePlayer()
         XGM2_playPCM(wav_shot, sizeof(wav_shot), SOUND_PCM_CH_AUTO);
     }
 
-    // stuff that stops u
-    if (player.x >= SCREEN_X_END - PLAYER_WIDTH)
-    {
-        player.x -= player.velocity.x;
-        player.x = SCREEN_X_END - PLAYER_WIDTH;
-    }
-    else if (player.x <= SCREEN_X_OFFSET)
-    {
-        player.x -= player.velocity.x;
-        player.x = SCREEN_X_OFFSET;
-    }
-    if (player.y >= SCREEN_Y_END - PLAYER_HEIGHT - 16) // adjust for bottom gb window layer
-    {
-        player.y -= player.velocity.y;
-        player.y = SCREEN_Y_END - PLAYER_HEIGHT - 16; // adjust for bottom gb window layer
-    }
-    else if (player.y <= SCREEN_Y_OFFSET)
-    {
-        player.y -= player.velocity.y;
-        player.y = SCREEN_Y_OFFSET;
-    }
+    // // stuff that stops u
+    // if (player.x >= SCREEN_X_END - PLAYER_WIDTH)
+    // {
+    //     player.x -= player.velocity.x;
+    //     player.x = SCREEN_X_END - PLAYER_WIDTH;
+    // }
+    // else if (player.x <= SCREEN_X_OFFSET)
+    // {
+    //     player.x -= player.velocity.x;
+    //     player.x = SCREEN_X_OFFSET;
+    // }
+    // if (player.y >= SCREEN_Y_END - PLAYER_HEIGHT - 16) // adjust for bottom gb window layer
+    // {
+    //     player.y -= player.velocity.y;
+    //     player.y = SCREEN_Y_END - PLAYER_HEIGHT - 16; // adjust for bottom gb window layer
+    // }
+    // else if (player.y <= SCREEN_Y_OFFSET)
+    // {
+    //     player.y -= player.velocity.y;
+    //     player.y = SCREEN_Y_OFFSET;
+    // }
 
     u8 i = 0;
     bool collided = false;
@@ -166,25 +166,25 @@ void updatePlayer()
     // TILES DEBUG
     if (!(player.velocity.x == 0 && player.velocity.y == 0))
     {
-        u8 tile_x;
-        u8 tile_y;
+        u8 tile_x = 0;
+        u8 tile_y = 0;
         if (player.velocity.x > 0)
         {
-            tile_x = (player.x - SCREEN_X_OFFSET + PLAYER_WIDTH) / 8 + MAP_X;
+            tile_x = (player.x - SCREEN_X_OFFSET + 2) / 8 + MAP_X;
         }
         else if (player.velocity.x <= 0)
         {
-            tile_x = (player.x - SCREEN_X_OFFSET + PLAYER_WIDTH) / 8 + MAP_X;
+            tile_x = (player.x - SCREEN_X_OFFSET + 2) / 8 + MAP_X;
         }
         if (player.velocity.y > 0)
         {
-            tile_y = (player.y - SCREEN_Y_OFFSET + PLAYER_HEIGHT) / 8 + MAP_Y;
+            tile_y = (player.y - SCREEN_Y_OFFSET + 8) / 8 + MAP_Y;
         }
         else if (player.velocity.y <= 0)
         {
-            tile_y = (player.y - SCREEN_Y_OFFSET + PLAYER_HEIGHT) / 8 + MAP_Y;
+            tile_y = (player.y - SCREEN_Y_OFFSET + 8) / 8 + MAP_Y;
         }
-        u8 tile_type = (level_1_map_data)[tile_y][tile_x];
+        u8 tile_type = (level_2_map_data)[tile_y][tile_x];
         if ((tile_type >= 2 && tile_type <= 9))
         {
             collided = true;

@@ -146,6 +146,7 @@ void initObject(u8 object_type, u8 x, u8 y, u8 push_x, u8 push_y)
             struct levelObjectData obj;
             obj.data.x = x;
             obj.data.y = y;
+            obj.object_type = object_type;
             if (object_type == OBJECT_TYPE_IDOL)
             {
                 obj.data.sprite = SPR_addSprite(&idol_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
@@ -188,6 +189,10 @@ void pickupObject(u8 index)
     if (level_object_array[index].object_type == OBJECT_TYPE_IDOL)
     {
         player.hp += 1;
+    }
+    else if (level_object_array[index].object_type == OBJECT_TYPE_KEY)
+    {
+        has_key = TRUE;
     }
 }
 

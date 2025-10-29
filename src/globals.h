@@ -39,6 +39,7 @@ extern u8 doors_closed;
 extern u8 secrets_found;
 extern u8 level_timer;
 extern u8 enemies_killed;
+extern bool has_key;
 extern u8 total_doors_closed;
 extern u16 total_enemies_killed;
 extern s8 SCROLL_X;

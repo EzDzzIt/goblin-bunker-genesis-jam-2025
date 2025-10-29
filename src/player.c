@@ -23,8 +23,8 @@ void player_info_print()
     sprintf(door_buffer, "DOORS:%d", level_data.doors_closed_limit - doors_closed);
     VDP_drawText(door_buffer, 7, 22);
     char time_buffer[2];
-    sprintf(door_buffer, "TIME:%d", level_timer);
-    VDP_drawText(door_buffer, 14, 21);
+    sprintf(time_buffer, "TIME:%d", has_key);
+    VDP_drawText(time_buffer, 14, 21);
     // warp
     // if (player.warp_cooldown <= 0)
     // {
@@ -55,7 +55,7 @@ void initPlayer()
     player.speed = 1.8;
     player.x = SCREEN_X_OFFSET;
     player.y = SCREEN_Y_OFFSET;
-    player.hp = 3;
+    player.hp = 2;
     SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
 }
 
@@ -81,7 +81,6 @@ void updatePlayer()
     {
         initSpell(SPELL_SHOT, player.x, player.y);
         player.cast = 0;
-        // SND_PCM_startPlay(wav_laser, sizeof(wav_laser), SOUND_PCM_RATE_13400, SOUND_PAN_CENTER, FALSE);
         XGM2_playPCM(wav_shot, sizeof(wav_shot), SOUND_PCM_CH_AUTO);
     }
 
@@ -191,6 +190,14 @@ void updatePlayer()
         if ((tile_type >= 2 && tile_type <= 9))
         {
             collided = true;
+        }
+        if (tile_type == 16)
+        {
+            // key doorway
+            if (!has_key)
+            {
+                collided = true;
+            }
         }
     }
 

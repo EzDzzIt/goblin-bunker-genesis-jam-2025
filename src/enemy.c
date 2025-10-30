@@ -7,9 +7,10 @@
 
 struct enemyData enemy_array[MAX_ENEMIES];
 
-struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y, u8 push_x, u8 push_y)
+u8 initEnemy(u8 enemy_type, u8 x, u8 y, u8 push_x, u8 push_y)
 {
     u8 i = 0;
+    u8 return_index = 255;
     for (i = 0; i < MAX_ENEMIES; i++)
     {
         if (!enemy_array[i].data.active)
@@ -52,10 +53,46 @@ struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y, u8 push_x, u8 push_y)
             SPR_setAnim(en.data.sprite, 0);
             SPR_setAlwaysOnTop(en.data.sprite);
             enemy_array[i] = en;
+            return_index = i;
             break;
         }
     }
     XGM2_playPCM(wav_en_spawn, sizeof(wav_en_spawn), SOUND_PCM_CH_AUTO);
+    return return_index;
+}
+
+void randomEnemySpawn()
+{
+
+    s16 random_x = (random() % (20 - 1 + 1)) + 1;
+    s16 random_y = (random() % (16 - 1 + 1)) + 1;
+
+    random_x = random_x * 8 + SCREEN_X_OFFSET;
+    random_y = random_y * 8 + SCREEN_Y_OFFSET;
+
+    u8 return_index = 0;
+
+    if ((random() % (100 - 1 + 1)) + 1 <= 20)
+    {
+        return_index = initEnemy(ENEMY_TYPE_DEMON, random_x, random_y, 0, 0);
+        // check to make sure we do not spawn on top of the player!
+        if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, enemy_array[return_index].data.x, enemy_array[return_index].data.y, enemy_array[return_index].width, enemy_array[return_index].height))
+        {
+            enemy_array[return_index].data.x = -1;
+            enemy_array[return_index].data.y = -1;
+            SPR_setPosition(enemy_array[return_index].data.sprite, -1, -1);
+        }
+    }
+    else
+    {
+        return_index = initEnemy(ENEMY_TYPE_EYE, random_x, random_y, 0, 0);
+        if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, enemy_array[return_index].data.x, enemy_array[return_index].data.y, enemy_array[return_index].width, enemy_array[return_index].height))
+        {
+            enemy_array[return_index].data.x = -1;
+            enemy_array[return_index].data.y = -1;
+            SPR_setPosition(enemy_array[return_index].data.sprite, -1, -1);
+        }
+    }
 }
 
 void killEnemy(u8 index)

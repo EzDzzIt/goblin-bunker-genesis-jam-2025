@@ -174,7 +174,7 @@ int main(bool resetType)
 				game_state = GAME_STATE_GAME;
 				global_counter = 1;
 				// DEBUGGING FIXME
-				initLevel(4);
+				initLevel(5);
 				// initLevel(current_level + 1);
 				title_skip = false;
 			}

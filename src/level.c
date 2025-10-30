@@ -369,11 +369,11 @@ void updateLevel(u8 level)
             MAP_Y = 0;
             level_data.beastmode_chance = 45;
             level_data.beastmode_time_limit = 250;
-            level_data.enemy_shot_chance = 100;                    // percent
-            level_data.doors_closed_limit = 4;                     // seal n doors to win the level
-            level_data.shuts_to_seal = 2;                          // shut each door 3 times to seal
-            level_data.level_timer_max = 50;                       // seconds on the clock
-            level_data.x_warp_points[0] = 6 * 8 + SCREEN_X_OFFSET; // portal 0 warp
+            level_data.enemy_shot_chance = 100;                     // percent
+            level_data.doors_closed_limit = 4;                      // seal n doors to win the level
+            level_data.shuts_to_seal = 2;                           // shut each door 3 times to seal
+            level_data.level_timer_max = 50;                        // seconds on the clock
+            level_data.x_warp_points[0] = 15 * 8 + SCREEN_X_OFFSET; // portal 0 warp
             level_data.y_warp_points[0] = 3 * 8 + SCREEN_Y_OFFSET;
             level_timer = level_data.level_timer_max;
             // player spawn
@@ -419,13 +419,43 @@ void updateLevel(u8 level)
             player.y = SCREEN_Y_OFFSET + 8 * 8;
             // player.hp += 1; // heal a bit each round
             // level objects
-            initDoor(15 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 0, 0);
 
             // apply object offsets to other screens if needed
             applyObjectOffsets();
         }
+        if (enemies_killed < 7)
+        {
+            if (global_counter % 100 == 0)
+            {
+                randomEnemySpawn();
+            }
+        }
+        else if (enemies_killed < 15)
+        {
+            if (global_counter % 50 == 0)
+            {
+                randomEnemySpawn();
+            }
+        }
+        else if (enemies_killed == 15 && level_state == 0)
+        {
+            initDoor(9 * 8 + SCREEN_X_OFFSET, 6 * 8 + SCREEN_Y_OFFSET, 0, 0);
+            level_state += 1;
+        }
+        else if (level_state == 1)
+        {
+            if (global_counter % 240 == 0)
+            {
+                randomEnemySpawn();
+            }
+        }
     }
-    // deal with level timer
+
+    // spacing
+    //
+    //
+    //
+    // deal with universal level updates
     if (global_counter % 60 == 0)
     {
         level_timer -= 1;

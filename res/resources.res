@@ -7,6 +7,7 @@ SPRITE door_sprite "assets/gfx/door.png" 1 2 FAST 30
 SPRITE doorbeast_sprite "assets/gfx/doorbeast.png" 1 2 FAST 15
 SPRITE demon_sprite "assets/gfx/demon.png" 1 2 FAST 10
 SPRITE eye_sprite "assets/gfx/eye.png" 2 1 FAST 10
+SPRITE cultist_sprite "assets/gfx/cultist.png" 1 2 FAST 20
 SPRITE bullet_sprite "assets/gfx/bullet.png" 1 1 FAST 10
 SPRITE idol_sprite "assets/gfx/idol.png" 1 1 FAST 30
 SPRITE key_sprite "assets/gfx/key.png" 1 1 FAST 30
@@ -19,7 +20,7 @@ TILEMAP level_2_map "assets/tiles/level_2.tmx" "Tile Layer 1" FAST FAST  0
 TILEMAP level_3_map "assets/tiles/level_3.tmx" "Tile Layer 1" FAST FAST  0
 TILEMAP level_4_map "assets/tiles/level_4.tmx" "Tile Layer 1" FAST FAST  0
 TILEMAP level_5_map "assets/tiles/level_5.tmx" "Tile Layer 1" FAST FAST  0
-//TILEMAP level_6_map "assets/tiles/level_6.tmx" "Tile Layer 1" FAST FAST  0
+TILEMAP level_6_map "assets/tiles/level_6.tmx" "Tile Layer 1" FAST FAST  0
 //TILEMAP level_7_map "assets/tiles/level_7.tmx" "Tile Layer 1" FAST FAST  0
 //TILEMAP level_8_map "assets/tiles/level_8.tmx" "Tile Layer 1" FAST FAST  0
 //TILEMAP level_9_map "assets/tiles/level_9.tmx" "Tile Layer 1" FAST FAST  0

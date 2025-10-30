@@ -367,12 +367,30 @@ void initLevel(u8 level)
         // apply object offsets to other screens if needed
         applyObjectOffsets();
     }
-    // else if (level == 6)
-    // {
-    //     currentMap = &level_6_map;
-    //     current_map_data = level_6_map_data;
-    //     current_map_data_columns = 20;
-    // }
+    else if (level == 6)
+    {
+        currentMap = &level_6_map;
+        current_map_data = level_6_map_data;
+        current_map_data_columns = 40;
+        level_data.map_height = 16 * 2 - 16; // 16 tiles per screen height
+        level_data.map_width = 20 * 2 - 20;  // 20 tiles per screen width
+        level_data.beastmode_chance = 45;
+        level_data.beastmode_time_limit = 250;
+        level_data.enemy_shot_chance = 100; // percent
+        level_data.doors_closed_limit = 1;  // seal n doors to win the level
+        level_data.shuts_to_seal = 5;       // shut each door 3 times to seal
+        level_data.level_timer_max = 200;   // seconds on the clock
+
+        level_timer = level_data.level_timer_max;
+        // player spawn
+        player.x = SCREEN_X_OFFSET + 8 * 8;
+        player.y = SCREEN_Y_OFFSET + 10 * 8;
+        // player.hp += 1; // heal a bit each round
+        // level objects
+
+        // apply object offsets to other screens if needed
+        applyObjectOffsets();
+    }
 
     SYS_disableInts();
     VDP_loadTileSet(&level_tileset, 0, DMA);
@@ -434,6 +452,16 @@ void updateLevel(u8 level)
             if (global_counter % 300 == 0)
             {
                 randomEnemySpawn();
+            }
+        }
+    }
+    else if (level == 6)
+    {
+        if (enemies_killed < 7)
+        {
+            if (global_counter % 120 == 0)
+            {
+                randomCultistSpawn();
             }
         }
     }

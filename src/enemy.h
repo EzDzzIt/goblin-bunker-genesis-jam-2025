@@ -5,10 +5,11 @@
 
 // enemy stuff
 
-#define MAX_ENEMIES 10
+#define MAX_ENEMIES 12
 #define ENEMY_TYPE_DEMON 0
 #define ENEMY_TYPE_EYE 1
 #define ENEMY_TYPE_SECRET 2
+#define ENEMY_TYPE_CULTIST 3
 
 struct enemyData
 {
@@ -31,7 +32,8 @@ extern struct enemyData enemy_array[];
 
 extern u8 initEnemy(u8 enemy_type, u8 x, u8 y, u8 push_x, u8 push_y);
 extern void randomEnemySpawn();
-void killEnemy(u8 index);
+extern void randomCultistSpawn();
+extern void killEnemy(u8 index);
 extern void updateEnemies();
 extern void enemyAI(u8 index);
 

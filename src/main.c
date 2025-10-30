@@ -177,8 +177,8 @@ int main(bool resetType)
 				game_state = GAME_STATE_GAME;
 				global_counter = 1;
 				// DEBUGGING FIXME
-				// initLevel(1);
-				initLevel(current_level + 1);
+				initLevel(6);
+				// initLevel(current_level + 1);
 				title_skip = false;
 			}
 			else if (global_counter == 1)
@@ -201,7 +201,7 @@ int main(bool resetType)
 					VDP_drawText("Press A", 8 + 5, 8 + 6);
 					VDP_drawText("to SEAL", 9 + 5, 9 + 6);
 				}
-				else if (current_level == 1) // level id - 1
+				else if (current_level == 1) // actual level id - 1
 				{
 					VDP_drawText("THEY CAN NOT", 2 + 5, 3 + 6);
 					VDP_drawText("HOLD YOU..", 3 + 5, 5 + 6);
@@ -223,28 +223,13 @@ int main(bool resetType)
 				else if (current_level == 4)
 				{
 					VDP_drawText("SHOW", 5 + 5, 3 + 6);
-					VDP_drawText("NO", 6 + 5, 8 + 6);
-					VDP_drawText("MERCY!", 7 + 5, 12 + 6);
+					VDP_drawText("NO", 9 + 5, 8 + 6);
+					VDP_drawText("MERCY!", 12 + 5, 12 + 6);
 				}
 				else if (current_level == 5)
 				{
-					VDP_drawText("SEND THEM..", 2 + 5, 3 + 6);
-					VDP_drawText("..BACK..", 3 + 5, 5 + 6);
-				}
-				else if (current_level == 3)
-				{
-					VDP_drawText("SEND THEM..", 2 + 5, 3 + 6);
-					VDP_drawText("..BACK..", 3 + 5, 5 + 6);
-				}
-				else if (current_level == 3)
-				{
-					VDP_drawText("SEND THEM..", 2 + 5, 3 + 6);
-					VDP_drawText("..BACK..", 3 + 5, 5 + 6);
-				}
-				else if (current_level == 3)
-				{
-					VDP_drawText("SEND THEM..", 2 + 5, 3 + 6);
-					VDP_drawText("..BACK..", 3 + 5, 5 + 6);
+					VDP_drawText("STOP THEIR", 6 + 5, 4 + 6);
+					VDP_drawText("FINAL RITES!", 9 + 5, 7 + 6);
 				}
 			}
 		}

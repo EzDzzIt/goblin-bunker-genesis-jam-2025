@@ -61,12 +61,9 @@ void initPlayer()
     player.portal_warp = -1;
     player.x = SCREEN_X_OFFSET;
     player.y = SCREEN_Y_OFFSET;
-    player.hp = 3;
+    player.hp = 6;
     SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
 }
-
-// u8 (*level_1_map_data_pointer)[16][20];
-// level_1_map_data_pointer = &level_1_map_data;
 
 void updatePlayer()
 {
@@ -331,11 +328,11 @@ void updatePlayer()
     // adjust final scroll position based on player
     if (player.y >= SCREEN_Y_END - 32 && MAP_Y < level_data.map_height) // adjust for window
     {
-        player.y = SCREEN_Y_OFFSET + 2; // send player to top of next area
+        player.y = SCREEN_Y_OFFSET + 9; // send player to top of next area
         SCROLL_Y = 16;                  // tileset needs to scroll up by 20 tiles
         UPDATE_SCROLL = TRUE;
     }
-    else if (player.y < SCREEN_Y_OFFSET + 1)
+    else if (player.y < SCREEN_Y_OFFSET)
     {
         if (MAP_Y <= 0)
         {

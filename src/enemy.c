@@ -32,6 +32,14 @@ u8 initEnemy(u8 enemy_type, u8 x, u8 y, u8 push_x, u8 push_y)
                 en.hp = 2;
                 en.type = ENEMY_TYPE_EYE;
             }
+            else if (enemy_type == ENEMY_TYPE_CULTIST)
+            {
+                en.data.sprite = SPR_addSprite(&cultist_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+                en.width = 8;
+                en.height = 16;
+                en.hp = 3;
+                en.type = ENEMY_TYPE_CULTIST;
+            }
             else if (enemy_type == ENEMY_TYPE_SECRET)
             {
                 en.data.sprite = SPR_addSprite(&secret_left_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
@@ -95,6 +103,26 @@ void randomEnemySpawn()
     }
 }
 
+void randomCultistSpawn()
+{
+    s16 random_x = (random() % (20 - 1 + 1)) + 1;
+    s16 random_y = (random() % (16 - 1 + 1)) + 1;
+
+    random_x = random_x * 8 + SCREEN_X_OFFSET;
+    random_y = random_y * 8 + SCREEN_Y_OFFSET;
+
+    u8 return_index = 0;
+
+    return_index = initEnemy(ENEMY_TYPE_CULTIST, random_x, random_y, MAP_X, MAP_Y);
+    // check to make sure we do not spawn on top of the player!
+    if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, enemy_array[return_index].data.x, enemy_array[return_index].data.y, enemy_array[return_index].width, enemy_array[return_index].height))
+    {
+        enemy_array[return_index].data.x = -1;
+        enemy_array[return_index].data.y = -1;
+        SPR_setPosition(enemy_array[return_index].data.sprite, -1, -1);
+    }
+}
+
 void killEnemy(u8 index)
 {
     if (enemy_array[index].type != ENEMY_TYPE_SECRET)
@@ -117,7 +145,6 @@ void killEnemy(u8 index)
 
 void enemyAI(u8 index)
 {
-
     if (enemy_array[index].type == ENEMY_TYPE_EYE)
     {
         if (enemy_array[index].enemy_ai_counter % 140 == 0)
@@ -139,6 +166,63 @@ void enemyAI(u8 index)
         // {
         //     enemy_array[index].reverse_ai = false;
         // }
+        else if (enemy_array[index].enemy_ai_counter % 90 == 0)
+        {
+            if ((random() % (100 - 1 + 1)) + 1 <= level_data.enemy_shot_chance)
+            {
+                s8 bullet_x_velocity = 0;
+                s8 bullet_y_velocity = 0;
+                if (enemy_array[index].data.x >= player.x + PLAYER_WIDTH)
+                {
+                    bullet_x_velocity = -1;
+                }
+                else if (enemy_array[index].data.x <= player.x - PLAYER_WIDTH)
+                {
+                    bullet_x_velocity = 1;
+                }
+                if (enemy_array[index].data.y >= player.y + PLAYER_HEIGHT)
+                {
+                    bullet_y_velocity = -1;
+                }
+                else if (enemy_array[index].data.y <= player.y - PLAYER_HEIGHT)
+                {
+                    bullet_y_velocity = 1;
+                }
+                if (bullet_x_velocity == 0 && bullet_y_velocity == 0)
+                {
+                }
+                // offscreen enemeies can't fire though
+                else if (enemy_array[index].data.x >= SCREEN_X_END || enemy_array[index].data.x <= SCREEN_X_OFFSET)
+                {
+                }
+                else if (enemy_array[index].data.y >= SCREEN_Y_END || enemy_array[index].data.y <= SCREEN_Y_OFFSET)
+                {
+                }
+                else
+                {
+                    XGM2_playPCM(wav_en_shot, sizeof(wav_shot), SOUND_PCM_CH_AUTO);
+                    initBullet(enemy_array[index].data.x + 4, enemy_array[index].data.y + 2, bullet_x_velocity, bullet_y_velocity);
+                }
+            }
+        }
+    }
+    else if (enemy_array[index].type == ENEMY_TYPE_CULTIST)
+    {
+        if (enemy_array[index].enemy_ai_counter % 140 == 0)
+        {
+            if ((random() % (4 - 1 + 1)) + 1 <= 1)
+            {
+                enemy_array[index].reverse_ai = true;
+            }
+            else
+            {
+                enemy_array[index].reverse_ai = false;
+            }
+            if (enemy_array[index].data.x >= SCREEN_X_END || enemy_array[index].data.x <= SCREEN_X_OFFSET || enemy_array[index].data.y >= SCREEN_Y_END || enemy_array[index].data.y <= SCREEN_Y_OFFSET)
+            {
+                enemy_array[index].reverse_ai = false;
+            }
+        }
         else if (enemy_array[index].enemy_ai_counter % 90 == 0)
         {
             if ((random() % (100 - 1 + 1)) + 1 <= level_data.enemy_shot_chance)
@@ -326,11 +410,11 @@ void updateEnemies()
 
                 if (enemy_array[i].x_velocity < 0)
                 {
-                    SPR_setHFlip(enemy_array[i].data.sprite, FALSE);
-                }
-                else
-                {
                     SPR_setHFlip(enemy_array[i].data.sprite, TRUE);
+                }
+                else if (enemy_array[i].x_velocity > 0)
+                {
+                    SPR_setHFlip(enemy_array[i].data.sprite, FALSE);
                 }
                 SPR_setPosition(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
                 // setSprite(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
@@ -373,7 +457,7 @@ void initBullet(u8 x, u8 y, f16 x_velocity, f16 y_velocity)
         if (!bullet_array[i].data.active)
         {
             struct bulletData bul;
-            bul.data.sprite = SPR_addSprite(&bullet_sprite, x, y, TILE_ATTR(PAL2, 0, FALSE, FALSE));
+            bul.data.sprite = SPR_addSprite(&bullet_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
             bul.data.x = x;
             bul.data.y = y;
             bul.data.active = true;

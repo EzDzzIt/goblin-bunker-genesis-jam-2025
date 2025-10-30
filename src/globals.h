@@ -61,7 +61,7 @@ extern void setSprite(Sprite *sprite, s16 x, s16 y);
 extern const u8 level_1_map_data[16][20];
 extern const u8 level_2_map_data[16][20];
 extern const u8 level_3_map_data[16][20];
-extern const u8 level_4_map_data[32][40];
+extern const u8 level_4_map_data[16][40];
 extern const u8 level_5_map_data[32][40];
 extern const u8 level_6_map_data[32][40];
 extern const u8 level_7_map_data[32][40];

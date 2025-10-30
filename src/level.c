@@ -249,9 +249,9 @@ void initLevel(u8 level)
     }
     else if (level == 4)
     {
-        // currentMap = &level_4_map;
-        // current_map_data = level_4_map_data;
-        // current_map_data_columns = 40;
+        currentMap = &level_4_map;
+        current_map_data = level_4_map_data;
+        current_map_data_columns = 40;
     }
 
     SYS_disableInts();

@@ -31,6 +31,7 @@ extern const TileSet level_tileset;
 extern const TileMap level_1_map;
 extern const TileMap level_2_map;
 extern const TileMap level_3_map;
+extern const TileMap level_4_map;
 extern const TileSet border_tileset;
 extern const TileSet border_transition_tileset;
 extern const TileSet blank_tileset;

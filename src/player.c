@@ -441,7 +441,7 @@ void checkInput()
             // DEBUG
             if (state & BUTTON_START && changed & BUTTON_START)
             {
-                initLevel(current_level + 1);
+                doors_closed += 5;
             }
         }
         else if (game_state == GAME_STATE_TITLE || game_state == GAME_STATE_OVER || game_state == GAME_STATE_TRANSITION)

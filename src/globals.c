@@ -101,6 +101,8 @@ void reset_globals()
     level_state = 0;
     has_key = false;
 
+    SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
+
     u8 i = 0;
     for (i = 0; i < MAX_SACRED_GROUND; i++)
     {

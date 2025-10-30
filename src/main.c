@@ -71,7 +71,7 @@ int main(bool resetType)
 					PAL_setPalette(PAL3, palette_3.data, DMA);
 					VDP_setTextPalette(PAL1);
 					VDP_setBackgroundColor(5); // change this per level?
-					VDP_drawBitmapEx(BG_A, &sgdk_logo_image, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 1, 3, FALSE);
+					VDP_drawBitmapEx(BG_A, &sgdk_logo_image, TILE_ATTR_FULL(PAL3, 0, 0, 0, 1), 1, 3, FALSE);
 					XGM2_setFMVolume(100);
 					XGM2_play(xgm2_title);
 					XGM2_fadeIn(120);
@@ -147,9 +147,12 @@ int main(bool resetType)
 				char buffer3[12];
 				sprintf(buffer3, "SLAIN:%d", total_enemies_killed);
 				VDP_drawText(buffer3, 11, 20);
-				char buffer4[12];
-				sprintf(buffer4, "SECRETS:%d", secrets_found);
-				VDP_drawText(buffer4, 11, 21);
+				if (secrets_found > 0)
+				{
+					char buffer4[12];
+					sprintf(buffer4, "SECRETS:%d", secrets_found);
+					VDP_drawText(buffer4, 11, 21);
+				}
 			}
 			else
 			{
@@ -174,8 +177,8 @@ int main(bool resetType)
 				game_state = GAME_STATE_GAME;
 				global_counter = 1;
 				// DEBUGGING FIXME
-				initLevel(5);
-				// initLevel(current_level + 1);
+				// initLevel(1);
+				initLevel(current_level + 1);
 				title_skip = false;
 			}
 			else if (global_counter == 1)
@@ -187,7 +190,7 @@ int main(bool resetType)
 				VDP_loadTileSet(&border_tileset, level_tileset.numTile, DMA);
 				VDP_setTileMapEx(BG_A, &border_image, TILE_ATTR_FULL(PAL3, 1, FALSE, FALSE, level_tileset.numTile), 0, 0, 0, 0, 32, 28, DMA);
 				SYS_enableInts();
-				XGM2_setFMVolume(60);
+				XGM2_setFMVolume(75);
 				XGM2_play(xgm2_level0);
 				if (current_level == 0)
 				{
@@ -215,13 +218,13 @@ int main(bool resetType)
 				else if (current_level == 3)
 				{
 					VDP_drawText("FEAR NOT..", 2 + 5, 3 + 6);
-					VDP_drawText("THE UNKNOWN..", 3 + 5, 5 + 6);
+					VDP_drawText("THE UNKNOWN..", 6 + 5, 9 + 6);
 				}
 				else if (current_level == 4)
 				{
-					VDP_drawText("SHOW", 2 + 5, 3 + 6);
-					VDP_drawText("NO", 3 + 5, 5 + 6);
-					VDP_drawText("MERCY!", 4 + 5, 7 + 6);
+					VDP_drawText("SHOW", 5 + 5, 3 + 6);
+					VDP_drawText("NO", 6 + 5, 8 + 6);
+					VDP_drawText("MERCY!", 7 + 5, 12 + 6);
 				}
 				else if (current_level == 5)
 				{

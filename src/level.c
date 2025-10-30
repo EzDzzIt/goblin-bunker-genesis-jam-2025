@@ -247,6 +247,13 @@ void initLevel(u8 level)
         current_map_data = level_3_map_data;
         current_map_data_columns = 20;
     }
+    else if (level == 4)
+    {
+        // currentMap = &level_4_map;
+        // current_map_data = level_4_map_data;
+        // current_map_data_columns = 40;
+    }
+
     SYS_disableInts();
     VDP_loadTileSet(&level_tileset, 0, DMA);
     VDP_setTileMapEx(BG_B, currentMap, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, SCROLL_X, SCROLL_Y, 20, 16, DMA);
@@ -320,6 +327,30 @@ void updateLevel(u8 level)
         {
             level_data.map_height = 16 * 1 - 16; // 16 tiles per screen height
             level_data.map_width = 20 * 1 - 20;  // 20 tiles per screen width
+            level_data.beastmode_chance = 45;
+            level_data.beastmode_time_limit = 300;
+            level_data.enemy_shot_chance = 100; // percent
+            level_data.doors_closed_limit = 1;  // seal one door to win the level
+            level_data.shuts_to_seal = 2;       // shut each door 3 times to seal
+            level_data.level_timer_max = 30;    // seconds on the clock
+            level_timer = level_data.level_timer_max;
+            // player spawn
+            player.x = SCREEN_X_OFFSET + 4 * 8;
+            player.y = SCREEN_Y_OFFSET + 10 * 8;
+            player.hp += 1; // heal a bit each round
+            // level objects
+            initDoor(17 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 0, 0);
+            initObject(OBJECT_TYPE_KEY, SCREEN_X_OFFSET + 17 * 8, SCREEN_Y_OFFSET + 2 * 8, 0, 0);
+            // apply object offsets to other screens if needed
+            applyObjectOffsets();
+        }
+    }
+    else if (level == 4)
+    {
+        if (global_counter == 2) // 2 is the earliest global counter for spawning stuff
+        {
+            level_data.map_height = 16 * 1 - 16; // 16 tiles per screen height
+            level_data.map_width = 20 * 2 - 20;  // 20 tiles per screen width
             level_data.beastmode_chance = 45;
             level_data.beastmode_time_limit = 300;
             level_data.enemy_shot_chance = 100; // percent

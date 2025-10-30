@@ -84,7 +84,9 @@ int main(bool resetType)
 				{
 					clear_graphics(FALSE);
 
-					VDP_drawBitmapEx(BG_A, &title_screen, TILE_ATTR_FULL(PAL1, 0, 0, 0, 1), 0, 0, FALSE);
+					VDP_drawBitmapEx(BG_A, &title_screen, TILE_ATTR_FULL(PAL1, 1, 0, 0, 1), 0, 0, FALSE);
+					VDP_loadTileSet(&border_tileset, 900, DMA);
+					VDP_setTileMapEx(BG_B, &border_image, TILE_ATTR_FULL(PAL3, 0, FALSE, FALSE, 900), 0, 0, 0, 0, 32, 28, DMA);
 				}
 				else if (global_counter == 2)
 				{

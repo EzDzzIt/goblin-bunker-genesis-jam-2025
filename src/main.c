@@ -174,7 +174,7 @@ int main(bool resetType)
 				game_state = GAME_STATE_GAME;
 				global_counter = 1;
 				// DEBUGGING FIXME
-				initLevel(5);
+				initLevel(4);
 				// initLevel(current_level + 1);
 				title_skip = false;
 			}
@@ -197,17 +197,13 @@ int main(bool resetType)
 					VDP_drawText("DOTH NOT SHINE;", 5 + 5, 5 + 6);
 					VDP_drawText("Press A", 8 + 5, 8 + 6);
 					VDP_drawText("to SEAL", 9 + 5, 9 + 6);
-					// VDP_drawText("the DOORS", 10 + 5, 10 + 6);
 				}
 				else if (current_level == 1) // level id - 1
 				{
 					VDP_drawText("THEY CAN NOT", 2 + 5, 3 + 6);
 					VDP_drawText("HOLD YOU..", 3 + 5, 5 + 6);
-					// VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
-					// VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
 					VDP_drawText("Press C", 8 + 5, 8 + 6);
 					VDP_drawText("to BLINK", 9 + 5, 9 + 6);
-					// VDP_drawText("randomly", 10 + 5, 10 + 6);
 				}
 				else if (current_level == 2)
 				{

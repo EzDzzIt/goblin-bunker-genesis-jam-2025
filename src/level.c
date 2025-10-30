@@ -147,6 +147,7 @@ void initObject(u8 object_type, u8 x, u8 y, u8 push_x, u8 push_y, u8 sub_type)
             obj.data.x = x;
             obj.data.y = y;
             obj.object_type = object_type;
+            obj.sub_type = sub_type;
             if (object_type == OBJECT_TYPE_IDOL)
             {
                 obj.data.sprite = SPR_addSprite(&idol_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
@@ -202,6 +203,7 @@ void pickupObject(u8 index)
     else if (level_object_array[index].object_type == OBJECT_TYPE_PORTAL)
     {
         // warp to location saved in current level data on next player update
+        player.portal_warp = level_object_array[index].sub_type;
     }
 }
 
@@ -363,12 +365,16 @@ void updateLevel(u8 level)
         {
             level_data.map_height = 16 * 1 - 16; // 16 tiles per screen height
             level_data.map_width = 20 * 2 - 20;  // 20 tiles per screen width
+            MAP_X = 0;
+            MAP_Y = 0;
             level_data.beastmode_chance = 45;
             level_data.beastmode_time_limit = 250;
-            level_data.enemy_shot_chance = 100; // percent
-            level_data.doors_closed_limit = 4;  // seal n doors to win the level
-            level_data.shuts_to_seal = 2;       // shut each door 3 times to seal
-            level_data.level_timer_max = 50;    // seconds on the clock
+            level_data.enemy_shot_chance = 100;                    // percent
+            level_data.doors_closed_limit = 4;                     // seal n doors to win the level
+            level_data.shuts_to_seal = 2;                          // shut each door 3 times to seal
+            level_data.level_timer_max = 50;                       // seconds on the clock
+            level_data.x_warp_points[0] = 6 * 8 + SCREEN_X_OFFSET; // portal 0 warp
+            level_data.y_warp_points[0] = 3 * 8 + SCREEN_Y_OFFSET;
             level_timer = level_data.level_timer_max;
             // player spawn
             player.x = SCREEN_X_OFFSET + 3 * 8;
@@ -406,6 +412,7 @@ void updateLevel(u8 level)
             level_data.doors_closed_limit = 1;  // seal n doors to win the level
             level_data.shuts_to_seal = 5;       // shut each door 3 times to seal
             level_data.level_timer_max = 200;   // seconds on the clock
+
             level_timer = level_data.level_timer_max;
             // player spawn
             player.x = SCREEN_X_OFFSET + 3 * 8;
@@ -417,32 +424,32 @@ void updateLevel(u8 level)
             // apply object offsets to other screens if needed
             applyObjectOffsets();
         }
-        // deal with level timer
-        if (global_counter % 60 == 0)
+    }
+    // deal with level timer
+    if (global_counter % 60 == 0)
+    {
+        level_timer -= 1;
+        if (level_timer <= 0)
         {
-            level_timer -= 1;
-            if (level_timer <= 0)
-            {
-                player.hp = 0; // you have died
-            }
+            player.hp = 0; // you have died
         }
-        if (UPDATE_SCROLL)
-        {
-            UPDATE_SCROLL = false;
-            MAP_X += SCROLL_X;
-            MAP_Y += SCROLL_Y;
-            SCROLL_X = 0;
-            SCROLL_Y = 0;
-            SYS_disableInts();
-            VDP_setTileMapEx(BG_B, currentMap, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, MAP_X, MAP_Y, 20, 16, DMA);
-            SYS_enableInts();
-        }
-        if (doors_closed >= level_data.doors_closed_limit)
-        {
-            // go to the next level
-            global_counter = 0;
-            score += level_timer;
-            game_state = GAME_STATE_TRANSITION;
-        }
+    }
+    if (UPDATE_SCROLL)
+    {
+        UPDATE_SCROLL = false;
+        MAP_X += SCROLL_X;
+        MAP_Y += SCROLL_Y;
+        SCROLL_X = 0;
+        SCROLL_Y = 0;
+        SYS_disableInts();
+        VDP_setTileMapEx(BG_B, currentMap, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, MAP_X, MAP_Y, 20, 16, DMA);
+        SYS_enableInts();
+    }
+    if (doors_closed >= level_data.doors_closed_limit)
+    {
+        // go to the next level
+        global_counter = 0;
+        score += level_timer;
+        game_state = GAME_STATE_TRANSITION;
     }
 }

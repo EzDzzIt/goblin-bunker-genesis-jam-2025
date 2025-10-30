@@ -61,6 +61,7 @@ struct levelObjectData
     u8 object_type;
     u8 push_x;
     u8 push_y;
+    u8 sub_type;
 };
 
 extern struct levelObjectData level_object_array[];
@@ -80,6 +81,8 @@ struct levelData
     u8 doors_closed_limit;
     u8 shuts_to_seal; // how many times you have to shgut a door to seal it in a level
     u8 level_timer_max;
+    u8 x_warp_points[3];
+    u8 y_warp_points[3];
 };
 
 extern struct levelData level_data;

@@ -35,6 +35,7 @@ struct playerData
     s8 hp;
     u8 cast;
     u8 spell_list;
+    s8 portal_warp;
 };
 
 extern struct playerData player;

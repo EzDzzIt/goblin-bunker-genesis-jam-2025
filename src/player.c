@@ -58,6 +58,7 @@ void initPlayer()
 {
     player.sprite = SPR_addSprite(&player_sprite, SCREEN_X_OFFSET, SCREEN_Y_OFFSET, TILE_ATTR(PAL1, 0, FALSE, FALSE));
     player.speed = 1.8;
+    player.portal_warp = -1;
     player.x = SCREEN_X_OFFSET;
     player.y = SCREEN_Y_OFFSET;
     player.hp = 3;
@@ -87,6 +88,12 @@ void updatePlayer()
         initSpell(SPELL_SHOT, player.x, player.y);
         player.cast = 0;
         XGM2_playPCM(wav_shot, sizeof(wav_shot), SOUND_PCM_CH_AUTO);
+    }
+    if (player.portal_warp > -1)
+    {
+        player.x = level_data.x_warp_points[player.portal_warp];
+        player.y = level_data.y_warp_points[player.portal_warp];
+        player.portal_warp = -1;
     }
 
     // // stuff that stops u
@@ -139,6 +146,10 @@ void updatePlayer()
                     player.hp -= 1;
                     XGM2_playPCM(wav_player_hurt, sizeof(wav_player_hurt), SOUND_PCM_CH_AUTO);
                     break;
+                }
+                else if (enemy_array[i].type == ENEMY_TYPE_SECRET) // secrets are walls
+                {
+                    collided = true;
                 }
             }
         }
@@ -210,19 +221,19 @@ void updatePlayer()
     {
         if (player.velocity.x > 0)
         {
-            player.x -= player.velocity.x + 3; //+ teleport_correction;
+            player.x -= player.velocity.x + 1; //+ teleport_correction;
         }
         else if (player.velocity.x < 0)
         {
-            player.x -= player.velocity.x - 3; //- teleport_correction;
+            player.x -= player.velocity.x - 1; //- teleport_correction;
         }
         if (player.velocity.y > 0)
         {
-            player.y -= player.velocity.y + 3; //+ teleport_correction;
+            player.y -= player.velocity.y + 1; //+ teleport_correction;
         }
         else if (player.velocity.y < 0)
         {
-            player.y -= player.velocity.y - 3; //- teleport_correction;
+            player.y -= player.velocity.y - 1; //- teleport_correction;
         }
 
         // player.move_cooldown = PLAYER_MOVE_COOLDOWN;
@@ -321,7 +332,7 @@ void updatePlayer()
     if (player.y >= SCREEN_Y_END - 32 && MAP_Y < level_data.map_height) // adjust for window
     {
         player.y = SCREEN_Y_OFFSET + 2; // send player to top of next area
-        SCROLL_Y = 16;                  // tileset needs to scroll up by 16 tiles
+        SCROLL_Y = 16;                  // tileset needs to scroll up by 20 tiles
         UPDATE_SCROLL = TRUE;
     }
     else if (player.y < SCREEN_Y_OFFSET + 1)
@@ -340,7 +351,7 @@ void updatePlayer()
     if (player.x >= SCREEN_X_END - 3 && MAP_X < level_data.map_width) // adjust for window
     {
         player.x = SCREEN_X_OFFSET + 8; // send player to top of next area
-        SCROLL_X = 20;                  // tileset needs to scroll up by 16 tiles
+        SCROLL_X = 20;                  // tileset needs to scroll up by 20 tiles
         UPDATE_SCROLL = TRUE;
     }
     else if (player.x < SCREEN_X_OFFSET + 3)

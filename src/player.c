@@ -60,7 +60,7 @@ void initPlayer()
     player.speed = 1.8;
     player.x = SCREEN_X_OFFSET;
     player.y = SCREEN_Y_OFFSET;
-    player.hp = 2;
+    player.hp = 3;
     SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
 }
 
@@ -192,11 +192,11 @@ void updatePlayer()
             tile_y = (player.y - SCREEN_Y_OFFSET + 8) / 8 + MAP_Y;
         }
         u8 tile_type = ((u8(*)[current_map_data_columns])current_map_data)[tile_y][tile_x];
-        if ((tile_type >= 2 && tile_type <= 9))
+        if ((tile_type >= 2 && tile_type <= 9) || (tile_type >= 18))
         {
             collided = true;
         }
-        if (tile_type == 16)
+        if (tile_type == 16 || tile_type == 17)
         {
             // key doorway
             if (!has_key)
@@ -245,10 +245,10 @@ void updatePlayer()
             SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
         }
     }
-    if (player.move_cooldown > 0)
-    {
-        player.move_cooldown -= 1;
-    }
+    // if (player.move_cooldown > 0)
+    // {
+    //     player.move_cooldown -= 1;
+    // }
     if (player.hurt_cooldown > 0)
     {
         cooldown_flag = true;
@@ -337,13 +337,13 @@ void updatePlayer()
             UPDATE_SCROLL = TRUE;
         }
     }
-    if (player.x >= SCREEN_X_END - 8 && MAP_X < level_data.map_width) // adjust for window
+    if (player.x >= SCREEN_X_END - 3 && MAP_X < level_data.map_width) // adjust for window
     {
         player.x = SCREEN_X_OFFSET + 8; // send player to top of next area
         SCROLL_X = 20;                  // tileset needs to scroll up by 16 tiles
         UPDATE_SCROLL = TRUE;
     }
-    else if (player.x < SCREEN_X_OFFSET + 9)
+    else if (player.x < SCREEN_X_OFFSET + 3)
     {
         if (MAP_X <= 0)
         {

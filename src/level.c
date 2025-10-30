@@ -83,11 +83,11 @@ void updateDoors()
 
                     if ((random() % (100 - 1 + 1)) + 1 <= 15)
                     {
-                        initEnemy(ENEMY_TYPE_DEMON, door_array[i].data.x, door_array[i].data.y, 0, 0);
+                        initEnemy(ENEMY_TYPE_DEMON, door_array[i].data.x, door_array[i].data.y, door_array[i].push_x, door_array[i].push_y);
                     }
                     else
                     {
-                        initEnemy(ENEMY_TYPE_EYE, door_array[i].data.x, door_array[i].data.y, 0, 0);
+                        initEnemy(ENEMY_TYPE_EYE, door_array[i].data.x, door_array[i].data.y, door_array[i].push_x, door_array[i].push_y);
                     }
                 }
             }
@@ -203,16 +203,16 @@ void applyObjectOffsets()
     {
         if (door_array[i].data.active)
         {
-            door_array[i].data.x += door_array[i].push_x * 8;
-            door_array[i].data.y += door_array[i].push_y * 8;
+            door_array[i].data.x += (door_array[i].push_x - MAP_X) * 8;
+            door_array[i].data.y += (door_array[i].push_y - MAP_Y) * 8;
         }
     }
     for (i = 0; i < MAX_OBJECTS; i++)
     {
         if (level_object_array[i].data.active)
         {
-            level_object_array[i].data.x += level_object_array[i].push_x * 8;
-            level_object_array[i].data.y += level_object_array[i].push_y * 8;
+            level_object_array[i].data.x += (level_object_array[i].push_x - MAP_X) * 8;
+            level_object_array[i].data.y += (level_object_array[i].push_y - MAP_Y) * 8;
         }
     }
 }
@@ -281,15 +281,12 @@ void updateLevel(u8 level)
             // player spawn
             player.x = SCREEN_X_OFFSET + 8;
             player.y = SCREEN_Y_OFFSET + 8;
-            player.hp += 1; // heal a bit each round
+            // player.hp += 1; // heal a bit each round
             // level objects
             initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
             initEnemy(ENEMY_TYPE_SECRET, SCREEN_X_OFFSET, 14 * 8 + SCREEN_Y_OFFSET, 0, 0);
             // apply object offsets to other screens if needed
             applyObjectOffsets();
-        }
-        else if (global_counter == 100)
-        {
         }
     }
     else if (level == 2)
@@ -337,7 +334,7 @@ void updateLevel(u8 level)
             // player spawn
             player.x = SCREEN_X_OFFSET + 4 * 8;
             player.y = SCREEN_Y_OFFSET + 10 * 8;
-            player.hp += 1; // heal a bit each round
+            // player.hp += 1; // heal a bit each round
             // level objects
             initDoor(17 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 0, 0);
             initObject(OBJECT_TYPE_KEY, SCREEN_X_OFFSET + 17 * 8, SCREEN_Y_OFFSET + 2 * 8, 0, 0);
@@ -352,21 +349,26 @@ void updateLevel(u8 level)
             level_data.map_height = 16 * 1 - 16; // 16 tiles per screen height
             level_data.map_width = 20 * 2 - 20;  // 20 tiles per screen width
             level_data.beastmode_chance = 45;
-            level_data.beastmode_time_limit = 300;
+            level_data.beastmode_time_limit = 250;
             level_data.enemy_shot_chance = 100; // percent
-            level_data.doors_closed_limit = 1;  // seal one door to win the level
+            level_data.doors_closed_limit = 4;  // seal n doors to win the level
             level_data.shuts_to_seal = 2;       // shut each door 3 times to seal
-            level_data.level_timer_max = 30;    // seconds on the clock
+            level_data.level_timer_max = 50;    // seconds on the clock
             level_timer = level_data.level_timer_max;
             // player spawn
-            player.x = SCREEN_X_OFFSET + 4 * 8;
-            player.y = SCREEN_Y_OFFSET + 10 * 8;
-            player.hp += 1; // heal a bit each round
+            player.x = SCREEN_X_OFFSET + 3 * 8;
+            player.y = SCREEN_Y_OFFSET + 8 * 8;
+            // player.hp += 1; // heal a bit each round
             // level objects
-            initDoor(17 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 0, 0);
-            initObject(OBJECT_TYPE_KEY, SCREEN_X_OFFSET + 17 * 8, SCREEN_Y_OFFSET + 2 * 8, 0, 0);
+            initDoor(17 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 20, 0);
+
             // apply object offsets to other screens if needed
             applyObjectOffsets();
+        }
+        if (doors_closed == 1 && level_state == 0)
+        {
+            initDoor(15 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 20, 0);
+            level_state += 1;
         }
     }
     // deal with level timer

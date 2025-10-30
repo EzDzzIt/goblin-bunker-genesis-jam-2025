@@ -41,8 +41,8 @@ struct enemyData initEnemy(u8 enemy_type, u8 x, u8 y, u8 push_x, u8 push_y)
                 SPR_setHFlip(en.data.sprite, false);
             }
 
-            en.data.x = x;
-            en.data.y = y;
+            en.data.x = x + (push_x - MAP_X) * 8;
+            en.data.y = y + (push_y - MAP_Y) * 8;
             en.passthrough = true; // start true so you don't collide with the door
             en.collided_cooldown = 0;
             en.speed = 1;
@@ -70,7 +70,7 @@ void killEnemy(u8 index)
     }
     else
     {
-        secrets_found += 1;
+        // secrets_found += 1;
         enemy_array[index].data.active = false;
         SPR_releaseSprite(enemy_array[index].data.sprite);
     }

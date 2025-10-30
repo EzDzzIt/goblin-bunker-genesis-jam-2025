@@ -48,9 +48,10 @@ extern struct doorData door_array[];
 
 // other level entities (keys, idols, hidden blocks)
 
-#define MAX_OBJECTS 12
+#define MAX_OBJECTS 8
 #define OBJECT_TYPE_IDOL 0
 #define OBJECT_TYPE_KEY 1
+#define OBJECT_TYPE_PORTAL 2
 
 // level objects
 
@@ -63,7 +64,7 @@ struct levelObjectData
 };
 
 extern struct levelObjectData level_object_array[];
-void initObject(u8 object_type, u8 x, u8 y, u8 push_x, u8 push_y);
+void initObject(u8 object_type, u8 x, u8 y, u8 push_x, u8 push_y, u8 sub_type);
 void updateObjects();
 void pickupObject(u8 index);
 

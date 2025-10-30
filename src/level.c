@@ -136,7 +136,7 @@ void shutDoor(u8 index)
 
 struct levelObjectData level_object_array[MAX_OBJECTS];
 
-void initObject(u8 object_type, u8 x, u8 y, u8 push_x, u8 push_y)
+void initObject(u8 object_type, u8 x, u8 y, u8 push_x, u8 push_y, u8 sub_type)
 {
     u8 i = 0;
     for (i = 0; i < MAX_OBJECTS; i++)
@@ -154,6 +154,10 @@ void initObject(u8 object_type, u8 x, u8 y, u8 push_x, u8 push_y)
             else if (object_type == OBJECT_TYPE_KEY)
             {
                 obj.data.sprite = SPR_addSprite(&key_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+            }
+            else if (object_type == OBJECT_TYPE_PORTAL)
+            {
+                obj.data.sprite = SPR_addSprite(&portal_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
             }
             obj.data.active = true;
             obj.push_x = push_x;
@@ -189,10 +193,15 @@ void pickupObject(u8 index)
     if (level_object_array[index].object_type == OBJECT_TYPE_IDOL)
     {
         player.hp += 1;
+        secrets_found += 1;
     }
     else if (level_object_array[index].object_type == OBJECT_TYPE_KEY)
     {
         has_key = TRUE;
+    }
+    else if (level_object_array[index].object_type == OBJECT_TYPE_PORTAL)
+    {
+        // warp to location saved in current level data on next player update
     }
 }
 
@@ -252,6 +261,12 @@ void initLevel(u8 level)
         currentMap = &level_4_map;
         current_map_data = level_4_map_data;
         current_map_data_columns = 40;
+    }
+    else if (level == 5)
+    {
+        currentMap = &level_5_map;
+        current_map_data = level_5_map_data;
+        current_map_data_columns = 20;
     }
 
     SYS_disableInts();
@@ -337,7 +352,7 @@ void updateLevel(u8 level)
             // player.hp += 1; // heal a bit each round
             // level objects
             initDoor(17 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 0, 0);
-            initObject(OBJECT_TYPE_KEY, SCREEN_X_OFFSET + 17 * 8, SCREEN_Y_OFFSET + 2 * 8, 0, 0);
+            initObject(OBJECT_TYPE_KEY, SCREEN_X_OFFSET + 17 * 8, SCREEN_Y_OFFSET + 2 * 8, 0, 0, 0);
             // apply object offsets to other screens if needed
             applyObjectOffsets();
         }
@@ -360,42 +375,74 @@ void updateLevel(u8 level)
             player.y = SCREEN_Y_OFFSET + 8 * 8;
             // player.hp += 1; // heal a bit each round
             // level objects
-            initDoor(17 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 20, 0);
+            initDoor(15 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 20, 0);
 
             // apply object offsets to other screens if needed
             applyObjectOffsets();
         }
         if (doors_closed == 1 && level_state == 0)
         {
-            initDoor(15 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 20, 0);
+
+            initDoor(3 * 8 + SCREEN_X_OFFSET, 7 * 8 + SCREEN_Y_OFFSET, 20, 0);
+            level_state += 1;
+        }
+        else if (doors_closed == 2 && level_state == 1)
+        {
+            initDoor(16 * 8 + SCREEN_X_OFFSET, 3 * 8 + SCREEN_Y_OFFSET, 20, 0);
+            initDoor(7 * 8 + SCREEN_X_OFFSET, 4 * 8 + SCREEN_Y_OFFSET, 20, 0);
+            initObject(OBJECT_TYPE_PORTAL, 14 * 8 + SCREEN_X_OFFSET, 12 * 8 + SCREEN_Y_OFFSET, 20, 0, 0);
             level_state += 1;
         }
     }
-    // deal with level timer
-    if (global_counter % 60 == 0)
+    else if (level == 5)
     {
-        level_timer -= 1;
-        if (level_timer <= 0)
+        if (global_counter == 2) // 2 is the earliest global counter for spawning stuff
         {
-            player.hp = 0; // you have died
+            level_data.map_height = 16 * 1 - 16; // 16 tiles per screen height
+            level_data.map_width = 20 * 1 - 20;  // 20 tiles per screen width
+            level_data.beastmode_chance = 45;
+            level_data.beastmode_time_limit = 250;
+            level_data.enemy_shot_chance = 100; // percent
+            level_data.doors_closed_limit = 1;  // seal n doors to win the level
+            level_data.shuts_to_seal = 5;       // shut each door 3 times to seal
+            level_data.level_timer_max = 200;   // seconds on the clock
+            level_timer = level_data.level_timer_max;
+            // player spawn
+            player.x = SCREEN_X_OFFSET + 3 * 8;
+            player.y = SCREEN_Y_OFFSET + 8 * 8;
+            // player.hp += 1; // heal a bit each round
+            // level objects
+            initDoor(15 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 0, 0);
+
+            // apply object offsets to other screens if needed
+            applyObjectOffsets();
         }
-    }
-    if (UPDATE_SCROLL)
-    {
-        UPDATE_SCROLL = false;
-        MAP_X += SCROLL_X;
-        MAP_Y += SCROLL_Y;
-        SCROLL_X = 0;
-        SCROLL_Y = 0;
-        SYS_disableInts();
-        VDP_setTileMapEx(BG_B, currentMap, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, MAP_X, MAP_Y, 20, 16, DMA);
-        SYS_enableInts();
-    }
-    if (doors_closed >= level_data.doors_closed_limit)
-    {
-        // go to the next level
-        global_counter = 0;
-        score += level_timer;
-        game_state = GAME_STATE_TRANSITION;
+        // deal with level timer
+        if (global_counter % 60 == 0)
+        {
+            level_timer -= 1;
+            if (level_timer <= 0)
+            {
+                player.hp = 0; // you have died
+            }
+        }
+        if (UPDATE_SCROLL)
+        {
+            UPDATE_SCROLL = false;
+            MAP_X += SCROLL_X;
+            MAP_Y += SCROLL_Y;
+            SCROLL_X = 0;
+            SCROLL_Y = 0;
+            SYS_disableInts();
+            VDP_setTileMapEx(BG_B, currentMap, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, MAP_X, MAP_Y, 20, 16, DMA);
+            SYS_enableInts();
+        }
+        if (doors_closed >= level_data.doors_closed_limit)
+        {
+            // go to the next level
+            global_counter = 0;
+            score += level_timer;
+            game_state = GAME_STATE_TRANSITION;
+        }
     }
 }

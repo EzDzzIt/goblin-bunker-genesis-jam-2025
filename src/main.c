@@ -173,7 +173,9 @@ int main(bool resetType)
 				// game start
 				game_state = GAME_STATE_GAME;
 				global_counter = 1;
-				initLevel(current_level + 1);
+				// DEBUGGING FIXME
+				initLevel(5);
+				// initLevel(current_level + 1);
 				title_skip = false;
 			}
 			else if (global_counter == 1)
@@ -189,44 +191,61 @@ int main(bool resetType)
 				XGM2_play(xgm2_level0);
 				if (current_level == 0)
 				{
-					VDP_drawText("THE TIME IS", 2 + 5, 1 + 6);
-					VDP_drawText("TOO EARLY", 3 + 5, 2 + 6);
+					VDP_drawText("THE TIME IS..", 2 + 5, 1 + 6);
+					VDP_drawText("..TOO EARLY", 3 + 5, 2 + 6);
 					VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
 					VDP_drawText("DOTH NOT SHINE;", 5 + 5, 5 + 6);
 					VDP_drawText("Press A", 8 + 5, 8 + 6);
-					VDP_drawText("to seal", 9 + 5, 9 + 6);
+					VDP_drawText("to SEAL", 9 + 5, 9 + 6);
 					// VDP_drawText("the DOORS", 10 + 5, 10 + 6);
 				}
 				else if (current_level == 1) // level id - 1
 				{
 					VDP_drawText("THEY CAN NOT", 2 + 5, 3 + 6);
-					VDP_drawText("HOLD YOU;", 3 + 5, 5 + 6);
+					VDP_drawText("HOLD YOU..", 3 + 5, 5 + 6);
 					// VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
 					// VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
 					VDP_drawText("Press C", 8 + 5, 8 + 6);
-					VDP_drawText("to blink", 9 + 5, 9 + 6);
+					VDP_drawText("to BLINK", 9 + 5, 9 + 6);
 					// VDP_drawText("randomly", 10 + 5, 10 + 6);
 				}
 				else if (current_level == 2)
 				{
 					VDP_drawText("RETRIEVE THE", 2 + 5, 3 + 6);
-					VDP_drawText("KEY, CHILD;", 3 + 5, 5 + 6);
-					// VDP_drawText("KEY, CHILD;", 3 + 5, 5 + 6);
-					// VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
-					// VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
-					// VDP_drawText("...SEAL...", 6 + 5, 8 + 6);
-					// VDP_drawText("...THE...", 7 + 5, 9 + 6);
-					// VDP_drawText("...DOORS...", 8 + 5, 10 + 6);
+					VDP_drawText("KEY, CHILD..", 3 + 5, 5 + 6);
+					VDP_drawText("Press B", 8 + 5, 8 + 6);
+					VDP_drawText("to SHOOT", 9 + 5, 9 + 6);
 				}
 				else if (current_level == 3)
 				{
-					VDP_drawText("THE TIME IS", 2 + 5, 1 + 6);
-					VDP_drawText("TOO EARLY;", 3 + 5, 2 + 6);
-					VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
-					VDP_drawText("DOTH NOT SHINE", 5 + 5, 5 + 6);
-					VDP_drawText("...SEAL...", 6 + 5, 8 + 6);
-					VDP_drawText("...THE...", 7 + 5, 9 + 6);
-					VDP_drawText("...DOORS...", 8 + 5, 10 + 6);
+					VDP_drawText("FEAR NOT..", 2 + 5, 3 + 6);
+					VDP_drawText("THE UNKNOWN..", 3 + 5, 5 + 6);
+				}
+				else if (current_level == 4)
+				{
+					VDP_drawText("SHOW", 2 + 5, 3 + 6);
+					VDP_drawText("NO", 3 + 5, 5 + 6);
+					VDP_drawText("MERCY!", 4 + 5, 7 + 6);
+				}
+				else if (current_level == 5)
+				{
+					VDP_drawText("SEND THEM..", 2 + 5, 3 + 6);
+					VDP_drawText("..BACK..", 3 + 5, 5 + 6);
+				}
+				else if (current_level == 3)
+				{
+					VDP_drawText("SEND THEM..", 2 + 5, 3 + 6);
+					VDP_drawText("..BACK..", 3 + 5, 5 + 6);
+				}
+				else if (current_level == 3)
+				{
+					VDP_drawText("SEND THEM..", 2 + 5, 3 + 6);
+					VDP_drawText("..BACK..", 3 + 5, 5 + 6);
+				}
+				else if (current_level == 3)
+				{
+					VDP_drawText("SEND THEM..", 2 + 5, 3 + 6);
+					VDP_drawText("..BACK..", 3 + 5, 5 + 6);
 				}
 			}
 		}
@@ -246,11 +265,11 @@ void inGameJoyEvent(u16 joy, u16 changed, u16 state)
 
 void display_stats()
 {
-	char free_mem[16] = "MEM: ";
-	char free_vram[16] = "VRAM: ";
+	// char free_mem[16] = "MEM: ";
+	// char free_vram[16] = "VRAM: ";
 	VDP_showCPULoad(12, 25);
-	intToStr(MEM_getAllocated(), &free_mem[5], 1);
-	VDP_drawText(free_mem, 1, 3);
-	intToStr(SPR_getFreeVRAM(), &free_vram[6], 1);
-	VDP_drawText(free_vram, 1, 4);
+	// intToStr(MEM_getAllocated(), &free_mem[5], 1);
+	// VDP_drawText(free_mem, 1, 3);
+	// intToStr(SPR_getFreeVRAM(), &free_vram[6], 1);
+	// VDP_drawText(free_vram, 1, 4);
 }

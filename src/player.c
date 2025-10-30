@@ -23,8 +23,13 @@ void player_info_print()
     sprintf(door_buffer, "DOORS:%d", level_data.doors_closed_limit - doors_closed);
     VDP_drawText(door_buffer, 7, 22);
     char time_buffer[2];
-    sprintf(time_buffer, "TIME:%d", has_key);
-    VDP_drawText(time_buffer, 14, 21);
+    sprintf(time_buffer, "TIME:%d", level_timer);
+    VDP_drawText(time_buffer, 16, 22);
+    // key
+    if (has_key)
+    {
+        VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, 31), 11, 21, 1, 1); // index 1473 is A
+    }
     // warp
     // if (player.warp_cooldown <= 0)
     // {

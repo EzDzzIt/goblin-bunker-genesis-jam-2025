@@ -11,7 +11,7 @@
 #define PLAYER_HEIGHT 2 * 8 // px
 #define PLAYER_WIDTH 8      // px
 
-#define PLAYER_HURT_COOLDOWN 70      // frames
+#define PLAYER_HURT_COOLDOWN 120     // frames
 #define PLAYER_MOVE_COOLDOWN 5       // frames
 #define PLAYER_WARP_COOLDOWN 300     // frames
 #define PLAYER_ATTACK_COOLDOWN 20    // frames

@@ -107,9 +107,11 @@ void killEnemy(u8 index)
     }
     else
     {
+        // break the blocks
         // secrets_found += 1;
         enemy_array[index].data.active = false;
         SPR_releaseSprite(enemy_array[index].data.sprite);
+        secret_triggered = true;
     }
 }
 

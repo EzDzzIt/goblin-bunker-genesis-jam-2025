@@ -18,6 +18,7 @@ u8 title_counter = 0;
 u16 global_counter = 0;
 bool title_skip = false;
 bool has_key = false;
+bool secret_triggered = false;
 u16 score = 0;
 u8 doors_closed = 0;
 u8 total_doors_closed = 0;
@@ -100,6 +101,7 @@ void reset_globals()
     enemies_killed = 0;
     level_state = 0;
     has_key = false;
+    secret_triggered = false;
 
     SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
 

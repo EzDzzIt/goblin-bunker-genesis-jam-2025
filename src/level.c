@@ -384,7 +384,15 @@ void initLevel(u8 level)
 
 void updateLevel(u8 level)
 {
-    if (level == 4)
+    if (level == 1)
+    {
+        if (secret_triggered)
+        {
+            secret_triggered = false;
+            initObject(OBJECT_TYPE_IDOL, 2 * 8 + SCREEN_X_OFFSET, 2 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
+        }
+    }
+    else if (level == 4)
     {
         if (doors_closed == 1 && level_state == 0)
         {

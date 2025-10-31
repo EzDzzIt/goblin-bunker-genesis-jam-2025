@@ -186,7 +186,7 @@ int main(bool resetType)
 				{
 					initLevel(current_level + 1);
 					// DEBUGGING FIXME
-					// initLevel(5);
+					// initLevel(7);
 				}
 			}
 			else if (global_counter == 1)

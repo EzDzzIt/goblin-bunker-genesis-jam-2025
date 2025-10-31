@@ -402,7 +402,7 @@ void initLevel(u8 level)
         level_data.beastmode_time_limit = 200;
         level_data.enemy_shot_chance = 75;                      // percent
         level_data.doors_closed_limit = 5;                      // seal n doors to win the level
-        level_data.shuts_to_seal = 2;                           // shut each door 3 times to seal
+        level_data.shuts_to_seal = 1;                           // shut each door 3 times to seal
         level_data.x_warp_points[0] = 15 * 8 + SCREEN_X_OFFSET; // portal 0 warp
         level_data.y_warp_points[0] = 3 * 8 + SCREEN_Y_OFFSET;
         level_data.level_timer_max = 100;
@@ -414,8 +414,12 @@ void initLevel(u8 level)
         initDoor(3 * 8 + SCREEN_X_OFFSET, 10 * 8 + SCREEN_Y_OFFSET, 0, 0);
         initDoor(16 * 8 + SCREEN_X_OFFSET, 10 * 8 + SCREEN_Y_OFFSET, 0, 0);
         initDoor(10 * 8 + SCREEN_X_OFFSET, 5 * 8 + SCREEN_Y_OFFSET, 0, 0);
-        initEnemy(ENEMY_TYPE_SECRET, SCREEN_X_OFFSET, 4 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
+        u8 secret = initEnemy(ENEMY_TYPE_SECRET, SCREEN_X_OFFSET, 4 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
+        SPR_setPriority(enemy_array[secret].data.sprite, FALSE);
     }
+
+    // set player on top
+    SPR_setPriority(player.sprite, TRUE);
 
     SYS_disableInts();
     VDP_loadTileSet(&level_tileset, TILE_USER_INDEX, DMA);
@@ -556,10 +560,19 @@ void updateLevel(u8 level)
         else if (level_state == 1 && MAP_Y == 16)
         {
             level_state = 2;
+            u8 i = 0;
+            for (i = 0; i < MAX_ENEMIES; i++)
+            {
+                if (enemy_array[i].data.active)
+                {
+                    killEnemy(i);
+                }
+            }
             initEnemy(ENEMY_TYPE_EYE_BOSS, 7 * 8 + SCREEN_X_OFFSET, 15 * 8 + SCREEN_Y_OFFSET, 0, 16, 0);
             global_counter = 2;
+            XGM2_play(xgm2_boss);
         }
-        else if (level_state == 2 && global_counter % 120 == 0)
+        else if (level_state == 2 && global_counter % 250 == 0)
         {
             randomCultistSpawn();
         }

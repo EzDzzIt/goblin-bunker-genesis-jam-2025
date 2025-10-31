@@ -414,7 +414,7 @@ void enemyAI(u8 index)
                 enemy_array[index].reverse_ai = false;
             }
         }
-        else if (enemy_array[index].enemy_ai_counter % 10 == 0)
+        else if (enemy_array[index].enemy_ai_counter % 41 == 0)
         {
             if ((random() % (100 - 1 + 1)) + 1 <= level_data.enemy_shot_chance)
             {

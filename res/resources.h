@@ -13,6 +13,7 @@ extern const u8 wav_en_spawn[9728];
 extern const u8 xgm2_title[1280];
 extern const u8 xgm2_level0[1280];
 extern const u8 xgm2_over[1024];
+extern const u8 xgm2_boss[1024];
 extern const Palette palette_0;
 extern const Palette palette_1;
 extern const Palette palette_2;

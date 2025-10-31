@@ -41,6 +41,7 @@ BITMAP over_screen "assets/gfx/over_screen.png" FAST
 XGM2 xgm2_title "assets/music/title2.vgm"
 XGM2 xgm2_level0 "assets/music/level.vgm"
 XGM2 xgm2_over "assets/music/over.vgm"
+XGM2 xgm2_boss "assets/music/boss.vgm"
 WAV wav_shot "assets/sound/laser gun 4.wav" XGM2 6650
 WAV wav_en_shot "assets/sound/laser gun 6.wav" XGM2 6650
 WAV wav_player_hurt "assets/sound/body hit with grunt 1.wav" XGM2 6650

@@ -30,7 +30,7 @@ struct enemyData
 
 extern struct enemyData enemy_array[];
 
-extern u8 initEnemy(u8 enemy_type, u8 x, u8 y, u8 push_x, u8 push_y);
+extern u8 initEnemy(u8 enemy_type, u8 x, u8 y, u8 push_x, u8 push_y, u8 sub_type);
 extern void randomEnemySpawn();
 extern void randomCultistSpawn();
 extern void killEnemy(u8 index);

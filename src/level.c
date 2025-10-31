@@ -28,6 +28,8 @@ void initDoor(u8 x, u8 y, u8 push_x, u8 push_y)
             door.close_cooldown = 0;
             door.push_x = push_x;
             door.push_y = push_y;
+            door.data.x += (door.push_x - MAP_X) * 8;
+            door.data.y += (door.push_y - MAP_Y) * 8;
             door_array[i] = door;
             break;
         }
@@ -83,11 +85,11 @@ void updateDoors()
 
                     if ((random() % (100 - 1 + 1)) + 1 <= 15)
                     {
-                        initEnemy(ENEMY_TYPE_DEMON, door_array[i].data.x, door_array[i].data.y, door_array[i].push_x, door_array[i].push_y);
+                        initEnemy(ENEMY_TYPE_DEMON, door_array[i].data.x, door_array[i].data.y, door_array[i].push_x, door_array[i].push_y, 0);
                     }
                     else
                     {
-                        initEnemy(ENEMY_TYPE_EYE, door_array[i].data.x, door_array[i].data.y, door_array[i].push_x, door_array[i].push_y);
+                        initEnemy(ENEMY_TYPE_EYE, door_array[i].data.x, door_array[i].data.y, door_array[i].push_x, door_array[i].push_y, 0);
                     }
                 }
             }
@@ -163,6 +165,8 @@ void initObject(u8 object_type, u8 x, u8 y, u8 push_x, u8 push_y, u8 sub_type)
             obj.data.active = true;
             obj.push_x = push_x;
             obj.push_y = push_y;
+            obj.data.x += (obj.push_x - MAP_X) * 8;
+            obj.data.y += (obj.push_y - MAP_Y) * 8;
             level_object_array[i] = obj;
             break;
         }
@@ -268,9 +272,9 @@ void initLevel(u8 level)
         // player.hp += 1; // heal a bit each round
         // level objects
         initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
-        initEnemy(ENEMY_TYPE_SECRET, SCREEN_X_OFFSET, 14 * 8 + SCREEN_Y_OFFSET, 0, 0);
+        initEnemy(ENEMY_TYPE_SECRET, SCREEN_X_OFFSET, 14 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
         // apply object offsets to other screens if needed
-        applyObjectOffsets();
+        // applyObjectOffsets();
     }
     else if (level == 2)
     {
@@ -292,7 +296,7 @@ void initLevel(u8 level)
         // on screen 1
         initDoor(80 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET, 0, 0);
 
-        applyObjectOffsets();
+        // applyObjectOffsets();
     }
     else if (level == 3)
     {
@@ -316,7 +320,7 @@ void initLevel(u8 level)
         initDoor(17 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 0, 0);
         initObject(OBJECT_TYPE_KEY, SCREEN_X_OFFSET + 17 * 8, SCREEN_Y_OFFSET + 2 * 8, 0, 0, 0);
         // apply object offsets to other screens if needed
-        applyObjectOffsets();
+        // applyObjectOffsets();
     }
     else if (level == 4)
     {
@@ -344,7 +348,7 @@ void initLevel(u8 level)
         initDoor(15 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 20, 0);
 
         // apply object offsets to other screens if needed
-        applyObjectOffsets();
+        // applyObjectOffsets();
     }
     else if (level == 5)
     {
@@ -368,7 +372,7 @@ void initLevel(u8 level)
         // level objects
 
         // apply object offsets to other screens if needed
-        applyObjectOffsets();
+        // applyObjectOffsets();
     }
     else if (level == 6)
     {
@@ -393,8 +397,11 @@ void initLevel(u8 level)
         // player.hp += 1; // heal a bit each round
         // level objects
         initObject(OBJECT_TYPE_IDOL, 3 * 8 + SCREEN_X_OFFSET, 3 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
+        initEnemy(ENEMY_TYPE_SECRET, 14 * 8 + SCREEN_X_OFFSET, 15 * 8 + SCREEN_Y_OFFSET, 20, 0, 1);
+        initEnemy(ENEMY_TYPE_SECRET, 15 * 8 + SCREEN_X_OFFSET, 15 * 8 + SCREEN_Y_OFFSET, 20, 0, 1);
+        // initEnemy(ENEMY_TYPE_SECRET, 16 * 8 + SCREEN_X_OFFSET, 15 * 8 + SCREEN_Y_OFFSET, 20, 0, 1);
         // apply object offsets to other screens if needed
-        applyObjectOffsets();
+        // applyObjectOffsets();
     }
 
     SYS_disableInts();
@@ -462,18 +469,29 @@ void updateLevel(u8 level)
     }
     else if (level == 6)
     {
-        if (enemies_killed < 30)
+        if (level_state == 0)
+        {
+            if (MAP_X == 20 && MAP_Y == 16) // when you enter lower-right
+            {
+                level_state = 1;
+            }
+        }
+        if (level_state == 1 && enemies_killed < 30)
         {
             if (global_counter % 120 == 0)
             {
                 randomCultistSpawn();
             }
         }
-        if (enemies_killed == 1 && level_state == 0)
+        else if (enemies_killed == 20 && level_state == 1)
         {
-            level_state += 1;
-            initObject(OBJECT_TYPE_KEY, 19 * 8 + SCREEN_X_OFFSET, 3 * 8 + SCREEN_Y_OFFSET, 0, 20, 0);
-            applyObjectOffsets();
+            level_state = 2;
+        }
+        if (level_state == 2)
+        {
+            level_state = 3;
+            initObject(OBJECT_TYPE_KEY, 15 * 8 + SCREEN_X_OFFSET, 3 * 8 + SCREEN_Y_OFFSET, 0, 20, 0);
+            // applyObjectOffsets();
         }
     }
 

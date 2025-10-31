@@ -7,7 +7,7 @@
 
 struct enemyData enemy_array[MAX_ENEMIES];
 
-u8 initEnemy(u8 enemy_type, u8 x, u8 y, u8 push_x, u8 push_y)
+u8 initEnemy(u8 enemy_type, u8 x, u8 y, u8 push_x, u8 push_y, u8 sub_type)
 {
     u8 i = 0;
     u8 return_index = 255;
@@ -42,7 +42,14 @@ u8 initEnemy(u8 enemy_type, u8 x, u8 y, u8 push_x, u8 push_y)
             }
             else if (enemy_type == ENEMY_TYPE_SECRET)
             {
-                en.data.sprite = SPR_addSprite(&secret_left_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+                if (sub_type == 0)
+                {
+                    en.data.sprite = SPR_addSprite(&secret_left_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+                }
+                else if (sub_type == 1)
+                {
+                    en.data.sprite = SPR_addSprite(&secret_down_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+                }
                 en.width = 8;
                 en.height = 8;
                 en.hp = 3;
@@ -82,7 +89,7 @@ void randomEnemySpawn()
 
     if ((random() % (100 - 1 + 1)) + 1 <= 20)
     {
-        return_index = initEnemy(ENEMY_TYPE_DEMON, random_x, random_y, 0, 0);
+        return_index = initEnemy(ENEMY_TYPE_DEMON, random_x, random_y, 0, 0, 0);
         // check to make sure we do not spawn on top of the player!
         if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, enemy_array[return_index].data.x, enemy_array[return_index].data.y, enemy_array[return_index].width, enemy_array[return_index].height))
         {
@@ -93,7 +100,7 @@ void randomEnemySpawn()
     }
     else
     {
-        return_index = initEnemy(ENEMY_TYPE_EYE, random_x, random_y, 0, 0);
+        return_index = initEnemy(ENEMY_TYPE_EYE, random_x, random_y, 0, 0, 0);
         if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, enemy_array[return_index].data.x, enemy_array[return_index].data.y, enemy_array[return_index].width, enemy_array[return_index].height))
         {
             enemy_array[return_index].data.x = -1;
@@ -113,7 +120,7 @@ void randomCultistSpawn()
 
     u8 return_index = 0;
 
-    return_index = initEnemy(ENEMY_TYPE_CULTIST, random_x, random_y, MAP_X, MAP_Y);
+    return_index = initEnemy(ENEMY_TYPE_CULTIST, random_x, random_y, MAP_X, MAP_Y, 0);
     // check to make sure we do not spawn on top of the player!
     if (collision_check(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, enemy_array[return_index].data.x, enemy_array[return_index].data.y, enemy_array[return_index].width, enemy_array[return_index].height))
     {

@@ -28,9 +28,9 @@ void initSpell(u8 spell_type, fix16 x, fix16 y)
             bul_y_velocity = 1;
         }
         initPlayerBullet(x, y, bul_x_velocity, bul_y_velocity);
-        initPlayerBullet(x, y, 1, 0);
+        // initPlayerBullet(x, y, 1, 0);
         initPlayerBullet(x, y, 0, 1);
-        initPlayerBullet(x, y, -1, 0);
+        // initPlayerBullet(x, y, -1, 0);
         initPlayerBullet(x, y, 0, -1);
     }
     else if (spell_type == SPELL_SACRED)

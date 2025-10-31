@@ -22,6 +22,7 @@ extern const SpriteDefinition door_sprite;
 extern const SpriteDefinition doorbeast_sprite;
 extern const SpriteDefinition demon_sprite;
 extern const SpriteDefinition eye_sprite;
+extern const SpriteDefinition eye_boss_sprite;
 extern const SpriteDefinition cultist_sprite;
 extern const SpriteDefinition bullet_sprite;
 extern const SpriteDefinition idol_sprite;

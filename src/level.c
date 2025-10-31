@@ -195,8 +195,9 @@ void pickupObject(u8 index)
 
     if (level_object_array[index].object_type == OBJECT_TYPE_IDOL)
     {
-        player.hp += 1;
+        player.hp += 2;
         secrets_found += 1;
+        score += 50;
         SPR_releaseSprite(level_object_array[index].data.sprite);
         level_object_array[index].data.active = false;
     }
@@ -264,17 +265,14 @@ void initLevel(u8 level)
         level_data.enemy_shot_chance = 100; // percent
         level_data.doors_closed_limit = 1;  // seal one door to win the level
         level_data.shuts_to_seal = 2;       // shut each door 3 times to seal
-        level_data.level_timer_max = 30;    // seconds on the clock
-        level_timer = level_data.level_timer_max;
+        level_data.level_timer_max = 10;    // seconds on the clock
+        level_timer += level_data.level_timer_max;
         // player spawn
         player.x = SCREEN_X_OFFSET + 8;
         player.y = SCREEN_Y_OFFSET + 8;
-        // player.hp += 1; // heal a bit each round
         // level objects
         initDoor(80 + SCREEN_X_OFFSET, 72 + SCREEN_Y_OFFSET, 0, 0);
         initEnemy(ENEMY_TYPE_SECRET, SCREEN_X_OFFSET, 14 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
-        // apply object offsets to other screens if needed
-        // applyObjectOffsets();
     }
     else if (level == 2)
     {
@@ -288,14 +286,16 @@ void initLevel(u8 level)
         level_data.beastmode_time_limit = 200;
         level_data.enemy_shot_chance = 100; // percent
         level_data.doors_closed_limit = 1;
-        level_data.shuts_to_seal = 2; // 3 times to seal
+        level_data.shuts_to_seal = 2;    // 3 times to seal
+        level_data.level_timer_max = 10; // seconds on the clock
+        level_timer += level_data.level_timer_max;
 
         // player spawn
         player.x = SCREEN_X_OFFSET + 2 * 8;
         player.y = SCREEN_Y_OFFSET + 11 * 8;
         // on screen 1
         initDoor(80 + SCREEN_X_OFFSET, 32 + SCREEN_Y_OFFSET, 0, 0);
-
+        initEnemy(ENEMY_TYPE_SECRET, 19 * 8 + SCREEN_X_OFFSET, 3 * 8 + SCREEN_Y_OFFSET, 0, 0, 2);
         // applyObjectOffsets();
     }
     else if (level == 3)
@@ -310,8 +310,8 @@ void initLevel(u8 level)
         level_data.enemy_shot_chance = 100; // percent
         level_data.doors_closed_limit = 1;  // seal one door to win the level
         level_data.shuts_to_seal = 2;       // shut each door 3 times to seal
-        level_data.level_timer_max = 30;    // seconds on the clock
-        level_timer = level_data.level_timer_max;
+        level_data.level_timer_max = 10;    // seconds on the clock
+        level_timer += level_data.level_timer_max;
         // player spawn
         player.x = SCREEN_X_OFFSET + 4 * 8;
         player.y = SCREEN_Y_OFFSET + 10 * 8;
@@ -319,6 +319,7 @@ void initLevel(u8 level)
         // level objects
         initDoor(17 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 0, 0);
         initObject(OBJECT_TYPE_KEY, SCREEN_X_OFFSET + 17 * 8, SCREEN_Y_OFFSET + 2 * 8, 0, 0, 0);
+        initEnemy(ENEMY_TYPE_SECRET, 10 * 8 + SCREEN_X_OFFSET, 15 * 8 + SCREEN_Y_OFFSET, 0, 0, 1);
         // apply object offsets to other screens if needed
         // applyObjectOffsets();
     }
@@ -336,16 +337,16 @@ void initLevel(u8 level)
         level_data.enemy_shot_chance = 100;                     // percent
         level_data.doors_closed_limit = 4;                      // seal n doors to win the level
         level_data.shuts_to_seal = 2;                           // shut each door 3 times to seal
-        level_data.level_timer_max = 40;                        // seconds on the clock
         level_data.x_warp_points[0] = 15 * 8 + SCREEN_X_OFFSET; // portal 0 warp
         level_data.y_warp_points[0] = 3 * 8 + SCREEN_Y_OFFSET;
-        level_timer = level_data.level_timer_max;
+        level_data.level_timer_max = 40; // seconds on the clock
+        level_timer += level_data.level_timer_max;
         // player spawn
         player.x = SCREEN_X_OFFSET + 3 * 8;
         player.y = SCREEN_Y_OFFSET + 8 * 8;
         // player.hp += 1; // heal a bit each round
         // level objects
-        initDoor(15 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 20, 0);
+        initDoor(15 * 8 + SCREEN_X_OFFSET, 12 * 8 + SCREEN_Y_OFFSET, 20, 0);
 
         // apply object offsets to other screens if needed
         // applyObjectOffsets();
@@ -362,9 +363,8 @@ void initLevel(u8 level)
         level_data.enemy_shot_chance = 100; // percent
         level_data.doors_closed_limit = 1;  // seal n doors to win the level
         level_data.shuts_to_seal = 5;       // shut each door 3 times to seal
-        level_data.level_timer_max = 120;   // seconds on the clock
-
-        level_timer = level_data.level_timer_max;
+        level_data.level_timer_max = 50;    // seconds on the clock
+        level_timer += level_data.level_timer_max;
         // player spawn
         player.x = SCREEN_X_OFFSET + 8 * 8;
         player.y = SCREEN_Y_OFFSET + 10 * 8;
@@ -384,13 +384,13 @@ void initLevel(u8 level)
         level_data.beastmode_chance = 45;
         level_data.beastmode_time_limit = 250;
         level_data.enemy_shot_chance = 100;                     // percent
-        level_data.doors_closed_limit = 2;                      // seal n doors to win the level
+        level_data.doors_closed_limit = 3;                      // seal n doors to win the level
         level_data.shuts_to_seal = 2;                           // shut each door 3 times to seal
-        level_data.level_timer_max = 120;                       // seconds on the clock
+        level_data.level_timer_max = 100;                       // seconds on the clock
         level_data.x_warp_points[0] = 15 * 8 + SCREEN_X_OFFSET; // portal 0 warp
         level_data.y_warp_points[0] = 3 * 8 + SCREEN_Y_OFFSET;
-        level_data.can_warp = false;
-        level_timer = level_data.level_timer_max;
+
+        level_timer += level_data.level_timer_max;
         // player spawn
         player.x = SCREEN_X_OFFSET + 8 * 8;
         player.y = SCREEN_Y_OFFSET + 10 * 8;
@@ -413,30 +413,24 @@ void initLevel(u8 level)
         current_map_data_columns = 20;
         level_data.map_height = 16 * 2 - 16; // 16 tiles per screen height
         level_data.map_width = 20 * 1 - 20;  // 20 tiles per screen width
-        level_data.beastmode_chance = 45;
-        level_data.beastmode_time_limit = 250;
-        level_data.enemy_shot_chance = 100;                     // percent
-        level_data.doors_closed_limit = 10;                     // seal n doors to win the level
-        level_data.shuts_to_seal = 3;                           // shut each door 3 times to seal
-        level_data.level_timer_max = 150;                       // seconds on the clock
+        level_data.beastmode_chance = 50;
+        level_data.beastmode_time_limit = 200;
+        level_data.enemy_shot_chance = 75;                      // percent
+        level_data.doors_closed_limit = 5;                      // seal n doors to win the level
+        level_data.shuts_to_seal = 2;                           // shut each door 3 times to seal
+                                                                // seconds on the clock
         level_data.x_warp_points[0] = 15 * 8 + SCREEN_X_OFFSET; // portal 0 warp
         level_data.y_warp_points[0] = 3 * 8 + SCREEN_Y_OFFSET;
-        level_data.can_warp = true;
-        level_timer = level_data.level_timer_max;
+        level_data.level_timer_max = 100;
+        level_timer += level_data.level_timer_max;
         // player spawn
         player.x = SCREEN_X_OFFSET + 8 * 8;
         player.y = SCREEN_Y_OFFSET + 10 * 8;
-        // player.hp += 1; // heal a bit each round
         // level objects
-        // initObject(OBJECT_TYPE_IDOL, 3 * 8 + SCREEN_X_OFFSET, 3 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
-        // initEnemy(ENEMY_TYPE_SECRET, 15 * 8 + SCREEN_X_OFFSET, 15 * 8 + SCREEN_Y_OFFSET, 20, 0, 1);
-        // initEnemy(ENEMY_TYPE_SECRET, 16 * 8 + SCREEN_X_OFFSET, 15 * 8 + SCREEN_Y_OFFSET, 20, 0, 1);
-        initDoor(15 * 8 + SCREEN_X_OFFSET, 7 * 8 + SCREEN_Y_OFFSET, 0, 0);
-        initDoor(10 * 8 + SCREEN_X_OFFSET, 2 * 8 + SCREEN_Y_OFFSET, 20, 0);
-        // initDoor(18 * 8 + SCREEN_X_OFFSET, 10 * 8 + SCREEN_Y_OFFSET, 20, 0);
-        // initEnemy(ENEMY_TYPE_SECRET, 16 * 8 + SCREEN_X_OFFSET, 15 * 8 + SCREEN_Y_OFFSET, 20, 0, 1);
-        // apply object offsets to other screens if needed
-        // applyObjectOffsets();
+        initDoor(3 * 8 + SCREEN_X_OFFSET, 10 * 8 + SCREEN_Y_OFFSET, 0, 0);
+        initDoor(16 * 8 + SCREEN_X_OFFSET, 10 * 8 + SCREEN_Y_OFFSET, 0, 0);
+        initDoor(10 * 8 + SCREEN_X_OFFSET, 5 * 8 + SCREEN_Y_OFFSET, 0, 0);
+        initEnemy(ENEMY_TYPE_SECRET, SCREEN_X_OFFSET, 4 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
     }
 
     SYS_disableInts();
@@ -454,7 +448,23 @@ void updateLevel(u8 level)
         if (secret_triggered)
         {
             secret_triggered = false;
-            initObject(OBJECT_TYPE_IDOL, 2 * 8 + SCREEN_X_OFFSET, 2 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
+            initObject(OBJECT_TYPE_IDOL, 2 * 8 + SCREEN_X_OFFSET, 6 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
+        }
+    }
+    else if (level == 2)
+    {
+        if (secret_triggered)
+        {
+            secret_triggered = false;
+            initObject(OBJECT_TYPE_IDOL, 17 * 8 + SCREEN_X_OFFSET, 4 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
+        }
+    }
+    else if (level == 3)
+    {
+        if (secret_triggered)
+        {
+            secret_triggered = false;
+            initObject(OBJECT_TYPE_IDOL, 10 * 8 + SCREEN_X_OFFSET, 11 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
         }
     }
     else if (level == 4)
@@ -462,7 +472,7 @@ void updateLevel(u8 level)
         if (doors_closed == 1 && level_state == 0)
         {
 
-            initDoor(3 * 8 + SCREEN_X_OFFSET, 7 * 8 + SCREEN_Y_OFFSET, 20, 0);
+            initDoor(2 * 8 + SCREEN_X_OFFSET, 2 * 8 + SCREEN_Y_OFFSET, 20, 0);
             level_state += 1;
         }
         else if (doors_closed == 2 && level_state == 1)
@@ -470,7 +480,14 @@ void updateLevel(u8 level)
             initDoor(16 * 8 + SCREEN_X_OFFSET, 3 * 8 + SCREEN_Y_OFFSET, 20, 0);
             initDoor(7 * 8 + SCREEN_X_OFFSET, 4 * 8 + SCREEN_Y_OFFSET, 20, 0);
             initObject(OBJECT_TYPE_PORTAL, 14 * 8 + SCREEN_X_OFFSET, 12 * 8 + SCREEN_Y_OFFSET, 20, 0, 0);
+            initEnemy(ENEMY_TYPE_SECRET, 19 * 8 + SCREEN_X_OFFSET, 4 * 8 + SCREEN_Y_OFFSET, 0, 0, 2);
+
             level_state += 1;
+        }
+        if (secret_triggered)
+        {
+            secret_triggered = false;
+            initObject(OBJECT_TYPE_IDOL, 4 * 8 + SCREEN_X_OFFSET, 2 * 8 + SCREEN_Y_OFFSET, 20, 0, 0);
         }
     }
     else if (level == 5)
@@ -527,6 +544,40 @@ void updateLevel(u8 level)
             level_state = 3;
             initObject(OBJECT_TYPE_KEY, 10 * 8 + SCREEN_X_OFFSET, 3 * 8 + SCREEN_Y_OFFSET, 0, 20, 0);
             // applyObjectOffsets();
+        }
+        if (MAP_X == 0 && MAP_Y == 0)
+        {
+            level_data.can_warp = false;
+        }
+        else
+        {
+            level_data.can_warp = true;
+        }
+    }
+    else if (level == 7)
+    {
+        if (level_state == 0 && doors_closed == 3)
+        {
+            level_state = 1;
+            initObject(OBJECT_TYPE_KEY, 10 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
+        }
+        if (level_state == 1 && MAP_Y == 16)
+        {
+            level_state = 2;
+            initEnemy(ENEMY_TYPE_EYE_BOSS, 7 * 8 + SCREEN_X_OFFSET, 15 * 8 + SCREEN_Y_OFFSET, 0, 16, 0);
+            global_counter = 2;
+        }
+        if (level_state == 2 && global_counter % 600 == 0)
+        {
+            level_state = 3;
+            initDoor(3 * 8 + SCREEN_X_OFFSET, 10 * 8 + SCREEN_Y_OFFSET, 0, 16);
+            initDoor(16 * 8 + SCREEN_X_OFFSET, 10 * 8 + SCREEN_Y_OFFSET, 0, 16);
+        }
+
+        if (secret_triggered)
+        {
+            secret_triggered = false;
+            initObject(OBJECT_TYPE_IDOL, 14 * 8 + SCREEN_X_OFFSET, 13 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
         }
     }
 

@@ -7,6 +7,7 @@ SPRITE door_sprite "assets/gfx/door.png" 1 2 FAST 30
 SPRITE doorbeast_sprite "assets/gfx/doorbeast.png" 1 2 FAST 15
 SPRITE demon_sprite "assets/gfx/demon.png" 1 2 FAST 10
 SPRITE eye_sprite "assets/gfx/eye.png" 2 1 FAST 10
+SPRITE eye_boss_sprite "assets/gfx/eye_boss.png" 4 2 FAST 8
 SPRITE cultist_sprite "assets/gfx/cultist.png" 1 2 FAST 20
 SPRITE bullet_sprite "assets/gfx/bullet.png" 1 1 FAST 10
 SPRITE idol_sprite "assets/gfx/idol.png" 1 1 FAST 30

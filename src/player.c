@@ -10,6 +10,7 @@ struct playerData player;
 void player_info_print()
 {
     // hp
+    VDP_clearTextArea(7, 21, 4, 1);
     char buffer[4];
     sprintf(buffer, "%dHP", player.hp);
     VDP_drawText(buffer, 7, 21);
@@ -22,20 +23,22 @@ void player_info_print()
     char door_buffer[2];
     sprintf(door_buffer, "DOORS:%d", level_data.doors_closed_limit - doors_closed);
     VDP_drawText(door_buffer, 7, 22);
+    // timer
+    VDP_clearTextArea(16, 22, 8, 1);
     char time_buffer[2];
     sprintf(time_buffer, "TIME:%d", level_timer);
     VDP_drawText(time_buffer, 16, 22);
     // key
     if (has_key)
     {
-        VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, TILE_USER_INDEX + 31), 11, 21, 1, 1); // index 1473 is A
+        VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, TILE_USER_INDEX + 31), 14, 21, 1, 1); // index 1473 is A
     }
     // warp
     if (player.warp_cooldown <= 0 && level_data.can_warp)
     {
         // char warp_buffer[4];
         // sprintf(warp_buffer, "%dHP", player.hp);
-        VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, 1473 + 22), 11, 21, 1, 1); // index 1473 is A
+        VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, 1473 + 22), 13, 21, 1, 1); // index 1473 is A
     }
     // else
     // {
@@ -61,7 +64,7 @@ void initPlayer()
     player.portal_warp = -1;
     player.x = SCREEN_X_OFFSET;
     player.y = SCREEN_Y_OFFSET;
-    player.hp = 6;
+    player.hp = 10;
     SPR_setAnim(player.sprite, PLAYER_ANIM_IDLE);
 }
 
@@ -111,7 +114,7 @@ void updatePlayer()
 
     u8 i = 0;
     bool collided = false;
-    bool hurt = false;
+    // bool hurt = false;
     // cycle through stuff for things that stop movement
     for (i = 0; i < MAX_DOORS; i++)
     {
@@ -456,7 +459,7 @@ void checkInput()
             // DEBUG
             if (state & BUTTON_START && changed & BUTTON_START)
             {
-                // doors_closed += 5;
+                game_state = GAME_STATE_PAUSE;
             }
         }
         else if (game_state == GAME_STATE_TITLE || game_state == GAME_STATE_OVER || game_state == GAME_STATE_TRANSITION)
@@ -464,6 +467,13 @@ void checkInput()
             if (state & BUTTON_START && !title_skip)
             {
                 title_skip = true;
+            }
+        }
+        else if (game_state == GAME_STATE_PAUSE)
+        {
+            if (state & BUTTON_START && changed & BUTTON_START)
+            {
+                game_state = GAME_STATE_GAME;
             }
         }
     }

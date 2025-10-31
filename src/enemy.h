@@ -10,6 +10,7 @@
 #define ENEMY_TYPE_EYE 1
 #define ENEMY_TYPE_SECRET 2
 #define ENEMY_TYPE_CULTIST 3
+#define ENEMY_TYPE_EYE_BOSS 4
 
 struct enemyData
 {

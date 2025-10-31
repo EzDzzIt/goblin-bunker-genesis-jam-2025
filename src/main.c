@@ -24,25 +24,20 @@ int main(bool resetType)
 
 		if (game_state == GAME_STATE_GAME)
 		{
-			if (global_counter >= 50000)
-			{
-				global_counter = 2;
-			}
-			if (global_counter == 1)
-			{
-			}
-			else
-			{
-				updatePlayer();
-				updateGame();
-				updateLevel(current_level);
-				SPR_update();
-				display_stats();
-			}
+			// if (global_counter >= 100000)
+			// {
+			// 	global_counter = 2;
+			// }
+			updatePlayer();
+			updateGame();
+			updateLevel(current_level);
+			SPR_update();
+			// display_stats();
 		}
 		else if (game_state == GAME_STATE_PAUSE)
 		{
-			// SYS_doVBlankProcess();
+			// take it back...
+			global_counter -= 1;
 		}
 		else if (game_state == GAME_STATE_TITLE)
 		{
@@ -152,6 +147,11 @@ int main(bool resetType)
 					char buffer4[12];
 					sprintf(buffer4, "SECRETS:%d", secrets_found);
 					VDP_drawText(buffer4, 11, 21);
+					VDP_drawText("/7", 20, 21);
+				}
+				if (current_level == 8)
+				{
+					VDP_drawText("Congrats!!", 11, 22);
 				}
 			}
 			else
@@ -176,10 +176,17 @@ int main(bool resetType)
 				// game start
 				game_state = GAME_STATE_GAME;
 				global_counter = 1;
+				title_skip = false;
 				// DEBUGGING FIXME
 				// initLevel(7);
-				initLevel(current_level + 1);
-				title_skip = false;
+				if (current_level == 8) // last level :(
+				{
+					game_state = GAME_STATE_OVER;
+				}
+				else
+				{
+					initLevel(current_level + 1);
+				}
 			}
 			else if (global_counter == 1)
 			{
@@ -229,13 +236,18 @@ int main(bool resetType)
 				}
 				else if (current_level == 5)
 				{
-					VDP_drawText("STOP THEIR", 6 + 5, 4 + 6);
-					VDP_drawText("HIDDEN RITES!", 9 + 5, 7 + 6);
+					VDP_drawText("STOP THESE", 4 + 5, 4 + 6);
+					VDP_drawText("HIDDEN RITES!", 6 + 5, 7 + 6);
 				}
 				else if (current_level == 6)
 				{
 					VDP_drawText("END", 6 + 5, 4 + 6);
-					VDP_drawText("THIS...", 9 + 5, 7 + 6);
+					VDP_drawText("THIS..", 9 + 5, 7 + 6);
+				}
+				else if (current_level == 7) // gg
+				{
+					VDP_drawText("THE THIRD STAR", 2 + 5, 4 + 6);
+					VDP_drawText("NOW RISES..", 3 + 5, 7 + 6);
 				}
 			}
 		}
@@ -257,7 +269,7 @@ void display_stats()
 {
 	// char free_mem[16] = "MEM: ";
 	// char free_vram[16] = "VRAM: ";
-	VDP_showCPULoad(12, 25);
+	// VDP_showCPULoad(12, 25);
 	// intToStr(MEM_getAllocated(), &free_mem[5], 1);
 	// VDP_drawText(free_mem, 1, 3);
 	// intToStr(SPR_getFreeVRAM(), &free_vram[6], 1);

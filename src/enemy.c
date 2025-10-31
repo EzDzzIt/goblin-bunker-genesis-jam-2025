@@ -62,7 +62,7 @@ u8 initEnemy(u8 enemy_type, u8 x, u8 y, u8 push_x, u8 push_y, u8 sub_type)
             }
             else if (enemy_type == ENEMY_TYPE_EYE_BOSS)
             {
-                en.data.sprite = SPR_addSprite(&eye_boss_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+                en.data.sprite = SPR_addSprite(&eye_boss_sprite, x, y, TILE_ATTR(PAL2, 0, FALSE, FALSE));
                 en.width = 32;
                 en.height = 16;
                 en.hp = 25;
@@ -520,7 +520,7 @@ void updateEnemies()
                     }
                     else
                     {
-                        SPR_setPalette(enemy_array[i].data.sprite, PAL3);
+                        SPR_setPalette(enemy_array[i].data.sprite, PAL2);
                     }
                 }
             }
@@ -606,7 +606,7 @@ void initBullet(u8 x, u8 y, f16 x_velocity, f16 y_velocity)
         if (!bullet_array[i].data.active)
         {
             struct bulletData bul;
-            bul.data.sprite = SPR_addSprite(&bullet_sprite, x, y, TILE_ATTR(PAL1, 0, FALSE, FALSE));
+            bul.data.sprite = SPR_addSprite(&bullet_sprite, x, y, TILE_ATTR(PAL2, 0, FALSE, FALSE));
             bul.data.x = x;
             bul.data.y = y;
             bul.data.active = true;

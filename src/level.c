@@ -499,24 +499,34 @@ void updateLevel(u8 level)
                 randomEnemySpawn();
             }
         }
-        else if (enemies_killed < 15)
+        else if (enemies_killed < 18)
         {
             if (global_counter % 100 == 0)
             {
                 randomEnemySpawn();
             }
         }
-        else if (enemies_killed == 15 && level_state == 0)
+        else if (enemies_killed == 18 && level_state == 0)
         {
             initDoor(9 * 8 + SCREEN_X_OFFSET, 6 * 8 + SCREEN_Y_OFFSET, 0, 0);
-            level_state += 1;
+            level_state = 1;
         }
         else if (level_state == 1)
         {
-            if (global_counter % 300 == 0)
+            initEnemy(ENEMY_TYPE_SECRET, SCREEN_X_OFFSET, 1 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
+            level_state = 2;
+        }
+        else if (level_state == 2)
+        {
+            if (global_counter % 360 == 0)
             {
                 randomEnemySpawn();
             }
+        }
+        if (secret_triggered)
+        {
+            secret_triggered = false;
+            initObject(OBJECT_TYPE_IDOL, 10 * 8 + SCREEN_X_OFFSET, 8 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
         }
     }
     else if (level == 6)

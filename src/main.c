@@ -177,15 +177,16 @@ int main(bool resetType)
 				game_state = GAME_STATE_GAME;
 				global_counter = 1;
 				title_skip = false;
-				// DEBUGGING FIXME
-				// initLevel(7);
+
 				if (current_level == 8) // last level :(
 				{
 					game_state = GAME_STATE_OVER;
 				}
 				else
 				{
-					initLevel(current_level + 1);
+					// initLevel(current_level + 1);
+					// DEBUGGING FIXME
+					initLevel(5);
 				}
 			}
 			else if (global_counter == 1)

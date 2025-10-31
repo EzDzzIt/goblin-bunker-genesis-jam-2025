@@ -12,3 +12,5 @@ B to fire orbs at enemies,
 C to blink to a random spot
 
 sound fx from https://filmcow.itch.io/filmcow-sfx
+
+made with SGDK https://github.com/Stephane-D/SGDK

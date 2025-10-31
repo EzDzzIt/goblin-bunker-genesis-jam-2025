@@ -146,6 +146,10 @@ void killEnemy(u8 index)
 {
     if (enemy_array[index].type != ENEMY_TYPE_SECRET)
     {
+        if (enemy_array[index].type == ENEMY_TYPE_EYE_BOSS)
+        {
+            level_data.boss_killed = true;
+        }
         enemies_killed += 1;
         total_enemies_killed += 1;
         enemy_array[index].data.active = false;
@@ -357,7 +361,17 @@ void enemyAI(u8 index)
     }
     else if (enemy_array[index].type == ENEMY_TYPE_DEMON)
     {
-        if (enemy_array[index].enemy_ai_counter % 2 == 0)
+        if (enemy_array[index].enemy_ai_counter >= 200 && enemy_array[index].enemy_ai_counter <= 400)
+        {
+
+            enemy_array[index].x_velocity = 0;
+            enemy_array[index].y_velocity = 0;
+            if (enemy_array[index].enemy_ai_counter == 400)
+            {
+                enemy_array[index].enemy_ai_counter == 1;
+            }
+        }
+        else if (enemy_array[index].enemy_ai_counter % 2 == 0)
         {
             if (enemy_array[index].data.x >= player.x)
             {
@@ -376,14 +390,6 @@ void enemyAI(u8 index)
                 enemy_array[index].y_velocity = 1 * enemy_array[index].speed;
             }
         }
-        else if (enemy_array[index].enemy_ai_counter % 240 == 0)
-        {
-            if ((random() % (2 - 1 + 1)) + 1 <= 1)
-            {
-                enemy_array[index].x_velocity = 0;
-                enemy_array[index].y_velocity = 0;
-            }
-        }
 
         else
         {
@@ -393,7 +399,7 @@ void enemyAI(u8 index)
     }
     else if (enemy_array[index].type == ENEMY_TYPE_EYE_BOSS)
     {
-        if (enemy_array[index].enemy_ai_counter % 60 == 0)
+        if (enemy_array[index].enemy_ai_counter % 80 == 0)
         {
             if ((random() % (4 - 1 + 1)) + 1 <= 1)
             {
@@ -447,7 +453,7 @@ void enemyAI(u8 index)
                 }
             }
         }
-        else if (enemy_array[index].enemy_ai_counter % 1 == 0)
+        else if (enemy_array[index].enemy_ai_counter % 2 == 0)
         {
 
             if ((random() % (100 - 1 + 1)) + 1 <= 70)
@@ -506,7 +512,6 @@ void updateEnemies()
                 }
 
                 SPR_setPosition(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
-                // setSprite(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
                 if (enemy_array[i].hp <= 0)
                 {
                     killEnemy(i);
@@ -566,7 +571,6 @@ void updateEnemies()
                     SPR_setHFlip(enemy_array[i].data.sprite, FALSE);
                 }
                 SPR_setPosition(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
-                // setSprite(enemy_array[i].data.sprite, enemy_array[i].data.x, enemy_array[i].data.y);
                 if (enemy_array[i].hp <= 0)
                 {
                     killEnemy(i);
@@ -584,7 +588,7 @@ void updateEnemies()
                     }
                 }
                 enemy_array[i].enemy_ai_counter += 1;
-                if (enemy_array[i].enemy_ai_counter > 2000)
+                if (enemy_array[i].enemy_ai_counter > 3000)
                 {
                     enemy_array[i].enemy_ai_counter = 1;
                 }

@@ -5,7 +5,7 @@
 
 // enemy stuff
 
-#define MAX_ENEMIES 12
+#define MAX_ENEMIES 8
 #define ENEMY_TYPE_DEMON 0
 #define ENEMY_TYPE_EYE 1
 #define ENEMY_TYPE_SECRET 2

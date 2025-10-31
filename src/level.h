@@ -84,6 +84,7 @@ struct levelData
     u8 x_warp_points[3];
     u8 y_warp_points[3];
     bool can_warp;
+    bool boss_killed;
 };
 
 extern struct levelData level_data;

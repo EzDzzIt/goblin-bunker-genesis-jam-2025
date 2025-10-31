@@ -244,6 +244,9 @@ void initLevel(u8 level)
     reset_globals();
     SPR_defragVRAM();
 
+    // defaults
+    level_data.can_warp = true;
+
     if (level == 1)
     {
         currentMap = &level_1_map;
@@ -376,27 +379,29 @@ void initLevel(u8 level)
         level_data.map_width = 20 * 2 - 20;  // 20 tiles per screen width
         level_data.beastmode_chance = 45;
         level_data.beastmode_time_limit = 250;
-        level_data.enemy_shot_chance = 100; // percent
-        level_data.doors_closed_limit = 1;  // seal n doors to win the level
-        level_data.shuts_to_seal = 5;       // shut each door 3 times to seal
-        level_data.level_timer_max = 200;   // seconds on the clock
-
+        level_data.enemy_shot_chance = 100;                     // percent
+        level_data.doors_closed_limit = 1;                      // seal n doors to win the level
+        level_data.shuts_to_seal = 5;                           // shut each door 3 times to seal
+        level_data.level_timer_max = 200;                       // seconds on the clock
+        level_data.x_warp_points[0] = 15 * 8 + SCREEN_X_OFFSET; // portal 0 warp
+        level_data.y_warp_points[0] = 3 * 8 + SCREEN_Y_OFFSET;
+        level_data.can_warp = false;
         level_timer = level_data.level_timer_max;
         // player spawn
         player.x = SCREEN_X_OFFSET + 8 * 8;
         player.y = SCREEN_Y_OFFSET + 10 * 8;
         // player.hp += 1; // heal a bit each round
         // level objects
-
+        initObject(OBJECT_TYPE_IDOL, 3 * 8 + SCREEN_X_OFFSET, 3 * 8 + SCREEN_Y_OFFSET, 0, 0, 0);
         // apply object offsets to other screens if needed
         applyObjectOffsets();
     }
 
     SYS_disableInts();
-    VDP_loadTileSet(&level_tileset, 0, DMA);
-    VDP_setTileMapEx(BG_B, currentMap, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, SCROLL_X, SCROLL_Y, 20, 16, DMA);
-    VDP_loadTileSet(&border_tileset, level_tileset.numTile, DMA);
-    VDP_setTileMapEx(BG_A, &border_image, TILE_ATTR_FULL(PAL3, 1, FALSE, FALSE, level_tileset.numTile), 0, 0, 0, 0, 32, 28, DMA);
+    VDP_loadTileSet(&level_tileset, TILE_USER_INDEX, DMA);
+    VDP_setTileMapEx(BG_B, currentMap, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, TILE_USER_INDEX), 6, 5, SCROLL_X, SCROLL_Y, 20, 16, DMA);
+    VDP_loadTileSet(&border_tileset, TILE_USER_INDEX + level_tileset.numTile, DMA);
+    VDP_setTileMapEx(BG_A, &border_image, TILE_ATTR_FULL(PAL3, 1, FALSE, FALSE, TILE_USER_INDEX + level_tileset.numTile), 0, 0, 0, 0, 32, 28, DMA);
     SYS_enableInts();
 }
 
@@ -457,12 +462,18 @@ void updateLevel(u8 level)
     }
     else if (level == 6)
     {
-        if (enemies_killed < 7)
+        if (enemies_killed < 30)
         {
             if (global_counter % 120 == 0)
             {
                 randomCultistSpawn();
             }
+        }
+        if (enemies_killed == 1 && level_state == 0)
+        {
+            level_state += 1;
+            initObject(OBJECT_TYPE_KEY, 19 * 8 + SCREEN_X_OFFSET, 3 * 8 + SCREEN_Y_OFFSET, 0, 20, 0);
+            applyObjectOffsets();
         }
     }
 
@@ -482,7 +493,7 @@ void updateLevel(u8 level)
         SCROLL_X = 0;
         SCROLL_Y = 0;
         SYS_disableInts();
-        VDP_setTileMapEx(BG_B, currentMap, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, 0), 6, 5, MAP_X, MAP_Y, 20, 16, DMA);
+        VDP_setTileMapEx(BG_B, currentMap, TILE_ATTR_FULL(PAL1, 0, FALSE, FALSE, TILE_USER_INDEX), 6, 5, MAP_X, MAP_Y, 20, 16, DMA);
         SYS_enableInts();
     }
     if (doors_closed >= level_data.doors_closed_limit)

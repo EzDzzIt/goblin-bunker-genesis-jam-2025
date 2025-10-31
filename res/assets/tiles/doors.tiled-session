@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level_5.tmx",
+    "activeFile": "level_6.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -48,6 +48,14 @@
                 "y": 63.85193753614806
             }
         },
+        "level_6.tmx": {
+            "scale": 4,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 114.625,
+                "y": 148.5
+            }
+        },
         "main.tsx": {
             "scaleInDock": 3,
             "scaleInEditor": 1
@@ -65,14 +73,15 @@
         "main.tsx",
         "level_1.tmx",
         "level_5.tmx",
-        "level_4.tmx"
+        "level_6.tmx"
     ],
     "project": "doors.tiled-project",
     "recentFiles": [
         "main.tsx",
         "level_1.tmx",
-        "level_4.tmx",
         "level_5.tmx",
+        "level_6.tmx",
+        "level_4.tmx",
         "level_3.tmx",
         "level_2.tmx"
     ],

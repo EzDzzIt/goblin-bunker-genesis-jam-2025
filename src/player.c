@@ -28,15 +28,15 @@ void player_info_print()
     // key
     if (has_key)
     {
-        VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, 31), 11, 21, 1, 1); // index 1473 is A
+        VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, TILE_USER_INDEX + 31), 11, 21, 1, 1); // index 1473 is A
     }
     // warp
-    // if (player.warp_cooldown <= 0)
-    // {
-    //     // char warp_buffer[4];
-    //     // sprintf(warp_buffer, "%dHP", player.hp);
-    //     VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, 1473 + 22), 11, 21, 1, 1); // index 1473 is A
-    // }
+    if (player.warp_cooldown <= 0 && level_data.can_warp)
+    {
+        // char warp_buffer[4];
+        // sprintf(warp_buffer, "%dHP", player.hp);
+        VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, 1473 + 22), 11, 21, 1, 1); // index 1473 is A
+    }
     // else
     // {
     //     VDP_fillTileMapRect(BG_A, TILE_ATTR_FULL(PAL1, 1, 0, 0, 0), 11, 21, 1, 1);
@@ -85,12 +85,6 @@ void updatePlayer()
         initSpell(SPELL_SHOT, player.x, player.y);
         player.cast = 0;
         XGM2_playPCM(wav_shot, sizeof(wav_shot), SOUND_PCM_CH_AUTO);
-    }
-    if (player.portal_warp > -1)
-    {
-        player.x = level_data.x_warp_points[player.portal_warp];
-        player.y = level_data.y_warp_points[player.portal_warp];
-        player.portal_warp = -1;
     }
 
     // // stuff that stops u
@@ -200,11 +194,11 @@ void updatePlayer()
             tile_y = (player.y - SCREEN_Y_OFFSET + 8) / 8 + MAP_Y;
         }
         u8 tile_type = ((u8(*)[current_map_data_columns])current_map_data)[tile_y][tile_x];
-        if ((tile_type >= 2 && tile_type <= 9) || (tile_type >= 18))
+        if ((tile_type >= 2 && tile_type <= 9))
         {
             collided = true;
         }
-        if (tile_type == 16 || tile_type == 17)
+        if (tile_type >= 16 && tile_type <= 25)
         {
             // key doorway
             if (!has_key)
@@ -364,6 +358,16 @@ void updatePlayer()
             UPDATE_SCROLL = TRUE;
         }
     }
+    // did we enter a plpoortal?
+    if (player.portal_warp > -1)
+    {
+        player.x = level_data.x_warp_points[player.portal_warp];
+        player.y = level_data.y_warp_points[player.portal_warp];
+        player.portal_warp = -1;
+        player.warp_cooldown = 60;
+        SPR_setAnim(player.sprite, PLAYER_ANIM_WARP);
+    }
+
     // // are we dead yet
     if (player.hp <= 0)
     {
@@ -427,7 +431,10 @@ void checkInput()
             {
                 if (player.warp_cooldown <= 0)
                 {
-                    initWarp();
+                    if (level_data.can_warp)
+                    {
+                        initWarp();
+                    }
                 }
             }
             if (state & BUTTON_B && changed & BUTTON_B)
@@ -449,7 +456,7 @@ void checkInput()
             // DEBUG
             if (state & BUTTON_START && changed & BUTTON_START)
             {
-                doors_closed += 5;
+                // doors_closed += 5;
             }
         }
         else if (game_state == GAME_STATE_TITLE || game_state == GAME_STATE_OVER || game_state == GAME_STATE_TRANSITION)

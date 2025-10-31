@@ -83,6 +83,7 @@ struct levelData
     u8 level_timer_max;
     u8 x_warp_points[3];
     u8 y_warp_points[3];
+    bool can_warp;
 };
 
 extern struct levelData level_data;

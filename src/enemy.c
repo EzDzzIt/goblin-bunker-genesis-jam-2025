@@ -169,10 +169,6 @@ void enemyAI(u8 index)
                 enemy_array[index].reverse_ai = false;
             }
         }
-        // else if (enemy_array[index].reverse_ai || enemy_array[index].enemy_ai_counter % 70 == 0)
-        // {
-        //     enemy_array[index].reverse_ai = false;
-        // }
         else if (enemy_array[index].enemy_ai_counter % 90 == 0)
         {
             if ((random() % (100 - 1 + 1)) + 1 <= level_data.enemy_shot_chance)
@@ -211,6 +207,45 @@ void enemyAI(u8 index)
                     initBullet(enemy_array[index].data.x + 4, enemy_array[index].data.y + 2, bullet_x_velocity, bullet_y_velocity);
                 }
             }
+        }
+        else if (enemy_array[index].enemy_ai_counter % 3 == 0)
+        {
+
+            if ((random() % (100 - 1 + 1)) + 1 <= 70)
+            {
+                s8 flip = 1;
+                if (enemy_array[index].reverse_ai)
+                {
+                    flip = -1;
+                }
+                if (enemy_array[index].data.x >= player.x)
+                {
+                    enemy_array[index].x_velocity = -1 * enemy_array[index].speed * flip;
+                }
+                else
+                {
+                    enemy_array[index].x_velocity = 1 * enemy_array[index].speed * flip;
+                }
+                if (enemy_array[index].data.y >= player.y)
+                {
+                    enemy_array[index].y_velocity = -1 * enemy_array[index].speed * flip;
+                }
+                else
+                {
+                    enemy_array[index].y_velocity = 1 * enemy_array[index].speed * flip;
+                }
+            }
+            else
+            {
+                enemy_array[index].x_velocity = 0;
+                enemy_array[index].y_velocity = 0;
+            }
+        }
+
+        else
+        {
+            enemy_array[index].x_velocity = 0;
+            enemy_array[index].y_velocity = 0;
         }
     }
     else if (enemy_array[index].type == ENEMY_TYPE_CULTIST)

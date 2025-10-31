@@ -14,6 +14,7 @@ SPRITE key_sprite "assets/gfx/key.png" 1 1 FAST 30
 SPRITE portal_sprite "assets/gfx/portal.png" 1 1 FAST 15
 SPRITE secret_left_sprite "assets/gfx/secret_block_left.png" 1 1 FAST
 SPRITE secret_down_sprite "assets/gfx/secret_block_down.png" 1 1 FAST
+SPRITE secret_right_sprite "assets/gfx/secret_block_right.png" 1 1 FAST
 SPRITE sacred_ground_sprite "assets/gfx/sacred_ground.png" 2 2 FAST 5
 TILESET level_tileset "assets/gfx/tileset2.png" NONE NONE
 TILEMAP level_1_map "assets/tiles/level_1.tmx" "Tile Layer 1" FAST FAST  0
@@ -22,7 +23,7 @@ TILEMAP level_3_map "assets/tiles/level_3.tmx" "Tile Layer 1" FAST FAST  0
 TILEMAP level_4_map "assets/tiles/level_4.tmx" "Tile Layer 1" FAST FAST  0
 TILEMAP level_5_map "assets/tiles/level_5.tmx" "Tile Layer 1" FAST FAST  0
 TILEMAP level_6_map "assets/tiles/level_6.tmx" "Tile Layer 1" FAST FAST  0
-//TILEMAP level_7_map "assets/tiles/level_7.tmx" "Tile Layer 1" FAST FAST  0
+TILEMAP level_7_map "assets/tiles/level_7.tmx" "Tile Layer 1" FAST FAST  0
 //TILEMAP level_8_map "assets/tiles/level_8.tmx" "Tile Layer 1" FAST FAST  0
 //TILEMAP level_9_map "assets/tiles/level_9.tmx" "Tile Layer 1" FAST FAST  0
 //TILEMAP level_10_map "assets/tiles/level_10.tmx" "Tile Layer 1" FAST FAST  0

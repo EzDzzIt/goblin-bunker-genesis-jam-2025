@@ -43,8 +43,19 @@ void initWarp()
 {
     player.warp_cooldown = PLAYER_WARP_COOLDOWN;
     SPR_setAnim(player.sprite, PLAYER_ANIM_WARP);
-    player.x = (((random() % (18 - 2 + 1)) + 2) + 6) * 8;
-    player.y = (((random() % (14 - 2 + 1)) + 2) + 5) * 8;
+    u8 i = 0;
+    for (i = 0; i < 200; i++)
+    {
+        u8 tile_x = (((random() % (18 - 2 + 1)) + 2) + 6);
+        u8 tile_y = (((random() % (14 - 2 + 1)) + 2) + 5);
+        u8 tile_type = ((u8(*)[current_map_data_columns])current_map_data)[tile_y][tile_x];
+        if (tile_type == 2 || (tile_type >= 10 && tile_type <= 15))
+        {
+            player.x = tile_x * 8;
+            player.y = tile_y * 8;
+            break;
+        }
+    }
 }
 
 struct bulletData player_bullet_array[MAX_BULLETS];

@@ -177,8 +177,8 @@ int main(bool resetType)
 				game_state = GAME_STATE_GAME;
 				global_counter = 1;
 				// DEBUGGING FIXME
-				initLevel(6);
-				// initLevel(current_level + 1);
+				// initLevel(7);
+				initLevel(current_level + 1);
 				title_skip = false;
 			}
 			else if (global_counter == 1)
@@ -198,22 +198,23 @@ int main(bool resetType)
 					VDP_drawText("..TOO EARLY", 3 + 5, 2 + 6);
 					VDP_drawText("THE THIRD STAR", 4 + 5, 4 + 6);
 					VDP_drawText("DOTH NOT SHINE;", 5 + 5, 5 + 6);
-					VDP_drawText("Press A", 8 + 5, 8 + 6);
-					VDP_drawText("to SEAL", 9 + 5, 9 + 6);
+					VDP_drawText("A to SEAL", 8 + 5, 8 + 6);
+					VDP_drawText("B to FIRE", 8 + 5, 10 + 6);
+					VDP_drawText("C to BLINK", 8 + 5, 12 + 6);
 				}
 				else if (current_level == 1) // actual level id - 1
 				{
 					VDP_drawText("THEY CAN NOT", 2 + 5, 3 + 6);
 					VDP_drawText("HOLD YOU..", 3 + 5, 5 + 6);
-					VDP_drawText("Press C", 8 + 5, 8 + 6);
-					VDP_drawText("to BLINK", 9 + 5, 9 + 6);
+					// VDP_drawText("Press C", 8 + 5, 8 + 6);
+					// VDP_drawText("to BLINK", 9 + 5, 9 + 6);
 				}
 				else if (current_level == 2)
 				{
 					VDP_drawText("RETRIEVE THE", 2 + 5, 3 + 6);
 					VDP_drawText("KEY, CHILD..", 3 + 5, 5 + 6);
-					VDP_drawText("Press B", 8 + 5, 8 + 6);
-					VDP_drawText("to SHOOT", 9 + 5, 9 + 6);
+					// VDP_drawText("Press B", 8 + 5, 8 + 6);
+					// VDP_drawText("to SHOOT", 9 + 5, 9 + 6);
 				}
 				else if (current_level == 3)
 				{
@@ -229,7 +230,12 @@ int main(bool resetType)
 				else if (current_level == 5)
 				{
 					VDP_drawText("STOP THEIR", 6 + 5, 4 + 6);
-					VDP_drawText("FINAL RITES!", 9 + 5, 7 + 6);
+					VDP_drawText("HIDDEN RITES!", 9 + 5, 7 + 6);
+				}
+				else if (current_level == 6)
+				{
+					VDP_drawText("END", 6 + 5, 4 + 6);
+					VDP_drawText("THIS...", 9 + 5, 7 + 6);
 				}
 			}
 		}
